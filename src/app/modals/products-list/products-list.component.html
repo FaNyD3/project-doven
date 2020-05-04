@@ -1,0 +1,74 @@
+<mat-nav-list>
+  <!----------------------->
+  <!-- header -->
+  <div class="sheetHeaderContainer">
+    <h2 class="cut-text orangeText">{{dataIn.client.name}}</h2>
+    <!----------------------->
+    <!-- year filter -->
+    <div class="customSelectContainer" id="sheetYear" matRipple (click)="year.open()">
+      <mat-select placeholder="Year" class="customSelect" #year id="year" [formControl]="yearControl" [value]="this.dataIn.years !== undefined ? this.dataIn.years[0].id : ''" (selectionChange)="this.loadTableData($event.value, true);">
+        <mat-option disabled >Select a year</mat-option>
+        <mat-option *ngFor="let year of dataIn.years" [value]="year.id">{{ year.name }}</mat-option>
+      </mat-select>
+      <mat-icon class="customSelectIcon">tune</mat-icon>
+    </div>
+  </div>
+  <!----------------------->
+  <!-- loading spinner -->
+  <div class="sheetLoaderContainer" *ngIf="firstLoad && !finishLoad">
+    <mat-spinner></mat-spinner>
+  </div>
+  <!----------------------->
+  <!-- not found container -->
+  <div *ngIf="!firstLoad && finishLoad">
+    <!----------------------->
+    <!-- not found message -->
+    <div class="fadeIn" *ngIf="products">
+      <div *ngIf="products.length === 0" class="sheetLoaderContainer">
+        <p>Has no registered participants</p>
+      </div>
+    </div>
+    <div class="fadeIn" *ngIf="!products">
+      <div class="sheetLoaderContainer">
+        <p>Has no registered products</p>
+      </div>
+    </div>
+  </div>
+  <!----------------------->
+  <!-- list -->
+  <div *ngIf="products.length > 0 && finishLoad" id="sheetProductsContainer">
+    <div *ngFor="let product of products" class="productItem">
+      <div class="productDataWrapper">
+        <p class="productName productDataItem">{{product.product.name ? product.product.name : 'N/A'}}</p>
+        <div class="productDataItem">
+          <p class="productItemTitle">Product grown</p>
+          <p class="productData tableText cut-text">{{product.productGrown ? product.productGrown : 'N/A'}}</p>
+        </div>
+        <div class="productDataItem">
+          <p class="productItemTitle">Product available</p>
+          <p class="productData tableText cut-text">{{product.productAvailable ? product.productAvailable : 'N/A'}}</p>
+        </div>
+        <div class="productDataItem">
+          <p class="productItemTitle">Target price</p>
+          <p class="productData tableText cut-text">{{product.targetPrice ? product.targetPrice : 'N/A'}}</p>
+        </div>
+        <div class="productDataItem">
+          <p class="productItemTitle">Grade</p>
+          <p class="productData tableText cut-text">{{product.grade ? product.grade : 'N/A'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-nav-list>
+<!----------------------->
+<!-- buttons -->
+<div class="row buttonsRow">
+  <div class="col-6 col-md-8"></div>
+  <!----------------------->
+  <!-- cancel button -->
+  <div class="col-6 col-md-4">
+    <button type="button" class="grayButton fullWidth" matRipple (click)="close()">
+      <span>Close</span>
+    </button>
+  </div>
+</div>

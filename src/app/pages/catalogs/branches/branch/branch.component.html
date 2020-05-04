@@ -1,0 +1,117 @@
+<div class="row">
+    <div class="col-12">
+        <h2 class="blueText"> {{ dataIn.title }} </h2>
+    </div>
+</div>
+<!----------------------->
+<!-- form -->
+<form [formGroup]="addForm" (ngSubmit)="performRequest()">
+    <div class="row">
+        <!----------------------->
+        <!-- name -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="name" class="inputLabel">Airstrip Name *</label>
+            <!--antes airstrip-->
+            <!--antes de aerodromo era sucursal-->
+            <div class="customInput" (click)="name.focus()">
+                <input type="text" matInput placeholder="Airstrip Name" id="name" #name formControlName="name">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('name').value" matSuffix aria-label="Clear" (click)="addForm.get('name').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+                <mat-error *ngIf="addForm.get('name').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!-- state -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="state" class="inputLabel">state</label>
+            <!--antes state-->
+            <div class="customInput" (click)="state.focus()">
+                <input type="text" matInput placeholder="State" id="state" #state formControlName="state">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('state').value" matSuffix aria-label="Clear" (click)="addForm.get('state').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+                <mat-error *ngIf="addForm.get('state').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!-- operationType -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="operationType" class="inputLabel">operationType *</label>
+            <!--antes OperationType-->
+            <div class="customInput" (click)="operationType.focus()">
+                <input type="text" matInput placeholder="Operation Type" id="operationType" #operationType formControlName="operationType">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('operationType').value" matSuffix aria-label="Clear" (click)="addForm.get('operationType').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+                <mat-error *ngIf="addForm.get('operationType').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!-- serviceType -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="serviceType" class="inputLabel">ServiceType *</label>
+            <!--antes ServiceType-->
+            <div class="customInput" (click)="serviceType.focus()">
+                <input type="text" matInput placeholder="Service Type" id="serviceType" #serviceType formControlName="serviceType">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('serviceType').value" matSuffix aria-label="Clear" (click)="addForm.get('serviceType').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+                <mat-error *ngIf="addForm.get('serviceType').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!-- classificacion -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="classification" class="inputLabel">Classification *</label>
+            <!--antes classification-->
+            <div class="customInput" (click)="classification.focus()">
+                <input type="text" matInput placeholder="Classification" id="classification" #classification formControlName="classification">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('classification').value" matSuffix aria-label="Clear" (click)="addForm.get('classification').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+                <mat-error *ngIf="addForm.get('classification').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!-- color -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="color" class="inputLabel">Color *</label>
+            <div class="customInput" (click)="color.focus()">
+                <input type="color" matInput id="color" #color formControlName="color" class="padd0">
+            </div>
+        </div>
+    </div>
+    <div class="row buttonsRow">
+        <div class="col-4" *ngIf="dataIn.isNew"></div>
+        <!----------------------->
+        <!-- cancel button -->
+        <div class="col-4">
+            <button type="button" class="grayButton fullWidth" matRipple (click)="onNoClick()">
+        <mat-icon class="showOnSmall marg0">close</mat-icon>
+        <span class="hideUntilMedium">Cancelar</span>
+      </button>
+        </div>
+        <!----------------------->
+        <!-- delete button -->
+        <div class="col-4" *ngIf="!dataIn.isNew">
+            <button type="button" class="redButton fullWidth" matRipple (click)="deleteObject()">
+        <mat-icon class="showOnSmall marg0">delete</mat-icon>
+        <span class="hideUntilMedium">Eliminar</span>
+      </button>
+        </div>
+        <!----------------------->
+        <!-- new button -->
+        <div class="col-4">
+            <button class="blueButton fullWidth" matRipple type="submit">
+        <mat-icon class="showOnSmall marg0">save</mat-icon>
+        <span class="hideUntilMedium">Guardar</span>
+      </button>
+        </div>
+    </div>
+</form>

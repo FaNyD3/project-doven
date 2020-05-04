@@ -1,0 +1,85 @@
+.customButtonsRow {
+  margin-top: 10px;
+}
+.buttonContainer{
+  display: flex;
+  align-content: flex-end;
+  align-items: flex-end;
+}
+.employeeCell {
+  min-width: 150px;
+}
+.lastCell {
+  padding-right: 0px !important;
+}
+.margt5 {
+  margin-top: 5px;
+}
+.margt21 {
+  margin-top: 21px;
+}
+
+@media only screen and (max-width: 768px) {
+  .margt21 {
+    margin-top: 5px;
+  }
+}
+
+.employeeCol {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.employeeButton {
+  max-width: 200px !important;
+  min-width: 140px !important;
+  width: 140px !important;
+}
+
+.actionButtonsContainer {
+  display: flex;
+  align-items: center;
+  align-content: flex-end;
+  justify-content: flex-end;
+  button {
+    max-width: 220px;
+  }
+}
+
+.actionRowContainer {
+  height: 100%;
+  align-items: flex-end;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.margr10px {
+  margin-right: 10px !important;
+}
+
+.plantTitle {
+  display: flex;
+  align-items: center;
+}
+
+/* -------------- */
+/* Select */
+/* -------------- */
+::ng-deep .mat-select-panel mat-option{
+  font-size: 13px !important;
+  height: 35px !important;
+  border-bottom: 1px solid var(--very-light-pink) !important;
+}
+
+.grainCheckContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  padding: 10px 0;
+}
+.grainCheck {
+  margin-right: 5px;
+}

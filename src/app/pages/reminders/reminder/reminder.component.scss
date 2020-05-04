@@ -1,0 +1,28 @@
+::ng-deep .mat-autocomplete-panel {
+  min-width: 230px !important;
+}
+::ng-deep .mat-autocomplete-panel mat-option{
+  min-width: 230px !important;
+  font-size: 13px !important;
+  height: 35px !important;
+  border-bottom: 1px solid var(--very-light-pink) !important;
+}
+.buyerContainer {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+}
+.branchesCircleContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-end;
+}
+.branchCircle{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-left: 2px;
+}

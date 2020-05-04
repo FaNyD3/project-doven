@@ -1,0 +1,318 @@
+<div class="row">
+    <div class="col-6">
+        <h2 class="blueText"> {{ dataIn.title }} </h2>
+    </div>
+    <div class="col-6 flexEnd">
+        <button type="button" class="editButton" (click)="changeRate(0)">
+      <mat-icon class="whiteClass removeStars">remove_circle_outline</mat-icon>
+    </button>
+        <button type="button" class="editButton" (click)="changeRate(1)">
+      <mat-icon class="whiteClass s1" *ngIf="!isActive1">star_border</mat-icon>
+      <mat-icon class="whiteClass s1" *ngIf="isActive1">star</mat-icon>
+    </button>
+        <button type="button" class="editButton" (click)="changeRate(2)">
+      <mat-icon class="whiteClass s2" *ngIf="!isActive2">star_border</mat-icon>
+      <mat-icon class="whiteClass s2" *ngIf="isActive2">star</mat-icon>
+    </button>
+        <button type="button" class="editButton" (click)="changeRate(3)">
+      <mat-icon class="whiteClass" *ngIf="!isActive3">star_border</mat-icon>
+      <mat-icon class="whiteClass" *ngIf="isActive3">star</mat-icon>
+    </button>
+        <button type="button" class="editButton" (click)="changeRate(4)">
+      <mat-icon class="whiteClass s4" *ngIf="!isActive4">star_border</mat-icon>
+      <mat-icon class="whiteClass s4" *ngIf="isActive4">star</mat-icon>
+    </button>
+        <button type="button" class="editButton" (click)="changeRate(5)">
+      <mat-icon class="whiteClass s5" *ngIf="!isActive5">star_border</mat-icon>
+      <mat-icon class="whiteClass s5" *ngIf="isActive5">star</mat-icon>
+    </button>
+    </div>
+</div>
+<!----------------------->
+<!-- form -->
+<form [formGroup]="addForm" (ngSubmit)="performRequest()">
+    <div class="row">
+        <!----------------------->
+        <!-- name -->
+        <div class="col-12 col-sm-6 formItem">
+            <label for="name" class="inputLabel">Nombre *</label>
+            <div class="customInput" (click)="name.focus()">
+                <input type="text" matInput placeholder="Nombre" id="name" #name formControlName="name">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('name').value" matSuffix aria-label="Clear" (click)="addForm.get('name').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+                <mat-error *ngIf="addForm.get('name').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!----------------------->
+        <!----------------------->
+        <!-- lastName -->
+        <div class="col-12 col-sm-6 formItem">
+            <label for="lastName" class="inputLabel">Apellidos * </label>
+            <div class="customInput" (click)="lastName.focus()">
+                <input type="text" matInput placeholder="Apellidos" id="lastName" #lastName formControlName="lastName">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('lastName').value" matSuffix aria-label="Clear" (click)="addForm.get('lastName').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+                <mat-error *ngIf="addForm.get('lastName').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- type -->
+        <div class="col-12 col-sm-6 col-lg-3 formItem">
+            <label for="type" class="inputLabel">Type *</label>
+            <div class="customInput">
+                <mat-select placeholder="Type" id="type" formControlName="type">
+                    <mat-option disabled="">Selecciona un genero</mat-option>
+                    <mat-option value="Capitan">
+                        <!--mat-icon class="matOptionIcon">spa</mat-icon>-->Capitan</mat-option>
+                    <mat-option value="Primer Oficial">
+                        <!--mat-icon class="matOptionIcon">record_voice_over</mat-icon>-->Primer Oficial</mat-option>
+                </mat-select>
+                <mat-error *ngIf="addForm.get('type').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- acrerage -->
+        <!--
+    <div class="col-12 col-sm-6 col-lg-3 formItem" *ngIf="addForm.get('gender').value === 'Mujer'">
+      <div>
+        <label for="acrerage" class="inputLabel">Acrerage</label>
+        <div class="customInput" (click)="acrerage.focus()">
+          <input type="number" matInput placeholder="Acrerage" id="acrerage" #acrerage formControlName="acrerage">
+          <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('gender').value" matSuffix aria-label="Clear" (click)="addForm.get('gender').setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    -->
+        <!----------------------->
+        <!-- buyer -->
+        <!--
+    <div class="col-12 col-sm-6 col-md-6 formItem">
+      <label for="buyer" class="inputLabel">Buyer</label>
+      <div class="customInput" (click)="buyer.focus()">
+        <input type="text" class="autoInput" matInput placeholder="Buyer" id="buyer" #buyer formControlName="buyer" [matAutocomplete]="autoC">
+        <button type="button" type="button"  class="searchbarSuffix fsize22" *ngIf="addForm.get('buyer').value" matSuffix aria-label="Clear" (click)="addForm.get('buyer').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <mat-autocomplete #autoC="matAutocomplete" [displayWith]="displayFn">
+        <mat-option disabled>Select one buyer</mat-option>
+        <mat-option *ngFor="let buyer of (userOptions | async)" [value]="buyer">
+          <div class="buyerContainer">
+            <p>{{buyer.name}}</p>
+            <div class="branchesCircleContainer">
+              <div class="branchCircle" *ngFor="let branch of buyer.branches"
+                   [style.background-color]="branch.color"
+                   [matTooltip]="branch.name">
+              </div>
+            </div>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+    -->
+        <div class="col-6 col-lg-3 formItem" *ngIf="addForm.get('type').value !== 'producer' && isMediumSize"></div>
+        <!----------------------->
+        <!-- email -->
+        <div class="col-12 col-sm-6 col-lg-6 formItem">
+            <label for="email" class="inputLabel">Email</label>
+            <div class="customInput" (click)="email.focus()">
+                <input type="email" matInput placeholder="Correo electronico" id="email" #email formControlName="email">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('email').value" matSuffix aria-label="Clear" (click)="addForm.get('email').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- phone -->
+        <div class="col-12 col-sm-6 col-lg-3 formItem">
+            <label for="phone" class="inputLabel">Telefono</label>
+            <div class="customInput" (click)="phone.focus()">
+                <input type="text" matInput placeholder="Telefono" id="phone" #phone formControlName="phone">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('phone').value" matSuffix aria-label="Clear" (click)="addForm.get('phone').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- landphone -->
+        <!--
+    <div class="col-12 col-sm-6 col-lg-3 formItem">
+      <label for="landp" class="inputLabel">Land phone</label>
+      <div class="customInput" (click)="landp.focus()">
+        <input type="text" matInput placeholder="Land phone" id="landp" #landp formControlName="landphone">
+        <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('landphone').value" matSuffix aria-label="Clear" (click)="addForm.get('landphone').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+    -->
+        <!---<div class="col-lg-6"></div>-->
+        <!----------------------->
+        <!-- address -->
+        <!--
+    <div class="col-12 col-lg-6 formItem">
+      <label for="address" class="inputLabel">Direccion</label>
+      <div class="customInput" (click)="address.focus()">
+        <input google-place (onSelect)="setAddress($event)" type="text" matInput placeholder="Direccion" id="address" #address formControlName="address" autocomplete="off">
+        <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('address').value" matSuffix aria-label="Clear" (click)="addForm.get('address').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+    -->
+        <!----------------------->
+        <!-- town -->
+        <!--
+    <div class="col-6 col-lg-3 formItem">
+      <label for="town" class="inputLabel">Town</label>
+      <div class="customInput" (click)="town.focus()">
+        <input type="text" matInput placeholder="Town" id="town" #town formControlName="town">
+        <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('town').value" matSuffix aria-label="Clear" (click)="addForm.get('town').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+    -->
+        <!----------------------->
+        <!-- branch -->
+        <div class="col-6 col-lg-3 formItem">
+            <label for="branch" class="inputLabel">Sucursal</label>
+            <div class="customInput" (click)="branch.focus()">
+                <input type="text" matInput placeholder="Branch" id="branch" #branch formControlName="branch">
+                <div class="branchesCircleContainer">
+                    <div class="branchCircle" [style.background-color]="this.branchColor" id="branchCircle"></div>
+                </div>
+            </div>
+            <!--<div class="customInput">
+        <mat-select placeholder="Branch" id="branch" formControlName="branch">
+          <mat-option disabled="">Select one branch</mat-option>
+          <mat-option *ngFor="let branch of branches" [value]="branch.id">
+            {{ branch.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="addForm.get('branch').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+      </div>-->
+        </div>
+        <!----------------------->
+        <!-- lat -->
+        <!--<div class="col-12 col-md-3 formItem">
+      <label for="lat" class="inputLabel">Latitude *</label>
+      <div class="customInput" (click)="lat.focus()">
+        <input type="number" matInput placeholder="Lattitude" id="lat" #lat formControlName="lat">
+        <button class="searchbarSuffix fsize22" *ngIf="addForm.get('lat').value" matSuffix aria-label="Clear" (click)="addForm.get('lat').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>-->
+        <!----------------------->
+        <!-- lng -->
+        <!--<div class="col-12 col-md-3 formItem">
+      <label for="lng" class="inputLabel">Longitude *</label>
+      <div class="customInput" (click)="lng.focus()">
+        <input type="number" matInput placeholder="Longitude" id="lng" #lng formControlName="lng">
+        <button class="searchbarSuffix fsize22" *ngIf="addForm.get('lng').value" matSuffix aria-label="Clear" (click)="addForm.get('lng').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>-->
+    </div>
+    <!----------------------->
+    <!-- add tags to client -->
+    <form (ngSubmit)="addTag()">
+        <div class="row">
+            <!----------------------->
+            <!-- reminder autocomplete -->
+            <div class="col-8 col-sm-10 col-md-6 formItem">
+                <label for="tagsInput" class="inputLabel">Nueva tag</label>
+                <div class="customInput" (click)="tagsInput.focus()">
+                    <input type="text" matInput placeholder="Tag" id="tagsInput" class="fullHeight" #tagsInput [formControl]="tag">
+                    <button type="button" class="searchbarSuffix fsize22" *ngIf="this.tag.value" matSuffix aria-label="Clear" (click)="this.tag.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+                </div>
+            </div>
+            <!----------------------->
+            <!-- add reminder button -->
+            <div class="col-4 col-sm-2 col-md-6 col-lg-4 formItem">
+                <label class="inputLabel hideOnMobile">Agregar tag</label>
+                <label class="inputLabel hideOnDesktop">Add</label>
+                <button class="blueButton addButton" matRipple type="submit">
+          <mat-icon>add_circle_outline</mat-icon>
+          <span class="hideOnMobile">Agregar tag</span>
+        </button>
+            </div>
+
+        </div>
+    </form>
+    <!----------------------->
+    <!-- users added to reminder -->
+    <div class="row">
+        <div class="col-12 formItem">
+            <label class="inputLabel">Tags asignadas</label>
+        </div>
+        <!----------------------->
+        <!-- user reminder tags-->
+        <div class="col-12 formItem">
+            <mat-chip-list *ngIf="tags.length > 0">
+                <!--<mat-chip-list *ngIf="false">-->
+                <mat-chip *ngFor="let tag of tags" removable="true" selectable="false" (removed)="removeTag(tag)" class="branchChip">
+                    <p class="popUpMenuText">{{tag}}</p>
+                    <mat-icon matChipRemove>close</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+            <p *ngIf="tags.length === 0" class="tableText">No tiene tags asignadas</p>
+            <!--<p *ngIf="true" class="tableText">Has not tags assigned</p>-->
+        </div>
+    </div>
+    <!----------------------->
+    <!-- notes -->
+    <div class="row">
+        <div class="col-12 formItem">
+            <label for="notes" class="inputLabel">Observaciones</label>
+            <div class="customNoteInput" (click)="notes.focus()">
+                <textarea matInput placeholder="Observaciones..." id="notes" #notes formControlName="notes" rows="4"></textarea>
+            </div>
+        </div>
+    </div>
+</form>
+<!----------------------->
+<!-- buttons row -->
+<div class="row buttonsRow">
+    <div class="col-4" *ngIf="dataIn.isNew"></div>
+    <!----------------------->
+    <!-- cancel button -->
+    <div class="col-4">
+        <button type="button" class="grayButton fullWidth" matRipple (click)="onNoClick()">
+        <mat-icon class="showOnSmall marg0">close</mat-icon>
+        <span class="hideUntilMedium">Cancelar</span>
+      </button>
+    </div>
+    <!----------------------->
+    <!-- delete button -->
+    <!--
+    <div class="col-4" *ngIf="!dataIn.isNew">
+      <button type="button" class="redButton fullWidth" matRipple (click)="deleteObject()">
+        <mat-icon class="showOnSmall marg0">delete</mat-icon>
+        <span class="hideUntilMedium">Eliminar</span>
+      </button>
+    </div>
+    -->
+    <!----------------------->
+    <!-- new button -->
+    <div class="col-4">
+        <button class="blueButton fullWidth" matRipple type="button" (click)="performRequest()">
+        <mat-icon class="showOnSmall marg0">save</mat-icon>
+        <span class="hideUntilMedium">Guardar</span>
+      </button>
+    </div>
+</div>

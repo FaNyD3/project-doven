@@ -1,0 +1,154 @@
+<!----------------------->
+<!-- page container -->
+<div class="container-fluid fullHeight">
+    <!----------------------->
+    <!-- filters row -->
+    <div class="row">
+        <div class="col-12 col-sm-4 col-md-6 col-xl-8 pageTitleCell clientsFormItem">
+            <h2 class="blueText">AIRSTRIP</h2>
+            <!--Antes de aerodromo era sucursal-->
+        </div>
+        <!----------------------->
+        <!-- space if !usersAccess -->
+        <div class="col-6 col-sm-4 col-md-3 col-xl-2 clientsFormItem" *ngIf="!editAccess"></div>
+        <!----------------------->
+        <!-- searchbar -->
+        <div class="col-6 col-sm-4 col-md-3 col-xl-2 clientsFormItem">
+            <div class="searchbar" (click)="search.focus()">
+                <mat-icon matPrefix class="fsize22">search</mat-icon>
+                <input type="text" matInput placeholder="Buscar..." #search [formControl]="searchbar">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="searchbar.value" matSuffix aria-label="Clear" (click)="searchbar.setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- new user button -->
+        <div class="col-6 col-sm-4 col-md-3 col-xl-2 clientsFormItem" *ngIf="editAccess">
+            <button type="button" class="blueButton fullWidth" matRipple (click)="newBranch()">
+        <mat-icon>add_circle_outline</mat-icon>
+        <p>Nuevo Airstrip</p> 
+      </button>
+        </div>
+    </div>
+    <!----------------------->
+    <!-- loading spinner -->
+    <div class="tableLoaderContainer" *ngIf="firstLoad">
+        <mat-spinner></mat-spinner>
+    </div>
+    <!----------------------->
+    <!-- not found container -->
+    <div #noData>
+        <!----------------------->
+        <!-- not found message -->
+        <div class="tableLoaderContainer fadeIn" *ngIf="!firstLoad">
+            <p>Informacion no encontrada</p>
+        </div>
+    </div>
+    <!----------------------->
+    <!-- data container -->
+    <div #displayData class="fadeIn hidden">
+        <!----------------------->
+        <!-- table card -->
+        <div class="tableCard">
+            <div class="tableWrapper">
+                <div class="tableFixer">
+                    <!----------------------->
+                    <!-- table -->
+                    <mat-table class="personalizedTable" [dataSource]="dataSource" matSort (matSortChange)="loadTableData(searchbar.value, false, $event)">
+                        <!----------------------->
+                        <!-- check -->
+                        <ng-container cdkColumnDef="check">
+                            <mat-header-cell *cdkHeaderCellDef class="checkCell"></mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" [className]="'checkCell ' + row.id">
+                                <!----------------------->
+                                <!-- checkbox -->
+                                <mat-checkbox color="primary" (change)="selectRow($event, row.id)"></mat-checkbox>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- name -->
+                        <ng-container cdkColumnDef="name" sticky>
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> AIRSTRIP </mat-header-cell>
+                            <!--antes NOMBRE-->
+                            <mat-cell *cdkCellDef="let row" [className]="'cellPadding ' + row.id">
+                                <p class="cut-text tableText">
+                                    {{ row.name }}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- color -->
+                        <ng-container cdkColumnDef="color">
+                            <mat-header-cell *cdkHeaderCellDef class="colorCell headerCell"> COLOR </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" [className]="'cellPadding colorCell ' + row.id">
+                                <!----------------------->
+                                <!-- color container -->
+                                <div class="cut-text tableText">
+                                    <div [style.background-color]="row.color" class="colorCircle"></div>
+                                </div>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- state -->
+                        <ng-container cdkColumnDef="state" sticky>
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> STATE </mat-header-cell>
+                            <!--antes ESTADO-->
+                            <mat-cell *cdkCellDef="let row" [className]="'cellPadding ' + row.id">
+                                <p class="cut-text tableText">
+                                    {{ row.state }}
+                                </p>
+                            </mat-cell>
+                        </ng-container> -->
+                        <!-- operationType -->
+                        <ng-container cdkColumnDef="operationType" sticky>
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> OPERATION TYPE </mat-header-cell>
+                            <!--ANTES TIPO DE OPERACION-->
+                            <mat-cell *cdkCellDef="let row" [className]="'cellPadding ' + row.id">
+                                <p class="cut-text tableText">
+                                    {{ row.operationType }}
+                                </p>
+                            </mat-cell>
+                        </ng-container> -->
+                        <!-- serviceType -->
+                        <ng-container cdkColumnDef="serviceType" sticky>
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> SERVICE TYPE </mat-header-cell>
+                            <!--ANTES TIPO SERVICIO-->
+                            <mat-cell *cdkCellDef="let row" [className]="'cellPadding ' + row.id">
+                                <p class="cut-text tableText">
+                                    {{ row.serviceType }}
+                                </p>
+                            </mat-cell>
+                        </ng-container> -->
+                        <!-- classification -->
+                        <ng-container cdkColumnDef="classification" sticky>
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> CLASSIFICATION </mat-header-cell>
+                            <!--ANTES CLAFFIFICATION-->
+                            <mat-cell *cdkCellDef="let row" [className]="'cellPadding ' + row.id">
+                                <p class="cut-text tableText">
+                                    {{ row.classification }}
+                                </p>
+                            </mat-cell>
+                        </ng-container> -->
+                        <!----------------------->
+                        <!-- button -->
+                        <ng-container cdkColumnDef="button" <!--*ngIf="editAccess" -->>
+                            <mat-header-cell *cdkHeaderCellDef class="buttonCell"></mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" [className]="'buttonCell ' + row.id">
+                                <button type="button" class="whiteButton" matRipple (click)="openBranch(row)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row *cdkHeaderRowDef="editAccess ? displayedColumnsAdmin : displayedColumns; sticky: true"></mat-header-row>
+                        <mat-row *cdkRowDef="let row; columns: editAccess ? displayedColumnsAdmin : displayedColumns;"></mat-row>
+                    </mat-table>
+                </div>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- mat-table paginator -->
+        <mat-paginator class="out-paginator" [length]="tableCount" [pageSize]="25" [pageSizeOptions]="[10, 25, 50, 100]" (page)="loadTableData(this.searchbar.value, false, this.sort);">
+        </mat-paginator>
+    </div>
+</div>

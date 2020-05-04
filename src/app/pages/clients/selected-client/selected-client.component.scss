@@ -1,0 +1,534 @@
+/* -------------------------- */
+/* RESPONSIVE STYLES (MOBILE) */
+/* -------------------------- */
+.floatTopClient {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 78px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+  align-content: center;
+  transition: all .3s ease-out;
+  .topGradientContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 192px;
+    min-height: 192px;
+    max-height: 192px;
+    margin-top: 6px;
+    .gradientContainerRow {
+      display: flex;
+      width: 96vw;
+      align-content: center;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row;
+      .toggleWrapper {
+        width: 70%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .leftRightButtons {
+          width: 40px !important;
+          max-width: 40px !important;
+          min-width: 40px !important;
+          height: 30px;
+          padding: 0;
+          color: white !important;
+          border: 1px solid white;
+          -webkit-border-radius: 2px;
+          -moz-border-radius: 2px;
+          border-radius: 2px;
+          background-color: rgba(255,255,255,.4);
+          ::ng-deep .mat-button-wrapper {
+            height: 28px !important;
+            display: flex !important;
+            align-items: center !important;
+            align-content: center !important;
+            justify-content: center !important;
+          }
+        }
+        .leftRightButtons:first-of-type {
+          margin-right: 5px;
+        }
+      }
+      .clientDetails {
+        display: flex;
+        align-items: center;
+        font-size: 11px !important;
+        mat-icon {
+          margin: 3px 6px 3px 0 !important;
+          font-size: 14px !important;
+          width: 14px !important;
+          height: 14px !important;
+          display: flex;
+          align-items: center;
+          align-content: center;
+          justify-content: center;
+        }
+      }
+      .clientFormDataItem {
+        width: 47%;
+        .customSelectContainer, .viewMapContainer {
+          height: 25px;
+          margin: 0 0 7px 0;
+        }
+      }
+      @media only screen and (min-width: 576px) {
+        .clientFormDataItem {
+          width: 23% !important;
+        }
+      }
+    }
+    .gradientContainerCenterRow {
+      justify-content: center;
+      display: flex;
+      width: 96vw;
+      align-content: center;
+      align-items: center;
+      flex-direction: row;
+      .responsiveNoteButton {
+        height: 25px;
+        margin: 4px 0 10px 0;
+      }
+    }
+  }
+  .actionsContainer {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+
+    .editWrapper {
+      width: 30%;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
+.expandedPanel {
+  height: 200px;
+}
+@media only screen and (min-width: 576px) {
+  .expandedPanel {
+    height: 170px !important;
+  }
+  .expandedDataWrapper {
+    left: 0;
+    top: 170px !important;
+  }
+  .topGradientContainer {
+    height: 160px !important;
+    min-height: 160px !important;
+    max-height: 160px !important;
+  }
+  .responsiveNoteButton {
+    height: 28px;
+    margin: 4px 0 5px 0;
+    width: 200px;
+  }
+}
+@media only screen and (max-width: 575px) {
+  .expandedDataWrapper {
+    left: 0;
+    top: 200px !important;
+  }
+}
+@media only screen and (max-width: 992px) {
+  ::ng-deep .customSelectClient .mat-select-value {
+    padding: 5px 0 !important;
+  }
+  .customSelectIcon {
+    top: 4px;
+    font-size: 18px;
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+/* -------------------------- */
+/* DESKTOP STYLES (MOBILE) */
+/* -------------------------- */
+.floatLeftWrapper{
+  width: 190px;
+  top: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.floatLeftClient {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 10px 5px;
+  align-content: center;
+  flex-direction: column;
+  min-height: 570px;
+  .actionsContainer {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    .toggleWrapper {
+      width: 70%;
+      display: flex;
+      align-items: start;
+      .leftRightButtons {
+        width: 50px !important;
+        max-width: 50px !important;
+        min-width: 50px !important;
+        padding: 0;
+        color: white !important;
+        border: 1px solid white;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        background-color: rgba(255,255,255,.4);
+      }
+      .leftRightButtons:first-of-type {
+        margin-right: 5px;
+      }
+    }
+    .editWrapper {
+      width: 30%;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  .titleContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    .clientDetails {
+      display: flex;
+      align-items: center;
+      font-size: 12px !important;
+      mat-icon {
+        margin: 5px 10px 5px 0 !important;
+        font-size: 18px !important;
+        width: 20px !important;
+        height: 20px !important;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+      }
+    }
+    .clientDetails:first-of-type {
+      margin-top: 5px;
+    }
+  }
+  .buttonContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    button {
+      width: 90% !important;
+      margin-bottom: 10px;
+      mat-icon {
+        margin-left: 20%;
+        margin-right: 0 !important;
+      }
+    }
+  }
+  .clientFormDataWrapper {
+    display: flex;
+    flex-direction: column;
+    .clientFormDataItem {
+      width: 100%;
+      margin-top: 3px;
+      padding: 0 4px 0 3px;
+    }
+    .clientLabel {
+      margin-bottom: 5px;
+    }
+  }
+}
+.editButton {
+  color: white;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  min-width: 36px;
+  padding: 0;
+  mat-icon {
+    height: 20px !important;
+    width: 20px !important;
+    font-size: 20px !important;
+  }
+}
+.selectedClientName{
+  font-size: 18px !important;
+}
+@media only screen and (max-width: 800px) {
+  .selectedClientName {
+    font-size: 15px !important;
+  }
+  .editButton {
+    min-width: 26px !important;
+  }
+}
+
+.mat-button-toggle-label-content>* {
+  vertical-align: unset !important;
+}
+.tabGroup {
+}
+.clientDataWrapper{
+  position: absolute;
+  left: 190px;
+  right: 0;
+  top: 0;
+  transition: all .3s ease-out;
+}
+.clientLoaderContainer {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
+
+@media only screen and (max-width: 959px) {
+  .clientDataWrapper {
+    left: 0;
+    top: 78px;
+  }
+  .clientLoaderContainer {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    height: 60vh !important;
+  }
+}
+.selectedClientToolbar {
+  height: 32px;
+  border-bottom: 1px solid lightgray;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  overflow: hidden;
+}
+::ng-deep .mat-tab-label-container{
+  height: 42px;
+}
+::ng-deep .mat-tab-label {
+  height: 42px;
+}
+@media only screen and (max-width: 959px) {
+  .selectedClientToolbar {
+    height: 32px;
+  }
+  ::ng-deep .mat-tab-label-container{
+    height: 32px !important;;
+  }
+  ::ng-deep .mat-tab-label {
+    height: 32px !important;
+  }
+}
+.selectedClientContainer {
+  padding: 0 10px 0 10px;
+}
+
+.backButton {
+  color: #000;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+}
+.filterChip {
+  padding: 5px 10px !important;
+  height: 22px !important;
+  max-height: 22px !important;
+  min-height: 22px !important;
+  font-size: 13px !important;
+}
+.chipsWrapper {
+  //overflow: hidden;
+}
+.chipsContainer {
+  overflow-x: scroll;
+  height: 52px;
+  overflow-y: hidden;
+  margin-top: 24px;
+}
+.customChips {
+  ::ng-deep .mat-chip-list-wrapper {
+    min-width: max-content !important;
+    margin: 0 !important;
+  }
+}
+/* ------------- */
+/* pop up (modal) menus */
+::ng-deep .mat-menu-content {
+  padding: 0 !important;
+}
+::ng-deep .mat-menu-panel {
+  margin-top: 3px !important;
+}
+.popUpTag {
+  width: 200px;
+  border-bottom: 1px solid lightgray;
+  height: 32px !important;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  padding: 0 15px;
+}
+
+
+.selectedClientDesktopContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  .notesContainer {
+    width: 100%;
+    height: calc(55vh - 48px);
+    overflow: hidden;
+    padding: 0 10px;
+    border-bottom: 1px solid lightgray;
+  }
+  .twoContainer {
+    width: 100%;
+    height: calc(45vh - 48px);
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    .productsContainer {
+      width: 50%;
+      height: 100%;
+      padding: 0 10px 0 10px;
+      overflow: hidden;
+      border-right: 1px solid lightgray;
+    }
+    .dealsContainer {
+      width: 50%;
+      height: 100%;
+      padding: 0 10px 0 10px;
+      overflow: hidden;
+    }
+  }
+}
+
+.leftProductsContainer {
+  margin-top: 10px;
+  width: 100%;
+  max-height: 300px;
+  overflow: auto;
+  .leftProductItem {
+    .leftProductName {
+      display: flex;
+      align-content: center;
+      align-items: center;
+      justify-content: flex-start;
+      mat-icon {
+        color: #fff;
+        font-size: 15px;
+        width: 15px;
+        height: 15px;
+        margin-right: 5px;
+      }
+    }
+    .leftAvailable {
+      min-width: 60px;
+    }
+    padding: 3px 5px;
+    color: #fff;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.lefProductButton {
+  mat-icon {
+    width: 15px;
+    height: 15px;
+    font-size: 15px;
+    color: #FFF;
+  }
+  border: none;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  padding: 0;
+  width: 16px;
+  min-width: 16px;
+  height: 16px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  background: transparent;
+}
+
+
+
+.customLeftSelectContainer {
+  background: white;
+  box-shadow: 0 2px 4px 0 var(--brown-grey-9);
+  height: 23px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--greyish-brown) !important;
+  input {
+    font-size: 13px;
+  }
+}
+
+.saveButton {
+  margin: 0 7px;
+}
+
+.openMapButton {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  background: transparent;
+  width: 46px;
+  border: none;
+  height: 100%;
+  padding: 0;
+  .distanceIcon {
+    width: 20px;
+    height: 18px;
+    font-size: 18px;
+  }
+}
+
+.distanceNumber {
+  width: 100%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+

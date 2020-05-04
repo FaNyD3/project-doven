@@ -1,0 +1,53 @@
+.addButton {
+  width: 150px;
+  display: flex;
+  align-content: center;
+}
+.littleColorCircle {
+  width: 15px;
+  height: 15px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-left: 10px;
+}
+.branchChip {
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 8px 0 rgba(99, 99, 99, 0.17);
+}
+.addBranchCell {
+  display: flex;
+  align-content: flex-end;
+  align-items: flex-end;
+}
+
+.branchesCircleContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-end;
+}
+.branchCircle{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-left: 2px;
+}
+
+.branchOption {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+}
+
+/* -------------- */
+/* Select */
+/* -------------- */
+::ng-deep .mat-select-panel mat-option{
+  font-size: 13px !important;
+  height: 35px !important;
+  border-bottom: 1px solid var(--very-light-pink) !important;
+}

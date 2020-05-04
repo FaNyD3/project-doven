@@ -1,0 +1,273 @@
+<!----------------------->
+<!-- toolbar (back button and scrums) -->
+<div class="topGrayToolbar">
+  <button type="button" class="backButton" matRipple routerLink="/plants">
+    <mat-icon>keyboard_backspace</mat-icon>
+  </button>
+  <div class="topGrayCrumbs">
+    <p (click)="goToPlants()" class="pointer"> Groups </p> / <p> {{ currentPlant !== null ? currentPlant.name : 'New plant' }} </p>
+  </div>
+</div>
+<!----------------------->
+<!-- loading spinner -->
+<div class="clientLoaderContainer" *ngIf="firstLoad">
+  <mat-spinner></mat-spinner>
+</div>
+<!----------------------->
+<!-- data wrapper -->
+<div #displayData id="individualWrapper">
+  <!----------------------->
+  <!-- form -->
+  <form [formGroup]="addForm" (ngSubmit)="performRequest()">
+    <!----------------------->
+    <!-- title -->
+    <div class="row">
+      <div class="col-4 col-sm-6 col-md-8">
+        <h2 class="orangeText plantTitle"> {{isNew ? 'New Plant' : 'Edit Plant'}} </h2>
+      </div>
+      <div class="col-8 col-sm-6 col-md-4">
+        <div class="row actionRowContainer">
+          <div class="col-12 actionButtonsContainer">
+            <!----------------------->
+            <!-- delete button -->
+            <button type="button" class="redButton fullWidth margr10px" matRipple *ngIf="!isNew" (click)="deleteObject()">
+              <mat-icon class="showOnSmall marg0">delete</mat-icon>
+              <span class="hideUntilMedium">Delete</span>
+            </button>
+            <!----------------------->
+            <!-- new button -->
+            <button class="orangeButton fullWidth" matRipple type="submit">
+              <mat-icon class="showOnSmall marg0">save</mat-icon>
+              <span class="hideUntilMedium">Save</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!----------------------->
+      <!-- name -->
+      <div class="col-12 col-sm-5 col-md-3 formItem">
+        <label for="name" class="inputLabel">Name of plant *</label>
+        <div class="customInput" (click)="name.focus()">
+          <input type="text" matInput placeholder="Name" id="name" #name formControlName="name">
+          <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('name').value" matSuffix aria-label="Clear" (click)="addForm.get('name').setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="addForm.get('name').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+        </div>
+      </div>
+      <!----------------------->
+      <!-- address -->
+      <div class="col-12 col-sm-7 col-md-6 formItem">
+        <label for="addressWrapper" class="inputLabel">Address *</label>
+        <div class="customInput" (click)="address.focus()">
+          <input type="text" google-place  matInput placeholder="Address (search with google)" id="addressWrapper" #address formControlName="address" autocomplete="off" (onSelect)="patchAddress()">
+          <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('address').value" matSuffix aria-label="Clear" (click)="addForm.get('address').setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="addForm.get('address').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+        </div>
+      </div>
+      <!----------------------->
+      <!-- GRAIN WEEK -->
+      <div class="col-12 col-md-3 grainCheckContainer">
+        <mat-checkbox color="primary" class="grainCheck" formControlName="grainWeek"></mat-checkbox>
+        <p class="tableText checkText">Assign grain weeks.</p>
+      </div>
+    </div>
+  </form>
+  <!----------------------->
+  <!-- schedules -->
+  <div class="row">
+    <div class="col-12 col-md-7 col-lg-6">
+      <!----------------------->
+      <!-- plant schedule -->
+      <form [formGroup]="scheduleForm">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="orangeText margt5">Plant schedule</h2>
+          </div>
+          <!----------------------->
+          <!-- start hour -->
+          <div class="col-6 col-sm-4 formItem">
+            <label for="startHour" class="inputLabel">Start hour</label>
+            <mat-select class="customInput" placeholder="Start hour" id="startHour" #startHour formControlName="startHour">
+              <mat-option disabled>Select one hour</mat-option>
+              <mat-option *ngFor="let hour of hourOptions" [value]="hour">{{ hour }}</mat-option>
+            </mat-select>
+          </div>
+          <!----------------------->
+          <!-- end hour -->
+          <div class="col-6 col-sm-4 formItem">
+            <label for="endHour" class="inputLabel">End hour</label>
+            <mat-select class="customInput" placeholder="End hour" id="endHour" #endHour formControlName="endHour">
+              <mat-option disabled>Select one hour</mat-option>
+              <mat-option *ngFor="let hour of hourOptions" [value]="hour">{{ hour }}</mat-option>
+            </mat-select>
+          </div>
+          <!----------------------->
+          <!-- days picker -->
+          <div class="col-12 col-sm-4 formItem">
+            <label for="daysPicker" class="inputLabel">Working days</label>
+            <mat-select class="customInput" placeholder="Working days" id="daysPicker" #daysPicker formControlName="days" multiple>
+              <mat-select-trigger>
+                {{scheduleForm.get('days').value}}
+              </mat-select-trigger>
+              <mat-option disabled>Select multiple days</mat-option>
+              <mat-option value="Mo" class="rateOption">
+                <p class="starsWrapper">
+                  Monday
+                </p>
+              </mat-option>
+              <mat-option value="Tu">
+                <p class="starsWrapper">
+                  Tuesday
+                </p>
+              </mat-option>
+              <mat-option value="We">
+                <p class="starsWrapper">
+                  Wednesday
+                </p>
+              </mat-option>
+              <mat-option value="Th">
+                <p class="starsWrapper">
+                  Thursday
+                </p>
+              </mat-option>
+              <mat-option value="Fr">
+                <p class="starsWrapper">
+                  Friday
+                </p>
+              </mat-option>
+              <mat-option value="Sa">
+                <p class="starsWrapper">
+                  Saturday
+                </p>
+              </mat-option>
+              <mat-option value="Su">
+                <p class="starsWrapper">
+                  Sunday
+                </p>
+              </mat-option>
+            </mat-select>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-12 col-md-5 col-lg-6">
+      <!----------------------->
+      <!-- employees schedule -->
+        <div class="row">
+          <div class="col-12">
+            <h2 class="orangeText margt5">Employees</h2>
+          </div>
+          <div class="col-12 employeeCol">
+            <p class="margt21 fullWidth textCenter">{{employeesData.length}} employee(s)</p>
+            <button class="orangeButton margt21 employeeButton" matRipple type="button" (click)="newEmployee()">
+              <mat-icon class="showOnSmall marg0">add_circle_outline</mat-icon>
+              <span class="hideUntilMedium">Add employee</span>
+            </button>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="col-12 customButtonsRow">
+    <mat-table class="personalizedTable" [dataSource]="dataSource" matSort>
+      <!-------------------------->
+      <!-- employee -->
+      <ng-container cdkColumnDef="employee">
+        <mat-header-cell *cdkHeaderCellDef class="employeeCell headerCell" > EMPLOYEE/POS. </mat-header-cell>
+        <mat-cell *cdkCellDef="let row" class="padd0 employeeCell" [matTooltip]="((row.name ? row.name : 'N/A') + ' - ' + (row.position ? row.position : 'N/A'))" matTooltipPosition="above">
+          <div class="cellPadding">
+            <p class="cut-text tableText">
+              {{ row.name ? row.name : 'N/A'}} - {{row.position ? row.position : 'N/A'}}
+            </p>
+          </div>
+        </mat-cell>
+      </ng-container>
+      <!------------------------->
+      <!-- monday -->
+      <ng-container cdkColumnDef="monday">
+        <mat-header-cell *cdkHeaderCellDef class="headerCell" > MONDAY </mat-header-cell>
+        <mat-cell *cdkCellDef="let row; let i = index">
+          <div class="cellPadding">
+            {{ row.Mo ? row.Mo.startHour + ' - ' + row.Mo.endHour: 'N/A' }}
+          </div>
+        </mat-cell>
+      </ng-container>
+      <!------------------------->
+      <!-- tuesday -->
+      <ng-container cdkColumnDef="tuesday">
+        <mat-header-cell *cdkHeaderCellDef class="headerCell" > TUESDAY </mat-header-cell>
+        <mat-cell *cdkCellDef="let row; let i = index">
+          <div class="cellPadding">
+            {{ row.Tu ? row.Tu.startHour + ' - ' + row.Tu.endHour: 'N/A' }}
+          </div>
+        </mat-cell>
+      </ng-container>
+      <!------------------------->
+      <!-- wednesday -->
+      <ng-container cdkColumnDef="wednesday">
+        <mat-header-cell *cdkHeaderCellDef class="headerCell" > WEDNESDAY </mat-header-cell>
+        <mat-cell *cdkCellDef="let row; let i = index">
+          <div class="cellPadding">
+            {{ row.We ? row.We.startHour + ' - ' + row.We.endHour: 'N/A' }}
+          </div>
+        </mat-cell>
+      </ng-container>
+      <!------------------------->
+      <!-- thursday -->
+      <ng-container cdkColumnDef="thursday">
+        <mat-header-cell *cdkHeaderCellDef class="headerCell" > THURSDAY </mat-header-cell>
+        <mat-cell *cdkCellDef="let row; let i = index">
+          <div class="cellPadding">
+            {{ row.Th ? row.Th.startHour + ' - ' + row.Th.endHour: 'N/A' }}
+          </div>
+        </mat-cell>
+      </ng-container>
+      <!------------------------->
+      <!-- friday -->
+      <ng-container cdkColumnDef="friday">
+        <mat-header-cell *cdkHeaderCellDef class="headerCell" > FRIDAY </mat-header-cell>
+        <mat-cell *cdkCellDef="let row; let i = index">
+          <div class="cellPadding">
+            {{ row.Fr ? row.Fr.startHour + ' - ' + row.Fr.endHour: 'N/A' }}
+          </div>
+        </mat-cell>
+      </ng-container>
+      <!------------------------->
+      <!-- saturday -->
+      <ng-container cdkColumnDef="saturday">
+        <mat-header-cell *cdkHeaderCellDef class="headerCell" > SATURDAY </mat-header-cell>
+        <mat-cell *cdkCellDef="let row; let i = index">
+          <div class="cellPadding">
+            {{ row.Sa ? row.Sa.startHour + ' - ' + row.Sa.endHour: 'N/A' }}
+          </div>
+        </mat-cell>
+      </ng-container>
+      <!------------------------->
+      <!-- sunday -->
+      <ng-container cdkColumnDef="sunday">
+        <mat-header-cell *cdkHeaderCellDef class="headerCell" > SUNDAY </mat-header-cell>
+        <mat-cell *cdkCellDef="let row; let i = index" class="lastCell">
+          <div class="cellPadding">
+            {{ row.Su ? row.Su.startHour + ' - ' + row.Su.endHour: 'N/A' }}
+          </div>
+        </mat-cell>
+      </ng-container>
+      <!----------------------->
+      <!-- button -->
+      <ng-container cdkColumnDef="button">
+        <mat-header-cell *cdkHeaderCellDef   class="buttonCell"></mat-header-cell>
+        <mat-cell *cdkCellDef="let row; let i = index;" class="buttonCell">
+          <button type="button" class="whiteButton" matRipple (click)="openEmployee(row)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+      <mat-row *cdkRowDef="let row; columns: displayedColumns; let i = index;"></mat-row>
+    </mat-table>
+  </div>
+</div>

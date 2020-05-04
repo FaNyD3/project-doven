@@ -1,0 +1,351 @@
+::ng-deep .mat-select-panel mat-option {
+    font-size: 13px !important;
+    height: 35px !important;
+    border-bottom: 1px solid lightgray !important;
+}
+
+.clientsCard {
+    max-height: calc(100vh - 250px);
+    transition: all .27s;
+    overflow-x: auto !important;
+}
+
+.compressedCard {
+    max-height: calc(100vh - 530px) !important;
+}
+
+@media only screen and (max-width: 960px) {
+    .clientsCard {
+        max-height: calc(100vh - 275px);
+    }
+    .compressedCard {
+        max-height: calc(100vh - 540px) !important;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .compressedCard {
+        max-height: calc(100vh - 630px) !important;
+    }
+}
+
+@media only screen and (min-width: 961px) {
+    .clientsCard {
+        max-height: calc(100vh - 225px) !important;
+    }
+}
+
+
+/* ------------- */
+
+
+/* pop up (modal) menus */
+
+::ng-deep .mat-menu-content {
+    padding: 0 !important;
+}
+
+::ng-deep .mat-menu-panel {
+    margin-top: 3px !important;
+}
+
+.popUpTag {
+    width: 200px;
+    border-bottom: 1px solid lightgray;
+    height: 32px !important;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    padding: 0 15px;
+}
+
+.tagsIcon {
+    font-size: 16px !important;
+    height: 16px !important;
+    margin-right: 5px !important;
+    color: var(--blue);
+}
+
+.mat-horizontal-content-container {
+    padding: 0 !important;
+}
+
+.tagFilterWrapper {
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.addTagFilter {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    height: 33px;
+    width: 33px;
+    min-width: 33px;
+    background: #FFFFFF;
+    border: none;
+    border-left: 1px solid #E5E5E5 !important;
+    mat-icon {
+        width: 18px !important;
+        height: 18px !important;
+        font-size: 18px !important;
+    }
+}
+
+.addressIcon {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    height: 33px;
+    width: 33px;
+    min-width: 33px;
+    background: #FFFFFF;
+    border: none;
+    mat-icon {
+        width: 18px !important;
+        height: 18px !important;
+        font-size: 18px !important;
+    }
+}
+
+.filterTagItem {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.rateOption {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+}
+
+.starFilterIcon {
+    margin-right: 0 !important;
+    font-size: 18px;
+    height: 18px;
+    text-align: center;
+}
+
+.starsWrapper {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background: var(--orange) !important;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background: var(--orange) !important;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background: rgba(247, 107, 28, .54) !important;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background: var(--orange) !important;
+}
+
+.starData {
+    width: 23px;
+    min-width: 23px;
+    height: 20px;
+    border: none;
+    padding: 0;
+    color: var(--blue) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    font-size: 14px !important;
+}
+
+.starData mat-icon {
+    margin: 0 !important;
+    color: var(--orange) !important;
+    font-size: 12px;
+    height: 16px !important;
+    width: 10px;
+}
+
+mat-expansion-panel {
+    background-color: #f9f9f9 !important;
+    box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.07) !important;
+    border-radius: 2px !important;
+}
+
+mat-expansion-panel:hover {
+    background-color: #f9f9f9 !important;
+}
+
+mat-expansion-panel-header {
+    padding: 0 15px !important;
+}
+
+mat-expansion-panel-header:hover {
+    background-color: #f9f9f9 !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+    padding: 0 15px 5px 15px !important;
+}
+
+.fixWidthBug {
+    flex: 100% !important;
+}
+
+.expansionPanel {
+    margin-bottom: 20px !important;
+    width: 100%;
+}
+
+@media only screen and (max-width: 960px) {
+    .expansionPanel {
+        margin-bottom: 10px !important;
+    }
+}
+
+.expansionFixer {
+    box-sizing: border-box !important;
+}
+
+.closeExpansionButton {
+    width: 100%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.tableTypeIcon {
+    font-size: 16px !important;
+    text-align: center !important;
+    height: 16px !important;
+    width: 16px;
+}
+
+.loadProgress {
+    width: 100%;
+    height: 5px;
+}
+
+.loaderWrapper {
+    height: 5px;
+    width: 100%;
+}
+
+.expandedRow,
+.clientDetailCell {
+    min-height: 145px !important;
+    height: 145px !important;
+    width: 100%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 575px) {
+    .expandedRow,
+    .clientDetailCell {
+        min-height: 230px !important;
+        height: 230px !important;
+    }
+}
+
+.expandedItem {
+    padding: 5px 15px;
+}
+
+::ng-deep .mat-paginator-range-label {
+    margin: 0 10px 0 0px !important;
+}
+
+@media only screen and (max-width: 600px) {
+     ::ng-deep .mat-paginator-range-label {
+        margin: 0 10px 0 0px !important;
+    }
+     ::ng-deep .mat-paginator-container {
+        padding: 0 !important;
+    }
+}
+
+::ng-deep .mat-autocomplete-panel {
+    min-width: 230px !important;
+}
+
+::ng-deep .mat-autocomplete-panel mat-option {
+    min-width: 230px !important;
+    font-size: 13px !important;
+    height: 35px !important;
+    border-bottom: 1px solid lightgray !important;
+}
+
+.autoInput {
+    height: 100%;
+    padding: 0 10px;
+}
+
+.buyerContainer {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.branchesCircleContainer {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-end;
+}
+
+.branchCircle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-left: 2px;
+}
+
+.productRightContainer {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-end;
+}
+
+.eTopButton {
+    width: 30.33%;
+}
+
+.topButton {
+    width: 48%;
+}
+
+.topButtonsContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+
+/*horizontal scroll*/
+
+
+/*
+.mat-row,
+.mat-header-row {
+    min-width: 2800px;
+    width: 100%;
+}
+*/

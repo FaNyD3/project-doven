@@ -1,0 +1,1076 @@
+<!----------------------->
+<!-- page container -->
+<div class="container-fluid fullHeight">
+    <!----------------------->
+    <!-- actions row -->
+    <div class="row">
+        <div class="col-12 col-sm-4 col-md-6 col-xl-8 pageTitleCell clientsFormItem2">
+            <h2 class="blueText">Pilots</h2>
+        </div>
+        <!----------------------->
+        <div class="col-6 col-sm-4 col-md-3 col-xl-2 clientsFormItem" *ngIf="editAccess">
+            <button type="button" class="grayButton fullWidth" matRipple (click)="resetFilters()">
+          <mat-icon class="marg0">clear</mat-icon>
+          <p class="showOnlySmall">Filtros</p>
+          <p class="hideUntilMedium editTopButton">Filtros</p>
+        </button>
+        </div>
+
+        <div class="col-6 col-sm-4 col-md-3 col-xl-2 clientsFormItem" *ngIf="editAccess">
+            <button type="button" class="blueButton  fullWidth" matRipple (click)="newPilot()" #newClientButton *ngIf="editAccess">
+          <mat-icon>add_circle_outline</mat-icon>
+          <p class="showOnlySmall eTopButton">New Pilot</p>
+          <p class="hideUntilMedium">New </p>
+        </button>
+        </div>
+
+        <!-- products filter -->
+
+        <!--
+      <div class="col-6 col-md-2 clientsFormItem tagFilterWrapper" *ngIf="showOnLarge">
+        <div class="customSelectContainer customAutoInputContainer fullWidth">
+          <input type="text" class="autoCompleteInput" matInput placeholder="Products" id="productsWrapper" #productsWrapper [formControl]="products" [matAutocomplete]="autoProduct">
+          <button type="button" class="searchbarSuffix fsize22" *ngIf="products.value" matSuffix aria-label="Clear" (click)="products.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-autocomplete #autoProduct="matAutocomplete" [displayWith]="displayFn">
+            <mat-option disabled>Select one product</mat-option>
+            <mat-option *ngFor="let product of (productOptions | async)" [value]="product">
+              <div class="buyerContainer">
+                <p>{{product.name}}</p>
+                <div class="branchesCircleContainer">
+                  <div class="branchCircle" [style.background-color]="product.color"></div>
+                </div>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
+          <button type="button" class="addTagFilter" matRipple (click)="addProduct()">
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+          <button type="button" class="addTagFilter" matRipple [matMenuTriggerFor]="productModal2">
+            <mat-icon>{{'filter_' + (filterProducts.length > 0 ? (filterProducts.length <= 9 ? filterProducts.length : '9_plus') : 'none')}}</mat-icon>
+          </button>
+        </div>
+      </div>
+      -->
+        <!----------------------->
+        <!-- popoup filter products -->
+        <!--
+      <mat-menu #productModal2="matMenu">
+        <p class="popUpTag orangeText">
+          Filtered products
+        </p>
+        <p class="popUpTag popUpMenuText filterTagItem" *ngIf="filterProducts.length === 0">Has no filter products </p>
+        <div class="popUpTag popUpMenuText filterTagItem" *ngFor="let product of filterProducts">
+          <span>{{product.name}}</span>
+          <div class="productRightContainer">
+            <div class="branchesCircleContainer">
+              <div class="branchCircle" [style.background-color]="product.color"></div>
+            </div>
+            <button type="button" class="menuItemClose fsize22" matSuffix aria-label="Clear" (click)="removeProduct(product)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-menu>
+      -->
+        <!----------------------->
+        <!-- buyers filter -->
+        <!--
+      <div class="col-6 col-md-2 clientsFormItem tagFilterWrapper" *ngIf="showOnLarge">
+        <div class="customSelectContainer customAutoInputContainer fullWidth">
+          <input type="text" class="autoCompleteInput" matInput placeholder="Buyers" id="buyersWrapper" #buyersWrapper [formControl]="buyers" [matAutocomplete]="autoBuyer">
+          <button type="button" class="searchbarSuffix fsize22" *ngIf="buyers.value" matSuffix aria-label="Clear" (click)="buyers.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-autocomplete #autoBuyer="matAutocomplete" [displayWith]="displayFn">
+            <mat-option disabled>Select one buyer</mat-option>
+            <mat-option *ngFor="let buyer of (buyerOptions | async)" [value]="buyer">
+              <div class="buyerContainer">
+                <p>{{buyer.name}}</p>
+                <div class="branchesCircleContainer">
+                  <div class="branchCircle" *ngFor="let branch of buyer.branches"
+                       [style.background-color]="branch.color"
+                       [matTooltip]="branch.name"
+                       matTooltipPosition="above">
+                  </div>
+                  <p *ngIf="buyer.role === 'generalAdmin'" matTooltip="Admin" matTooltipPosition="above">A</p>
+                </div>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
+          <button type="button" class="addTagFilter" matRipple (click)="addBuyer()">
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+          <button type="button" class="addTagFilter" matRipple [matMenuTriggerFor]="buyerModal2">
+            <mat-icon>{{'filter_' + (filterBuyers.length > 0 ? (filterBuyers.length <= 9 ? filterBuyers.length : '9_plus') : 'none')}}</mat-icon>
+          </button>
+        </div>
+      </div>
+      -->
+        <!----------------------->
+        <!-- popoup filter buyers -->
+
+        <!--
+      <mat-menu #buyerModal2="matMenu">
+        <p class="popUpTag orangeText">
+          Filtered buyers
+        </p>
+        <p class="popUpTag popUpMenuText filterTagItem" *ngIf="filterBuyers.length === 0">Has no filter buyers </p>
+        <p class="popUpTag popUpMenuText filterTagItem" *ngFor="let buyer of filterBuyers">
+          <span>{{buyer.name}}</span>
+          <button type="button" class="menuItemClose fsize22" matSuffix aria-label="Clear" (click)="removeBuyer(buyer)">
+            <mat-icon>close</mat-icon>
+          </button>
+        </p>
+      </mat-menu>
+      <!----------------------->
+        <!-- groups filter -->
+        <!--
+      <div class="col-2 clientsFormItem" *ngIf="showOnLarge">
+        <div class="customSelectContainer customAutoInputContainer fullWidth">
+          <input type="text" class="autoCompleteInput" matInput placeholder="Groups" id="groupsWrapper2" #groupsWrapper2 [formControl]="groups" [matAutocomplete]="autoGroups2">
+          <button type="button" class="searchbarSuffix fsize22" *ngIf="groups.value" matSuffix aria-label="Clear" (click)="groups.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-autocomplete #autoGroups2="matAutocomplete" [displayWith]="displayFn">
+            <mat-option disabled>Select one group</mat-option>
+            <mat-option *ngFor="let group of (groupOptions | async)" [value]="group">
+              <div class="buyerContainer">
+                <p>{{group.name}}</p>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
+          <button type="button" class="addTagFilter" matRipple (click)="addGroup()">
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+          <button type="button" class="addTagFilter" matRipple [matMenuTriggerFor]="groupModal2">
+            <mat-icon>{{'filter_' + (filterGroups.length > 0 ? (filterGroups.length <= 9 ? filterGroups.length : '9_plus') : 'none')}}</mat-icon>
+          </button>
+        </div>
+      </div>
+      -->
+        <!----------------------->
+        <!-- popoup filter groups -->
+
+        <!--
+      <mat-menu #groupModal2="matMenu">
+        <p class="popUpTag orangeText">
+          Filtered groups
+        </p>
+        <p class="popUpTag popUpMenuText filterTagItem" *ngIf="filterGroups.length === 0">Has no filter groups </p>
+        <p class="popUpTag popUpMenuText filterTagItem" *ngFor="let group of filterGroups">
+          <span>{{group.name}}</span>
+          <button type="button" class="menuItemClose fsize22" matSuffix aria-label="Clear" (click)="removeGroup(group)">
+            <mat-icon>close</mat-icon>
+          </button>
+        </p>
+      </mat-menu>
+      -->
+
+        <!--
+      <div class="col-12 col-md-6 clientsFormItem" *ngIf="showOnLarge">
+        <div class="topButtonsContainer">
+          <div class="eTopButton" *ngIf="!editAccess"></div>
+          <button type="button" class="grayButton fullWidth eTopButton" matRipple (click)="resetFilters()">
+            <mat-icon class="marg0">clear</mat-icon>
+            <p class="showOnlySmall">Filtros</p>
+            <p class="hideUntilMedium editTopButton">Filtros</p>
+          </button>
+  
+          <div class="viewMapContainer eTopButton" matRipple>
+            <mat-icon>location_searching</mat-icon>
+            <p class="showOnlySmall">Prueba</p>
+            <p class="hideUntilMedium">Prueba</p>
+          </div>
+  
+          <button type="button" class="blueButton  eTopButton" matRipple (click)="newClient()" #newClientButton *ngIf="editAccess">
+            <mat-icon>add_circle_outline</mat-icon>
+            <p class="showOnlySmall eTopButton">Nuevo Socio</p>
+            <p class="hideUntilMedium">Nuevo Socio</p>
+          </button>
+        </div>
+      </div>
+      -->
+
+        <div class="col-9 clientsFormItem" *ngIf="false">
+            <div class="topButtonsContainer">
+                <div class="eTopButton" *ngIf="!editAccess"></div>
+                <button type="button" class="grayButton fullWidth eTopButton" matRipple (click)="resetFilters()">
+            <mat-icon class="marg0">clear</mat-icon>
+            <p class="showOnlySmall">Filtros</p>
+            <p class="hideUntilMedium editTopButton">Filtros</p>
+          </button>
+                <!--
+          <div class="viewMapContainer eTopButton" matRipple (click)="openMapView()">
+            <mat-icon>location_searching</mat-icon>
+            <p class="showOnlySmall">Map</p>
+            <p class="hideUntilMedium">Map</p>
+          </div>
+          -->
+                <button type="button" class="blueButton eTopButton" matRipple (click)="newPilot()" #newClientButton *ngIf="editAccess">
+            <mat-icon>add_circle_outline</mat-icon>
+            <p class="showOnlySmall eTopButton">New</p>
+            <p class="hideUntilMedium">New</p>
+          </button>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- space if !usersAccess -->
+        <!--<div class="col-12 col-sm-4 col-md-3 col-lg-3" *ngIf="!editAccess"></div>-->
+        <!----------------------->
+        <!-- map view -->
+        <!--<div class="col-3 col-md-2 col-lg-2 clientsFormItem" >
+  
+      </div>-->
+        <!----------------------->
+        <!-- import user button -->
+        <!--<div class="col-3 col-md-3 clientsFormItem disabledCursor" *ngIf="!editAccess">
+        <div class="viewMapContainer" matRipple>
+          <mat-icon>import_export</mat-icon>
+          <p class="showOnSmall">Import</p>
+          <p class="hideOnSmall">Import users</p>
+        </div>
+      </div>
+      <div class="col-3 col-md-2 col-lg-2 clientsFormItem disabledCursor" *ngIf="editAccess" #importButton>
+        <div class="viewMapContainer" matRipple>
+          <mat-icon>import_export</mat-icon>
+          <p class="showOnlySmall">Import</p>
+          <p class="hideUntilMedium">Import users</p>
+        </div>
+      </div>-->
+        <!----------------------->
+        <!-- new client button -->
+        <!--<div class="col-3 col-md-2 col-lg-2 clientsFormItem" *ngIf="editAccess" #newClientButton>
+  
+      </div>-->
+    </div>
+    <!----------------------->
+    <!-- filters row -->
+    <div class="row" *ngIf="showOnLarge">
+        <!-- tags filter -->
+        <div class="col-6 col-md-3 clientsFormItem tagFilterWrapper" *ngIf="showOnLarge">
+            <div class="customSelectContainer customAutoInputContainer fullWidth">
+                <input type="text" matInput placeholder="Tags" id="tagsWrapper" #tagsWrapper [formControl]="tags" class="autoCompleteInput">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="tags.value" matSuffix aria-label="Clear" (click)="tags.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+                <button type="button" class="addTagFilter" matRipple (click)="addTag()">
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+                <button type="button" class="addTagFilter" matRipple [matMenuTriggerFor]="tagModal2">
+            <mat-icon>{{'filter_' + (filterTags.length > 0 ? (filterTags.length <= 9 ? filterTags.length : '9_plus') : 'none')}}</mat-icon>
+          </button>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- popoup filter tags -->
+
+        <mat-menu #tagModal2="matMenu">
+            <p class="popUpTag blueText">
+                Tags filtradas
+            </p>
+            <p class="popUpTag popUpMenuText filterTagItem" *ngIf="filterTags.length === 0">No tiene tags filtradas </p>
+            <p class="popUpTag popUpMenuText filterTagItem" *ngFor="let tag of filterTags">
+                <span>{{tag}}</span>
+                <button type="button" class="menuItemClose fsize22" matSuffix aria-label="Clear" (click)="removeTag(tag)">
+            <mat-icon>close</mat-icon>
+          </button>
+            </p>
+        </mat-menu>
+
+        <!----------------------->
+        <!----------------------->
+        <!-- filter category -->
+        <div class="col-6 col-md-3 col-xl-3 clientsFormItem">
+            <div class="customSelectContainer" matRipple (click)="categoriesWrapper.open()">
+                <mat-select placeholder="Type" class="customSelect" #categoriesWrapper [formControl]="categories" (selectionChange)="this.loadTableData(this.searchbar.value, this.categories.value, $event.value, this.rate.value, true, this.sort)" multiple>
+                    <mat-select-trigger>
+                        <mat-icon class="selectIconTrigger" *ngIf="validateCategory(categories.value, 'Primer Oficial')">spa</mat-icon>
+                        <mat-icon class="selectIconTrigger" *ngIf="validateCategory(categories.value, 'Capitan')">record_voice_over</mat-icon>
+                    </mat-select-trigger>
+                    <mat-option disabled>Selecciona un Type</mat-option>
+                    <mat-option value="Primer Oficial">
+                        <mat-icon class="selectIcon">spa</mat-icon>
+                        Primer Oficiales
+                    </mat-option>
+                    <mat-option value="Capitan">
+                        <mat-icon class="selectIcon">record_voice_over</mat-icon>
+                        Capitanes
+                    </mat-option>
+                    <!--
+            <mat-option value="elevator">
+              <mat-icon class="selectIcon">directions_railway</mat-icon>
+              Mujeres
+            </mat-option>
+            <mat-option value="cleaning">
+              <mat-icon class="selectIcon">view_week</mat-icon>
+              Cleaning Plant
+            </mat-option>
+            -->
+                </mat-select>
+                <mat-icon class="customSelectIcon">tune</mat-icon>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- filter rate -->
+        <div class="col-6 col-md-3 col-xl-3 clientsFormItem">
+            <div class="customSelectContainer" matRipple (click)="rateWrapper.open()">
+                <mat-select placeholder="Calificacion" class="customSelect" #rateWrapper [formControl]="rate" (selectionChange)="this.loadTableData(this.searchbar.value, this.categories.value, $event.value, true, this.sort)" multiple>
+                    <mat-select-trigger>
+                        {{rate.value}}
+                    </mat-select-trigger>
+                    <mat-option disabled>Selecciona multiples calificaciones</mat-option>
+                    <mat-option value="0" class="rateOption">
+                        <p class="starsWrapper">
+                            <mat-icon class="starFilterIcon">star_border</mat-icon>
+                            <mat-icon class="starFilterIcon">star_border</mat-icon>
+                            <mat-icon class="starFilterIcon">star_border</mat-icon>
+                            <mat-icon class="starFilterIcon">star_border</mat-icon>
+                            <mat-icon class="starFilterIcon">star_border</mat-icon>
+                        </p>
+                    </mat-option>
+                    <mat-option value="1">
+                        <p class="starsWrapper">
+                            <mat-icon class="starFilterIcon">star</mat-icon>
+                            <mat-icon class="starFilterIcon">star_border</mat-icon>
+                            <mat-icon class="starFilterIcon">star_border</mat-icon>
+                            <mat-icon class="starFilterIcon">star_border</mat-icon>
+                            <mat-icon class="starFilterIcon">star_border</mat-icon>
+                        </p>
+                    </mat-option>
+                    <mat-option value="2">
+                        <p class="starsWrapper">
+                            <mat-icon class="starFilterIcon">star</mat-icon>
+                            <mat-icon class="starFilterIcon">star</mat-icon>
+                            <mat-icon class="starFilterIcon">star_border</mat-icon>
+                            <mat-icon class="starFilterIcon">star_border</mat-icon>
+                            <mat-icon class="starFilterIcon">star_border</mat-icon>
+                        </p>
+                    </mat-option>
+                    <mat-option value="3">
+                        <p class="starsWrapper">
+                            <mat-icon class="starFilterIcon">star</mat-icon>
+                            <mat-icon class="starFilterIcon">star</mat-icon>
+                            <mat-icon class="starFilterIcon">star</mat-icon>
+                            <mat-icon class="starFilterIcon">star_border</mat-icon>
+                            <mat-icon class="starFilterIcon">star_border</mat-icon>
+                        </p>
+                    </mat-option>
+                    <mat-option value="4">
+                        <p class="starsWrapper">
+                            <mat-icon class="starFilterIcon">star</mat-icon>
+                            <mat-icon class="starFilterIcon">star</mat-icon>
+                            <mat-icon class="starFilterIcon">star</mat-icon>
+                            <mat-icon class="starFilterIcon">star</mat-icon>
+                            <mat-icon class="starFilterIcon">star_border</mat-icon>
+                        </p>
+                    </mat-option>
+                    <mat-option value="5">
+                        <p class="starsWrapper">
+                            <mat-icon class="starFilterIcon">star</mat-icon>
+                            <mat-icon class="starFilterIcon">star</mat-icon>
+                            <mat-icon class="starFilterIcon">star</mat-icon>
+                            <mat-icon class="starFilterIcon">star</mat-icon>
+                            <mat-icon class="starFilterIcon">star</mat-icon>
+                        </p>
+                    </mat-option>
+                </mat-select>
+                <mat-icon class="customSelectIcon">tune</mat-icon>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- kms filter -->
+        <!--
+      <div class="col-6 col-md-2 col-xl-2 clientsFormItem tagFilterWrapper">
+        <div class="customSelectContainer customAutoInputContainer fullWidth" (click)="kmsWrapper.focus()">
+          <input type="number" matInput placeholder="Radius (km)" id="kmsWrapper" #kmsWrapper [formControl]="kms" class="autoCompleteInput">
+          <button type="button" class="searchbarSuffix fsize22" *ngIf="kms.value" matSuffix aria-label="Clear" (click)="kms.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <button type="button" class="addTagFilter" matRipple (click)="setCircleCoords()">
+            <mat-icon>my_location</mat-icon>
+          </button>
+        </div>
+      </div>
+      -->
+        <!----------------------->
+        <!-- google adress filter (MOBILE)
+  
+      <div class="col-6 col-md-3 clientsFormItem tagFilterWrapper">
+        <div class="customSelectContainer customAutoInputContainer fullWidth" (click)="addressWrapper.focus()">
+          <input type="text" matInput placeholder="Direccion (Busca con Google)" id="addressWrapper" #addressWrapper [formControl]="address" class="autoCompleteInput" (change)="onAddressTextChange($event)">
+          <button type="button" class="searchbarSuffix fsize22" *ngIf="address.value" matSuffix aria-label="Clear" (click)="address.setValue('');this.isRegexAddress = true">
+            <mat-icon>close</mat-icon>
+          </button>
+          <div class="addressIcon" matRipple>
+            <mat-icon *ngIf="isRegexAddress">near_me</mat-icon>
+            <mat-icon *ngIf="!isRegexAddress">trip_origin</mat-icon>
+          </div>
+        </div>
+      </div>
+  
+      <!--------------->
+        <!-- searchbar -->
+        <div class="col-6 col-md-3 clientsFormItem">
+            <div class="searchbar" (click)="search.focus()">
+                <mat-icon matPrefix class="fsize22">search</mat-icon>
+                <input type="text" matInput placeholder="Buscar..." #search [formControl]="searchbar">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="searchbar.value" matSuffix aria-label="Clear" (click)="searchbar.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+            </div>
+        </div>
+    </div>
+
+    <!----------------------->
+    <!-- mobile filters expansion panel (MOBILE) -->
+    <div *ngIf="!showOnLarge">
+        <mat-expansion-panel opened="false" class="expansionPanel" #expansionPanel (click)="setExpanded()" #expansionFilters>
+            <mat-expansion-panel-header>
+                Filtros
+            </mat-expansion-panel-header>
+            <div class="row expansionFixer">
+                <!----------------------->
+                <!-- searchbar -->
+                <div class="col-12 col-sm-6 col-lg-4 clientsFormItem">
+                    <div class="searchbar" (click)="search.focus()">
+                        <mat-icon matPrefix class="fsize22">search</mat-icon>
+                        <input type="text" matInput placeholder="Buscar..." #search [formControl]="searchbar">
+                        <button type="button" class="searchbarSuffix fsize22" *ngIf="searchbar.value" matSuffix aria-label="Clear" (click)="searchbar.setValue('')">
+                <mat-icon>close</mat-icon>
+              </button>
+                    </div>
+                </div>
+                <!----------------------->
+                <!-- tags filter -->
+                <div class="col-12 col-sm-6 clientsFormItem tagFilterWrapper">
+                    <div class="customSelectContainer customAutoInputContainer fullWidth">
+                        <input type="text" matInput placeholder="Tags" id="tagsWrapper2" #tagsWrapper2 [formControl]="tags" class="autoCompleteInput">
+                        <button type="button" class="searchbarSuffix fsize22" *ngIf="tags.value" matSuffix aria-label="Clear" (click)="tags.setValue('')">
+                <mat-icon>close</mat-icon>
+              </button>
+                        <button type="button" class="addTagFilter" matRipple (click)="addTag()">
+                <mat-icon>add_circle_outline</mat-icon>
+              </button>
+                        <button type="button" class="addTagFilter" matRipple [matMenuTriggerFor]="tagModal3">
+                <mat-icon>{{'filter_' + (filterTags.length > 0 ? (filterTags.length <= 9 ? filterTags.length : '9_plus') : 'none')}}</mat-icon>
+              </button>
+                    </div>
+                </div>
+                <!----------------------->
+                <!-- popoup filter tags -->
+                <mat-menu #tagModal3="matMenu">
+                    <p class="popUpTag blueText">
+                        Tags filtradas
+                    </p>
+                    <p class="popUpTag popUpMenuText filterTagItem" *ngIf="filterTags.length === 0">No tiene tags filtradas </p>
+                    <p class="popUpTag popUpMenuText filterTagItem" *ngFor="let tag of filterTags">
+                        <span>{{tag}}</span>
+                        <button type="button" class="menuItemClose fsize22" matSuffix aria-label="Clear" (click)="removeTag(tag)">
+                <mat-icon>close</mat-icon>
+              </button>
+                    </p>
+                </mat-menu>
+                <!----------------------->
+                <!-- products filter -->
+                <!--
+          <div class="col-12 col-sm-6 clientsFormItem tagFilterWrapper">
+            <div class="customSelectContainer customAutoInputContainer fullWidth">
+              <input type="text" class="autoCompleteInput" matInput placeholder="Products" id="productsWrapper2" #productsWrapper2 [formControl]="products" [matAutocomplete]="autoProduct2">
+              <button type="button" class="searchbarSuffix fsize22" *ngIf="products.value" matSuffix aria-label="Clear" (click)="products.setValue('')">
+                <mat-icon>close</mat-icon>
+              </button>
+              <mat-autocomplete #autoProduct2="matAutocomplete" [displayWith]="displayFn">
+                <mat-option disabled>Select one product</mat-option>
+                <mat-option *ngFor="let product of (productOptions | async)" [value]="product">
+                  <div class="buyerContainer">
+                    <p>{{product.name}}</p>
+                  </div>
+                </mat-option>
+              </mat-autocomplete>
+              <button type="button" class="addTagFilter" matRipple (click)="addProduct()">
+                <mat-icon>add_circle_outline</mat-icon>
+              </button>
+              <button type="button" class="addTagFilter" matRipple [matMenuTriggerFor]="productModal">
+                <mat-icon>{{'filter_' + (filterProducts.length > 0 ? (filterProducts.length <= 9 ? filterProducts.length : '9_plus') : 'none')}}</mat-icon>
+              </button>
+            </div>
+          </div>
+          -->
+                <!----------------------->
+                <!-- popoup filter products -->
+                <!--
+          <mat-menu #productModal="matMenu">
+            <p class="popUpTag orangeText">
+              Filtered products
+            </p>
+            <p class="popUpTag popUpMenuText filterTagItem" *ngIf="filterProducts.length === 0">Has no filter products </p>
+            <p class="popUpTag popUpMenuText filterTagItem" *ngFor="let product of filterProducts">
+              <span>{{product.name}}</span>
+              <button type="button" class="menuItemClose fsize22" matSuffix aria-label="Clear" (click)="removeProduct(product)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </p>
+          </mat-menu>
+          -->
+                <!----------------------->
+                <!-- buyers filter -->
+                <!--
+          <div class="col-12 col-sm-6 clientsFormItem tagFilterWrapper">
+            <div class="customSelectContainer customAutoInputContainer fullWidth">
+              <input type="text" class="autoCompleteInput" matInput placeholder="Buyers" id="buyersWrapper2" #buyersWrapper2 [formControl]="buyers" [matAutocomplete]="autoBuyer2">
+              <button type="button" class="searchbarSuffix fsize22" *ngIf="buyers.value" matSuffix aria-label="Clear" (click)="buyers.setValue('')">
+                <mat-icon>close</mat-icon>
+              </button>
+              <mat-autocomplete #autoBuyer2="matAutocomplete" [displayWith]="displayFn">
+                <mat-option disabled>Select one buyer</mat-option>
+                <mat-option *ngFor="let buyer of (buyerOptions | async)" [value]="buyer">
+                  <div class="buyerContainer">
+                    <p>{{buyer.name}}</p>
+                    <div class="branchesCircleContainer">
+                      <div class="branchCircle" *ngFor="let branch of buyer.branches"
+                           [style.background-color]="branch.color"
+                           [matTooltip]="branch.name"
+                           matTooltipPosition="above">
+                      </div>
+                      <p *ngIf="buyer.role === 'generalAdmin'" matTooltip="Admin" matTooltipPosition="above">A</p>
+                    </div>
+                  </div>
+                </mat-option>
+              </mat-autocomplete>
+              <button type="button" class="addTagFilter" matRipple (click)="addBuyer()">
+                <mat-icon>add_circle_outline</mat-icon>
+              </button>
+              <button type="button" class="addTagFilter" matRipple [matMenuTriggerFor]="buyerModal">
+                <mat-icon>{{'filter_' + (filterBuyers.length > 0 ? (filterBuyers.length <= 9 ? filterBuyers.length : '9_plus') : 'none')}}</mat-icon>
+              </button>
+            </div>
+          </div>
+          -->
+                <!----------------------->
+                <!-- popoup filter buyers -->
+                <!--
+          <mat-menu #buyerModal="matMenu">
+            <p class="popUpTag orangeText">
+              Filtered buyers
+            </p>
+            <p class="popUpTag popUpMenuText filterTagItem" *ngIf="filterBuyers.length === 0">Has no filter buyers </p>
+            <p class="popUpTag popUpMenuText filterTagItem" *ngFor="let buyer of filterBuyers">
+              <span>{{buyer.name}}</span>
+              <button type="button" class="menuItemClose fsize22" matSuffix aria-label="Clear" (click)="removeBuyer(buyer)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </p>
+          </mat-menu>
+          -->
+                <!----------------------->
+                <!-- filter category -->
+                <div class="col-6 col-sm-6 clientsFormItem">
+                    <div class="customSelectContainer" matRipple (click)="categoriesWrapper.open()">
+                        <mat-select placeholder="Type" class="customSelect" #categoriesWrapper multiple [formControl]="categories" (selectionChange)="this.loadTableData(this.searchbar.value, this.categories.value, $event.value, this.rate.value, true, this.sort)" multiple>
+                            <mat-select-trigger class="">
+                                <mat-icon class="selectIconTrigger" *ngIf="validateCategory(categories.value, 'Primer Oficial')">spa</mat-icon>
+                                <mat-icon class="selectIconTrigger" *ngIf="validateCategory(categories.value, 'Capitan')">record_voice_over</mat-icon>
+
+                            </mat-select-trigger>
+                            <mat-option disabled>Selecciona el type</mat-option>
+                            <mat-option value="Primer Oficial">
+                                <mat-icon class="selectIcon">spa</mat-icon>
+                                Primeros Oficiales
+                            </mat-option>
+                            <mat-option value="Capitan">
+                                <mat-icon class="selectIcon">record_voice_over</mat-icon>
+                                Capitanes
+                            </mat-option>
+                        </mat-select>
+                        <mat-icon class="customSelectIcon">tune</mat-icon>
+                    </div>
+                </div>
+                <!----------------------->
+                <!-- filter rate -->
+                <div class="col-6 col-sm-6 col-lg-2 clientsFormItem">
+                    <div class="customSelectContainer" matRipple (click)="rateWrapper.open()">
+                        <mat-select placeholder="Calificaciones" class="customSelect" #rateWrapper [formControl]="rate" color="primary" (selectionChange)="this.loadTableData(this.searchbar.value,this.categories.value,  $event.value, true, this.sort)" multiple>
+                            <mat-select-trigger>
+                                {{rate.value}}
+                            </mat-select-trigger>
+                            <mat-option disabled>Selecciona multiple calificaciones</mat-option>
+                            <mat-option color="primary" value=0 class="rateOption">
+                                <p class="starsWrapper">
+                                    <mat-icon class="starFilterIcon">star_border</mat-icon>
+                                    <mat-icon class="starFilterIcon">star_border</mat-icon>
+                                    <mat-icon class="starFilterIcon">star_border</mat-icon>
+                                    <mat-icon class="starFilterIcon">star_border</mat-icon>
+                                    <mat-icon class="starFilterIcon">star_border</mat-icon>
+                                </p>
+                            </mat-option>
+                            <mat-option value=1>
+                                <p class="starsWrapper">
+                                    <mat-icon class="starFilterIcon">star</mat-icon>
+                                    <mat-icon class="starFilterIcon">star_border</mat-icon>
+                                    <mat-icon class="starFilterIcon">star_border</mat-icon>
+                                    <mat-icon class="starFilterIcon">star_border</mat-icon>
+                                    <mat-icon class="starFilterIcon">star_border</mat-icon>
+                                </p>
+                            </mat-option>
+                            <mat-option value=2>
+                                <p class="starsWrapper">
+                                    <mat-icon class="starFilterIcon">star</mat-icon>
+                                    <mat-icon class="starFilterIcon">star</mat-icon>
+                                    <mat-icon class="starFilterIcon">star_border</mat-icon>
+                                    <mat-icon class="starFilterIcon">star_border</mat-icon>
+                                    <mat-icon class="starFilterIcon">star_border</mat-icon>
+                                </p>
+                            </mat-option>
+                            <mat-option value=3>
+                                <p class="starsWrapper">
+                                    <mat-icon class="starFilterIcon">star</mat-icon>
+                                    <mat-icon class="starFilterIcon">star</mat-icon>
+                                    <mat-icon class="starFilterIcon">star</mat-icon>
+                                    <mat-icon class="starFilterIcon">star_border</mat-icon>
+                                    <mat-icon class="starFilterIcon">star_border</mat-icon>
+                                </p>
+                            </mat-option>
+                            <mat-option value=4>
+                                <p class="starsWrapper">
+                                    <mat-icon class="starFilterIcon">star</mat-icon>
+                                    <mat-icon class="starFilterIcon">star</mat-icon>
+                                    <mat-icon class="starFilterIcon">star</mat-icon>
+                                    <mat-icon class="starFilterIcon">star</mat-icon>
+                                    <mat-icon class="starFilterIcon">star_border</mat-icon>
+                                </p>
+                            </mat-option>
+                            <mat-option value=5>
+                                <p class="starsWrapper">
+                                    <mat-icon class="starFilterIcon">star</mat-icon>
+                                    <mat-icon class="starFilterIcon">star</mat-icon>
+                                    <mat-icon class="starFilterIcon">star</mat-icon>
+                                    <mat-icon class="starFilterIcon">star</mat-icon>
+                                    <mat-icon class="starFilterIcon">star</mat-icon>
+                                </p>
+                            </mat-option>
+                        </mat-select>
+                        <mat-icon class="customSelectIcon">tune</mat-icon>
+                    </div>
+                </div>
+                <!----------------------->
+                <!-- google adress filter (DESKTOP) -->
+                <!--
+          <div class="col-12 clientsFormItem tagFilterWrapper">
+            <div class="customSelectContainer customAutoInputContainer fullWidth" (click)="addressWrapper2.focus()">
+              <input type="text" matInput placeholder="Address (Search with google)" google-place id="addressWrapper2" #addressWrapper2 [formControl]="address" class="autoCompleteInput" (change)="onAddressTextChange($event)">
+              <button type="button" class="searchbarSuffix fsize22" *ngIf="address.value" matSuffix aria-label="Clear" (click)="address.setValue('');this.isRegexAddress = true">
+                <mat-icon>close</mat-icon>
+              </button>
+              <div class="addressIcon">
+                <mat-icon *ngIf="isRegexAddress">near_me</mat-icon>
+                <mat-icon *ngIf="!isRegexAddress">trip_origin</mat-icon>
+              </div>
+            </div>
+          </div>
+          -->
+                <!----------------------->
+                <!-- kms filter -->
+                <!--
+          <div class="col-6 clientsFormItem tagFilterWrapper">
+            <div class="customSelectContainer customAutoInputContainer fullWidth">
+              <input type="number" matInput placeholder="Radius (km)" id="kmsWrapper2" #kmsWrapper2 [formControl]="kms" class="autoCompleteInput">
+              <button type="button" class="searchbarSuffix fsize22" *ngIf="kms.value" matSuffix aria-label="Clear" (click)="kms.setValue('')">
+                <mat-icon>close</mat-icon>
+              </button>
+              <button type="button" class="addTagFilter" matRipple (click)="setCircleCoords()">
+                <mat-icon>my_location</mat-icon>
+              </button>
+            </div>
+          </div>
+          -->
+            </div>
+            <!----------------------->
+            <!-- unexpand button -->
+            <div class="row expansionFixer">
+                <div class="col-12 closeExpansionButton" (click)="expansionPanel.close()">
+                    <mat-icon>expand_less</mat-icon>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </div>
+    <!----------------------->
+    <!-- loading bar -->
+    <!--
+    <div class="loaderWrapper">
+      <mat-progress-bar mode="indeterminate" class="loadProgress" *ngIf="(dataSource.loading$ | async) && !firstLoad"></mat-progress-bar>
+    </div>
+    -->
+    <!----------------------->
+    <!-- loading spinner -->
+
+    <div class="tableLoaderContainer" *ngIf="firstLoad">
+        <mat-spinner></mat-spinner>
+    </div>
+    <!----------------------->
+    <!-- not found container -->
+    <div #noData>
+        <!----------------------->
+        <!-- not found message -->
+        <div class="tableLoaderContainer fadeIn" *ngIf="!firstLoad">
+            <p>Informacion no encontrada</p>
+        </div>
+    </div>
+    <!----------------------->
+    <!-- data container (MOBILE) -->
+    <div #displayData class="fadeIn" *ngIf="!showBigTable">
+        <!----------------------->
+        <!-- table card -->
+        <div class="tableCard">
+            <div class="tableWrapper">
+                <div class="tableFixer clientsCard" #clientsCard>
+                    <!----------------------->
+                    <!-- table -->
+                    <mat-table class="personalizedTable" matSort [dataSource]="dataSource" multiTemplateDataRows [matSortActive]="1" [matSortDirection]="desc" (matSortChange)="loadTableData(this.searchbar.value, this.categories.value, this.rate.value, false, this.sort);">
+                        <!----------------------->
+                        <!-- check
+              <ng-container cdkColumnDef="check">
+                <mat-header-cell *cdkHeaderCellDef class="checkCell headerCell"></mat-header-cell>
+                <mat-cell *cdkCellDef="let element" [className]="'checkCell ' + element.id">
+                  <mat-checkbox color="primary" #clientCheck (change)="selectRow($event, element.id)"></mat-checkbox>
+                </mat-cell>
+              </ng-container>
+              <!----------------------->
+                        <!-- id -->
+                        <ng-container cdkColumnDef="id">
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="numberCell headerCell"> # </mat-header-cell>
+                            <mat-cell *cdkCellDef="let element" [className]="'numberCell pointer ' + element.number" (click)=" expandedElement = expandedElement !== element ? element : {};">
+                                <div class="cellPadding">
+                                    <p class="cut-text tableText">
+                                        {{ element.number }}
+                                    </p>
+                                </div>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- name -->
+                        <ng-container cdkColumnDef="name">
+                            <mat-header-cell *cdkHeaderCellDef class="headerCell" mat-sort-header> NOMBRE </mat-header-cell>
+                            <mat-cell *cdkCellDef="let element" [className]="'pointer ' + element.id" (click)=" expandedElement = expandedElement !== element ? element : {};">
+                                <div class="cellPadding">
+                                    <p class="cut-text tableText">
+                                        {{ element.name ? element.name : 'N/A' }}
+                                    </p>
+                                </div>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- category -->
+                        <ng-container cdkColumnDef="lastName">
+                            <mat-header-cell *cdkHeaderCellDef class="checkCell headerCell" mat-sort-header matTooltip="Category" matTooltipPosition="above"> STA </mat-header-cell>
+                            <mat-cell *cdkCellDef="let element" (click)=" expandedElement = expandedElement !== element ? element : {};" [className]="'checkCell pointer ' + element.id" [matTooltip]="element.category ? element.category.charAt(0).toUpperCase() + element.category.slice(1) : 'N/A'"
+                                matTooltipPosition="above">
+                                <mat-icon class="tableTypeIcon" *ngIf="element.status" matTooltip="Activo">check_circle</mat-icon>
+                                <mat-icon class="tableTypeIcon" *ngIf="!element.status" matTooltip="Inactivo">close</mat-icon>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- button -->
+                        <ng-container cdkColumnDef="button">
+                            <mat-header-cell *cdkHeaderCellDef class="threeButtonCell headerCell" mat-sort-header>CAL</mat-header-cell>
+                            <mat-cell *cdkCellDef="let element;" [className]="'threeButtonCell ' + element.id">
+                                <div class="starData tableButton">
+                                    {{element.rate ? element.rate : 0}}
+                                    <mat-icon>star</mat-icon>
+                                </div>
+                                <button type="button" class="whiteButton tableButton" matRipple (click)="details(element, element.index)">
+                      <mat-icon>list</mat-icon>
+                    </button>
+                                <button type="button" class="whiteButton" matRipple (click)="openClient(element)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+
+                            </mat-cell>
+                        </ng-container>
+                        <!-- Expanded Content Column - The detail row is made up of this one column -->
+                        <ng-container matColumnDef="expandedDetail">
+                            <mat-cell *cdkCellDef="let detail" class="clientDetailCell">
+                                <div class="row fullWidth">
+                                    <div class="col-6 col-sm-4 col-md-3 expandedItem">
+                                        <p class="cut-text inputLabel">Apellido</p>
+                                        <p class="cut-text tableText">{{ detail.lastName }}</p>
+                                    </div>
+                                    <div class="col-6 col-sm-4 col-md-3 pointer expandedItem" matRipple [matMenuTriggerFor]="tagModal4">
+                                        <p class="cut-text inputLabel">Tags</p>
+                                        <p class="blueText cut-text tableText">
+                                            <mat-icon class="tagsIcon">{{'filter_' + ( detail.tags.length > 0 ? ( detail.tags.length
+                                                <=9 ? detail.tags.length : '9_plus' ) : 'none')}}</mat-icon> Ver todos </p>
+                                        <!----------------------->
+                                        <!-- popoup client tags -->
+                                        <mat-menu #tagModal4="matMenu">
+                                            <p class="popUpTag blueText">
+                                                Tags asignadas
+                                            </p>
+                                            <p class="popUpTag popUpMenuText" *ngIf="detail.tags.length === 0">No tiene tags asignadas</p>
+                                            <p class="popUpTag popUpMenuText" *ngFor="let tag of detail.tags">
+                                                <span>{{tag}}</span>
+                                            </p>
+                                        </mat-menu>
+                                    </div>
+
+                                    <div class="col-6 col-sm-4 col-md-3 expandedItem">
+                                        <p class="cut-text inputLabel">Telefono</p>
+                                        <p class="cut-text tableText">{{ setFormattedPhone(detail.phone) }}</p>
+                                    </div>
+
+                                    <div class="col-6 col-sm-4 col-md-3 expandedItem">
+                                        <p class="cut-text inputLabel">Type</p>
+                                        <p class="cut-text tableText">{{ detail.type }}</p>
+                                    </div>
+
+                                    <div class="col-12 col-sm-8 expandedItem">
+                                        <p class="cut-text inputLabel">Direccion</p>
+                                        <p class="cut-text tableText">{{ detail.address ? detail.address : 'N/A'}}</p>
+                                    </div>
+
+                                    <div class="col-12 col-sm-8 expandedItem">
+                                        <p class="cut-text inputLabel">Email</p>
+                                        <p class="cut-text tableText">{{ detail.email ? detail.email : 'N/A'}}</p>
+                                    </div>
+                                </div>
+                            </mat-cell>
+                        </ng-container>
+
+
+                        <mat-header-row *cdkHeaderRowDef="displayedResponsiveColumns; sticky: true"></mat-header-row>
+                        <mat-row *cdkRowDef="let row;columns: displayedResponsiveColumns; let i = index;" class="element-row" [class.expanded]="expandedElement == row" matRipple></mat-row>
+                        <mat-row *cdkRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow" [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'" style="overflow: hidden" [className]="row == expandedElement ? 'expandedRow' : 'collapsedRow'">
+                        </mat-row>
+                    </mat-table>
+                </div>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- mat-table paginator -->
+        <mat-paginator class="out-paginator" [length]="tableCount" [pageSize]="25" [pageSizeOptions]="[10, 25, 50, 100]" (page)="loadTableData(this.searchbar.value, this.categories.value, this.rate.value, false, this.sort);">
+        </mat-paginator>
+    </div>
+    <!----------------------->
+    <!-- data container -->
+
+    <!--hidden #displayData-->
+    <div #displayData class="fadeIn" *ngIf="showBigTable">
+        <!----------------------->
+        <!-- table card -->
+        <div class="tableCard">
+            <div class="tableWrapper">
+                <div class="tableFixer clientsCard" #clientsCard>
+                    <!----------------------->
+                    <!-- table -->
+                    <mat-table class="personalizedTable" matSort [dataSource]="dataSource" multiTemplateDataRows [matSortActive]="1" [matSortDirection]="desc" (matSortChange)="loadTableData(searchbar.value, this.categories.value, this.rate.value, true, $event)">
+
+                        <!----------------------->
+                        <!-- number -->
+                        <!--
+                        <ng-container cdkColumnDef="id">
+                            <mat-header-cell *cdkHeaderCellDef class="numberCell headerCell" mat-sort-header> # </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" [className]="'numberCell ' + row.id" (mouseenter)="cellHover = 'numberCell' + row.id" (mouseleave)="cellHover = ''">
+                                <div class="cellPadding">
+                                    <p class="cut-text tableText">
+                                        {{ row.number }}
+                                    </p>
+                                    <div class="copyContainer">
+                                        <button type="button" class="copyButton" matRipple *ngIf="cellHover === 'numberCell' + row.id" (click)="copyData(row.id)">
+                                        <mat-icon class="leftEditProduct">file_copy</mat-icon>
+                                      </button>
+                                    </div>
+                                </div>
+                         -->
+                        <!--<div class="copyContainer">
+                    <button class="lefProductButton fadeIn" matRipple *ngIf="cellHover === row.id">
+                      <mat-icon class="leftEditProduct" (click)="copyData(row.id)">edit</mat-icon>
+                    </button>
+                  </div>-->
+                        <!--
+                            </mat-cell>
+                        </ng-container>
+                        -->
+                        <!----------------------->
+                        <!-- name -->
+                        <ng-container cdkColumnDef="name">
+                            <mat-header-cell *cdkHeaderCellDef class="headerCell" mat-sort-header> NOMBRE </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row; let i = index" [id]="'name' + row.id" [title]="row.name ? row.name : 'N/A'" [className]="'pointer ' + row.id" (mouseenter)="cellHover = 'name' + row.id" (mouseleave)="cellHover = ''">
+                                <div class="cellPadding">
+                                    <p class="cut-text tableText" (click)="details(row, i)">
+                                        {{ row.name ? row.name : 'N/A' }}
+                                    </p>
+                                    <div class="copyContainer">
+                                        <button type="button" class="copyButton" matRipple *ngIf="cellHover === 'name' + row.id" (click)="copyData(row.name ? row.name : 'N/A')">
+                        <mat-icon class="leftEditProduct">file_copy</mat-icon>
+                      </button>
+                                    </div>
+                                </div>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- lastName -->
+                        <ng-container cdkColumnDef="lastName">
+                            <mat-header-cell *cdkHeaderCellDef class="phoneCell headerCell" mat-sort-header> APELLIDO </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" [title]="row.name ? row.lastName : 'N/A'" (mouseenter)="cellHover = 'lastName' + row.id" (mouseleave)="cellHover = ''" [className]="'phoneCell ' + row.id">
+                                <div class="cellPadding">
+                                    <p class="cut-text tableText">
+                                        {{ row.lastName }}
+                                    </p>
+                                    <div class="copyContainer">
+                                        <button type="button" class="copyButton" matRipple *ngIf="cellHover === 'lastName' + row.id" (click)="copyData(row.lastName)">
+                        <mat-icon class="leftEditProduct">file_copy</mat-icon>
+                      </button>
+                                    </div>
+                                </div>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- phone -->
+                        <ng-container cdkColumnDef="phone">
+                            <mat-header-cell *cdkHeaderCellDef class="phoneCell headerCell" mat-sort-header> TELEFONO </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" [className]="'phoneCell ' + row.id" [title]="setFormattedPhone(row.phone)" (mouseenter)="cellHover = 'phone' + row.id" (mouseleave)="cellHover = ''">
+                                <div class="cellPadding">
+                                    <p class="cut-text tableText">
+                                        {{ setFormattedPhone(row.phone) }}
+                                    </p>
+                                    <div class="copyContainer">
+                                        <button type="button" class="copyButton" matRipple *ngIf="cellHover === 'phone' + row.id" (click)="copyData(setFormattedPhone(row.phone))">
+                        <mat-icon class="leftEditProduct">file_copy</mat-icon>
+                      </button>
+                                    </div>
+                                </div>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- createdAt -->
+                        <ng-container cdkColumnDef="createdAt">
+                            <mat-header-cell *cdkHeaderCellDef class="headerCell" mat-sort-header> PILOTO DESDE </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" [title]="row.createdAt ? row.createdAt : 'N/A'" [className]="row.id" (mouseenter)="cellHover = 'createdAt' + row.id" (mouseleave)="cellHover = ''">
+                                <div class="cellPadding">
+                                    <p class="cut-text tableText">
+                                        {{ row.createdAt ? row.createdAt : 'N/A' }}
+                                    </p>
+                                    <div class="copyContainer">
+                                        <button type="button" class="copyButton" matRipple *ngIf="cellHover === 'createdAt' + row.id" (click)="copyData(row.createdAt ? row.createdAt : 'N/A')">
+                        <mat-icon class="leftEditProduct">file_copy</mat-icon>
+                      </button>
+                                    </div>
+                                </div>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- lastDate -->
+                        <ng-container cdkColumnDef="lastDate">
+                            <mat-header-cell *cdkHeaderCellDef class="headerCell" mat-sort-header> FECHA DE CADUCACION </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" [title]="row.lastDate ? row.lastDate : 'N/A'" [className]="row.id" (mouseenter)="cellHover = 'lastDate' + row.id" (mouseleave)="cellHover = ''">
+                                <div class="cellPadding">
+                                    <p class="cut-text tableText">
+                                        {{ row.lastDate ? row.lastDate : 'N/A'}}
+                                    </p>
+                                    <div class="copyContainer">
+                                        <button type="button" class="copyButton" matRipple *ngIf="cellHover === 'lastDate' + row.id" (click)="copyData(row.lastDate ? row.lastDate : 'N/A')">
+                        <mat-icon class="leftEditProduct">file_copy</mat-icon>
+                      </button>
+                                    </div>
+                                </div>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- type -->
+                        <ng-container cdkColumnDef="type">
+                            <mat-header-cell *cdkHeaderCellDef class="checkCell centerHeaderCell" matTooltip="Genero" matTooltipPosition="above"> TYPE </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" [className]="'checkCell pointer ' + row.id">
+                                <mat-icon class="tagsIcon" matTooltip="Capitan" *ngIf="row.type === 'Capitan'">record_voice_over</mat-icon>
+                                <mat-icon class="tagsIcon" matTooltip="Primer Oficial" *ngIf="row.type === 'Primer Oficial'">spa</mat-icon>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- set custom product -->
+                        <div *ngFor="let productColumn of productColumns; let i = index">
+                            <ng-container [cdkColumnDef]="productColumn">
+                                <mat-header-cell *cdkHeaderCellDef class="productCell centerHeaderCell" mat-sort-header [matTooltip]="filterProducts[i].name" matTooltipPosition="above">
+                                    {{filterProducts[i].abreviation}}
+                                    <div class="branchesCircleContainer">
+                                        <div class="branchCircle" [style.background-color]="filterProducts[i].color"></div>
+                                    </div>
+                                </mat-header-cell>
+                                <mat-cell *cdkCellDef="let row" [className]="'productCell ' + row.id">
+                                    <div class="cellPadding">
+                                        {{ setFormattedNumber(row.productsAvailable[productColumn]) }}
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+                        </div>
+                        <!----------------------->
+                        <!-- closed deals -->
+                        <!--<ng-container cdkColumnDef="closedDeals">
+                <mat-header-cell *cdkHeaderCellDef class="numberCell headerCell" mat-sort-header matTooltip="Closed deals" matTooltipPosition="above"> C.D. </mat-header-cell>
+                <mat-cell *cdkCellDef="let row;let i = index" [className]="'numberCell ' + row.id">
+                  <div class="cellPadding">
+                    <p class="cut-text tableText">
+                      {{ dealsCount[i] ? dealsCount[i] : 0 }}
+                    </p>
+                  </div>
+                </mat-cell>
+              </ng-container>-->
+                        <!----------------------->
+                        <!-- status -->
+                        <ng-container cdkColumnDef="status">
+                            <mat-header-cell *cdkHeaderCellDef class="checkCell" mat-sort-header matTooltip="Status" matTooltipPosition="above"> STA </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" [className]="'checkCell ' + row.id" [title]="row.status ? row.status : 'N/A'">
+                                <mat-icon class="tableTypeIcon" *ngIf="row.status" matTooltip="Activo">check_circle</mat-icon>
+                                <mat-icon class="tableTypeIcon" *ngIf="!row.status" matTooltip="Inactivo">close</mat-icon>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- tags -->
+                        <ng-container cdkColumnDef="tags">
+                            <mat-header-cell *cdkHeaderCellDef class="checkCell centerHeaderCell" matTooltip="Tags" matTooltipPosition="above"> TAGS </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" [matMenuTriggerFor]="tagModal" [className]="'checkCell pointer ' + row.id" [title]="row.tags.length + ' Tag(s)'">
+                                <mat-icon class="tagsIcon">{{'filter_' + ( row.tags.length > 0 ? ( row.tags.length
+                                    <=9 ? row.tags.length : '9_plus') : 'none')}}</mat-icon>
+                                        <!----------------------->
+                                        <!-- popoup client tags -->
+                                        <mat-menu #tagModal="matMenu">
+                                            <p class="popUpTag blueText">
+                                                Tags Asignadas
+                                            </p>
+                                            <p class="popUpTag popUpMenuText" *ngIf=" row.tags.length === 0">No tiene tags asignadas</p>
+                                            <p class="popUpTag popUpMenuText" *ngFor="let tag of row.tags">
+                                                <span>{{tag}}</span>
+                                            </p>
+                                        </mat-menu>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- button -->
+                        <ng-container cdkColumnDef="button">
+                            <mat-header-cell *cdkHeaderCellDef class="threeButtonCell headerCell" matTooltip="Calificacion" matTooltipPosition="above" mat-sort-header>CALIF</mat-header-cell>
+                            <mat-cell *cdkCellDef="let row; let i = index;" [className]="'threeButtonCell ' + row.id">
+                                <div class="starData tableButton">
+                                    {{row.rate ? row.rate : 0}}
+                                    <mat-icon>star</mat-icon>
+                                </div>
+                                <button type="button" class="whiteButton tableButton" matRipple (click)="details(row, i)">
+                      <mat-icon>list</mat-icon>
+                    </button>
+                                <button type="button" class="whiteButton" matRipple (click)="openClient(row)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                        <mat-row *cdkRowDef="let row; columns: displayedColumns; let i = index;"></mat-row>
+                    </mat-table>
+                </div>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- mat-table paginator -->
+
+        <mat-paginator class="out-paginator" [length]="tableCount" [pageSize]="25" [pageSizeOptions]="[10, 25, 50, 100]" [showFirstLastButtons]="true" (page)="loadTableData(this.searchbar.value, this.categories.value, this.rate.value, false, this.sort);setPage()">
+        </mat-paginator>
+
+    </div>
+</div>

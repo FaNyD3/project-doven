@@ -1,0 +1,240 @@
+<!----------------------->
+<!-- title -->
+<div class="row">
+    <div class="col-12">
+        <h2 class="blueText"> {{ dataIn.title }} </h2>
+    </div>
+</div>
+<!----------------------->
+<!-- form -->
+<form [formGroup]="addForm" (ngSubmit)="performRequest()">
+    <!----------------------->
+    <!-- data inputs -->
+    <div class="row">
+        <!----------------------->
+        <!-- name -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="name" class="inputLabel">Nombre *</label>
+            <div class="customInput" (click)="name.focus()">
+                <input type="text" matInput placeholder="Nombre" id="name" #name formControlName="name">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('name').value" matSuffix aria-label="Clear" (click)="addForm.get('name').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+                <mat-error *ngIf="addForm.get('name').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- role -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="role" class="inputLabel">Rol *</label>
+            <div class="customInput">
+                <mat-select class="customInput borderNone" placeholder="Rol" id="role" #role formControlName="role">
+                    <mat-option disabled>Selecciona un rol</mat-option>
+                    <mat-option value="gym-admin">Super administrador</mat-option>
+                    <mat-option value="branch-admin">Administrador</mat-option>
+                </mat-select>
+                <mat-error *ngIf="addForm.get('role').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- birthday -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label class="inputLabel">Cumpleaños *</label>
+            <div class="customInput" (click)="picker.open()">
+                <input matInput [max]="today" [matDatepicker]="picker" formControlName="birthday" placeholder="Elije un dia" autocomplete="off">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker startView="multi-year"></mat-datepicker>
+                <mat-error *ngIf="addForm.get('birthday').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- email -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="email" class="inputLabel">Correo electronico *</label>
+            <div class="customInput" (click)="email.focus()">
+                <input type="email" matInput placeholder="Correo electronico" id="email" #email formControlName="email">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('email').value !== ''" matSuffix aria-label="Clear" (click)="addForm.get('email').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+                <mat-error *ngIf="addForm.get('email').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- username -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="username" class="inputLabel">Nombre de usuario *</label>
+            <div class="customInput" (click)="username.focus()">
+                <input type="text" matInput placeholder="Nombre de usuario" id="username" #username formControlName="username">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('username').value" matSuffix aria-label="Clear" (click)="addForm.get('username').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+                <mat-error *ngIf="addForm.get('username').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- password -->
+        <div class="col-12 col-md-6 col-lg-4 formItem" *ngIf="dataIn.isNew">
+            <label for="password" class="inputLabel">Contraseña *</label>
+            <div class="customInput" (click)="password.focus()">
+                <input type="password" matInput placeholder="Contraseña" id="password" #password formControlName="password">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('password').value" matSuffix aria-label="Clear" (click)="addForm.get('password').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+                <mat-error *ngIf="addForm.get('password').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <!----------------------->
+            <!-- add branches -->
+            <div class="row" *ngIf="addForm.get('role').value === 'branchTrader' || addForm.get('role').value === 'branchAdmin'">
+                <!----------------------->
+                <!-- branch select -->
+                <div class="col-7 col-sm-6 formItem">
+                    <div>
+                        <label for="branch" class="inputLabel">Available branches</label>
+                        <mat-select class="customInput" placeholder="Available branches" id="branch" #branch formControlName="branch">
+                            <mat-option disabled>Select one branch</mat-option>
+                            <mat-option *ngFor="let branch of branchOptions" [value]="branch">
+                                <div class="branchOption">
+                                    <p>{{branch.name}}</p>
+                                    <div class="branchesCircleContainer">
+                                        <div class="branchCircle" [style.background-color]="branch.color">
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+                <!----------------------->
+                <!-- add branch button -->
+                <div class="col-5 col-sm-6 formItem addBranchCell">
+                    <div>
+                        <button class="blueButton addButton" matRipple type="button" (click)="addBranch()">
+              <mat-icon>add_circle_outline</mat-icon>
+              Add branch
+            </button>
+                    </div>
+                </div>
+            </div>
+            <!----------------------->
+            <!-- branches belongs to -->
+            <div class="row" *ngIf="addForm.get('role').value === 'branchTrader' || addForm.get('role').value === 'branchAdmin'">
+                <div class="col-12 formItem">
+                    <label class="inputLabel">Assigned branches</label>
+                </div>
+                <!----------------------->
+                <!-- branch tags-->
+                <div class="col-12 formItem">
+                    <mat-chip-list *ngIf="branchBelongs.length > 0">
+                        <mat-chip *ngFor="let branch of branchBelongs" removable="true" selectable="false" (removed)="removeBranch(branch)" class="branchChip" [matTooltip]="branch.name" matTooltipPosition="above">
+                            <p class="popUpMenuText">{{branch.nickname}}</p>
+                            <div class="littleColorCircle" [style.background-color]="branch.color"></div>
+                            <mat-icon matChipRemove>close</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                    <p *ngIf="branchBelongs.length === 0" class="tableText">Has not branches asigned</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <!----------------------->
+            <!-- add groups -->
+            <div class="row" *ngIf="addForm.get('role').value === 'branchTrader'">
+                <!----------------------->
+                <!-- group select -->
+                <div class="col-7 col-sm-6 formItem">
+                    <div>
+                        <label for="groupInput" class="inputLabel">Available groups</label>
+                        <mat-select class="customInput" placeholder="Available groups" id="groupInput" #groupInput formControlName="group">
+                            <mat-option disabled>Select one group</mat-option>
+                            <mat-option *ngFor="let group of groupOptions" [value]="group">{{ group.name }}</mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+                <!----------------------->
+                <!-- add group button -->
+                <div class="col-5 col-sm-6 formItem addBranchCell">
+                    <div>
+                        <button class="blueButton addButton" matRipple type="button" (click)="addGroup()">
+              <mat-icon>add_circle_outline</mat-icon>
+              Add group
+            </button>
+                    </div>
+                </div>
+            </div>
+            <!----------------------->
+            <!-- groups belongs to -->
+            <div class="row" *ngIf="addForm.get('role').value === 'branchTrader'">
+                <div class="col-12 formItem">
+                    <label class="inputLabel">Assigned groups</label>
+                </div>
+                <!----------------------->
+                <!-- group tags-->
+                <div class="col-12 formItem">
+                    <mat-chip-list *ngIf="groupBelongs.length > 0">
+                        <mat-chip *ngFor="let group of groupBelongs" removable="true" selectable="false" (removed)="removeGroup(group)" class="branchChip" [matTooltip]="group.name" matTooltipPosition="above">
+                            <p class="popUpMenuText">{{group.name}}</p>
+                            <mat-icon matChipRemove>close</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                    <p *ngIf="groupBelongs.length === 0" class="tableText">Has not groups asigned</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <!----------------------->
+    <!-- buttons row -->
+    <div class="row buttonsRow">
+        <div class="col-4" *ngIf="dataIn.isNew"></div>
+        <!----------------------->
+        <!-- cancel button -->
+        <div class="col-4">
+            <button type="button" class="grayButton fullWidth" matRipple (click)="onNoClick()">
+        <mat-icon class="showOnSmall marg0">close</mat-icon>
+        <span class="hideUntilMedium">Cancelar</span>
+      </button>
+        </div>
+        <!----------------------->
+        <!-- delete button -->
+        <div class="col-4" *ngIf="!dataIn.isNew">
+            <button type="button" class="redButton fullWidth" matRipple (click)="deleteObject()">
+        <mat-icon class="showOnSmall marg0">delete</mat-icon>
+        <span class="hideUntilMedium">Eliminar</span>
+      </button>
+        </div>
+        <!----------------------->
+        <!-- new button -->
+        <div class="col-4">
+            <button class="blueButton fullWidth" matRipple type="submit">
+        <mat-icon class="showOnSmall marg0">library_books</mat-icon>
+        <span class="hideUntilMedium">Guardar</span>
+      </button>
+        </div>
+    </div>
+</form>

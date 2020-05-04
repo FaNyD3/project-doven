@@ -1,0 +1,204 @@
+@media only screen and (min-width: 960px) {
+.clientNotesFixer {
+  max-height: calc(100vh - 275px) !important;
+}
+}
+.clientNotesFixer {
+  max-height: calc(100vh - 400px);
+}
+.noteArea {
+  font-size: 12px !important;
+}
+
+.expandedRow, .clientDetailCell {
+  min-height: max-content;
+  height: max-content;
+  padding: 5px !important;
+  width: 100%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.expandedItem {
+  padding: 5px 15px;
+}
+.smallAddButton {
+  margin-bottom: 10px !important;
+}
+.tagsIcon {
+  font-size: 16px !important;
+  height: 16px !important;
+  margin-right: 5px !important;
+  color: var(--orange);
+}
+.quickEditContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-end;
+  width: 220px;
+}
+.noteTypeContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-end;
+  width: 200px;
+}
+
+@media only screen and (min-width: 992px) {
+.noteTypeContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center !important;
+  width: 100% !important;
+}
+}
+
+.detailsRowContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.margb5 {
+  margin-bottom: 5px;
+}
+.margR5 {
+  margin-right: 5px;
+}
+.margL5 {
+  margin-left: 5px;
+}
+.participantsContainer {
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+.noteContainer {
+  border-radius: 2px;
+  padding: 5px 10px !important;
+  font-size: 13px;
+  margin-top: 5px;
+  border: 1px solid lightgray;
+  background-color: #f5f5f5;
+}
+
+#notesCard {
+  // margin-top: 5px;
+}
+
+@media only screen and (max-width: 575px) {
+  #notesCard {
+    // margin-top: 57px !important;
+  }
+}
+
+.loaderWrapper {
+  width: 100%;
+  height: 5px;
+  margin-top: 5px;
+}
+
+#textEditor {
+  position: absolute;
+  background-color: #F5F5F5;
+  z-index: 500;
+  width: calc(100% - 10px);
+}
+
+.notePreviewCell {
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+.notePreviewText {
+  font-size: 11px !important;
+}
+
+.rowHtmlContainer {
+  max-height: 34px;
+  overflow: hidden;
+  p {
+    font-family: Roboto, sans-serif !important;
+}
+}
+
+.rowHtmlContainer > * {
+  font-family: Roboto, sans-serif !important;
+}
+
+.notesRow {
+  min-height: 40px !important;
+  max-height: 40px !important;
+  mat-cell {
+    min-height: 40px !important;
+    max-height: 40px !important;
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+}
+.htmlPadd5 {
+  padding: 2px 0;
+}
+
+
+.noteSubmitButton {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+.moreButton {
+  width: 40px;
+}
+
+
+/* ------------- */
+/* pop up (modal) menus */
+::ng-deep .mat-menu-content {
+  padding: 0 !important;
+}
+::ng-deep .mat-menu-panel {
+  margin-top: 3px !important;
+}
+.popUpNoteButton {
+  width: 200px;
+  font-size: 13px !important;
+  height: 38px !important;
+  border: none;
+  font-weight: 400;
+  border-bottom: 1px solid lightgray !important;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  padding: 0 10px;
+  font-family: Roboto;
+}
+.popUpNoteTitle {
+  font-weight: 400 !important;
+  color: gray !important;
+}
+.noteTypesIcon {
+  font-size: 16px !important;
+  margin-right: 10px !important;
+  height: 16px;
+  color: var(--greyish-brown);
+}
+
+::ng-deep .mat-select-panel mat-option{
+  font-size: 13px !important;
+  height: 35px !important;
+  border-bottom: 1px solid lightgray !important;
+}
+
+
+.noteTypeTitle {
+  white-space: nowrap;
+}

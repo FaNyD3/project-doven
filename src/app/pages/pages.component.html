@@ -1,0 +1,353 @@
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!----------------------->
+    <!-- toolbar -->
+    <div id="whiteToolbar" [formGroup]="menuForm">
+        <div id="toolbarContainer">
+            <div id="adroitLogo">
+                <!--<img src="../../assets/img/logo.png" alt="adroit logo" class="adroitImg">-->
+            </div>
+            <!----------------------->
+            <!-- toggle button if !isBigSize -->
+            <button mat-icon-button *ngIf="!isBigSize" (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+            <!----------------------->
+            <!-- toolbar if isBigSize -->
+            <div id="flexWrapper" *ngIf="isBigSize">
+                <div id="toolbarWrapper">
+                    <div id="pagesMenuWrapper">
+                        <!----------------------->
+                        <!-- dashboard menu -->
+                        <div class="menuItem pointer hoverItem" matRipple (click)="moveOrangeLine(0); currentMenuIndex = 0;" routerLink="/dashboard" routerLinkActive="active">
+                            <mat-icon class="menuItemIcon">dashboard</mat-icon>
+                            <p class="inlineBlock Panel-act-2 menuItemText">Tablero</p>
+                        </div>
+                        <!----------------------->
+                        <!-- clients menu -->
+                        <div class="menuItem pointer hoverItem" matRipple (click)="moveOrangeLine(1); currentMenuIndex = 1;" routerLink="/clients" routerLinkActive="active">
+                            <mat-icon class="menuItemIcon">account_box</mat-icon>
+                            <p class="inlineBlock Panel-act-2 menuItemText">Pilots</p>
+                        </div>
+                        <!----------------------->
+                        <!-- deals menu -->
+                        <div class="menuItem pointer hoverItem" matRipple (click)="moveOrangeLine(2); currentMenuIndex = 2;" routerLinkActive="active">
+                            <mat-icon class="menuItemIcon">perm_contact_calendar</mat-icon>
+                            <p class="inlineBlock Panel-act-2 menuItemText">Calendar</p>
+                        </div>
+                        <!----------------------->
+                        <!-- catalogs menu -->
+                        <div class="menuItem pointer hoverItem" id="menuDiv3" [matMenuTriggerFor]="catalogsMenu">
+                            <mat-icon class="menuItemIcon">apps</mat-icon>
+                            <p class="inlineBlock Panel-act-2 menuItemText">Menú</p>
+                            <!----------------------->
+                            <!-- popoup menu (modal) -->
+                            <mat-menu #catalogsMenu="matMenu">
+                                <button mat-menu-item class="popUpMenuButton popUpMenuText" (click)="moveOrangeLine(3); currentMenuIndex = 3;" routerLinkActive="active">
+                  <mat-icon class="popUpMenuIcon">account_box</mat-icon>
+                  <span>Graphics</span>
+                </button>
+                                <button mat-menu-item class="popUpMenuButton popUpMenuText" (click)="moveOrangeLine(3); currentMenuIndex = 3;" routerLinkActive="active">
+                  <mat-icon class="popUpMenuIcon">card_membership</mat-icon>
+                  <span>Flights</span>
+                </button>
+                                <button mat-menu-item class="popUpMenuButton popUpMenuText" (click)="moveOrangeLine(3); currentMenuIndex = 3;" routerLink="/users" routerLinkActive="active">
+                  <mat-icon class="popUpMenuIcon">verified_user</mat-icon>
+                  <span>Admins</span>
+                </button>
+                                <button mat-menu-item class="popUpMenuButton popUpMenuText" (click)="moveOrangeLine(3); currentMenuIndex = 3;" routerLink="/products" routerLinkActive="active">
+                  <mat-icon class="popUpMenuIcon">widgets</mat-icon>
+                  <span>Airsplains</span>
+                </button>
+                                <button mat-menu-item class="popUpMenuButton popUpMenuText" (click)="moveOrangeLine(3); currentMenuIndex = 3;" routerLink="/branches" routerLinkActive="active">
+                  <mat-icon class="popUpMenuIcon">place</mat-icon>
+                  <span>Airstrips</span> <!--antes de aerodromo era sucursal-->
+                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                    <div id="iconsMenuWrapper">
+                        <!----------------------->
+                        <!-- notes menu -->
+                        <div class="iconMenuItem hoverItem pointer" matRipple (click)="moveOrangeLine(4); currentMenuIndex = 5" routerLink="/notes" routerLinkActive="active" matTooltip="Notas">
+                            <mat-icon class="lastMenuItemIcon">book</mat-icon>
+                        </div>
+                        <!----------------------->
+                        <!-- messages menu -->
+                        <!--<div class="iconMenuItem hoverItem pointer" matRipple (click)="moveOrangeLine(4); currentMenuIndex = 4" routerLink="/messages" routerLinkActive="active" matTooltip="Messagges">
+              <mat-icon class="lastMenuItemIcon" >message</mat-icon>
+            </div>-->
+                        <!----------------------->
+                        <!-- reminders menu -->
+                        <div class="iconMenuItem hoverItem pointer" matRipple (click)="moveOrangeLine(5); currentMenuIndex = 6" routerLinkActive="active" matTooltip="Recordatorio">
+                            <mat-icon class="lastMenuItemIcon">alarm</mat-icon>
+                        </div>
+                        <!----------------------->
+                        <!-- calendar menu -->
+                        <div class="iconMenuItem hoverItem pointer" matRipple (click)="moveOrangeLine(6); currentMenuIndex = 7" routerLinkActive="active" matTooltip="Calendario">
+                            <mat-icon class="lastMenuItemIcon">date_range</mat-icon>
+                        </div>
+                        <!----------------------->
+                        <!-- grainWeek menu -->
+                        <div class="iconMenuItem hoverItem pointer" matRipple (click)="moveOrangeLine(7); currentMenuIndex = 8" routerLinkActive="active" matTooltip="Ejemplo">
+                            <mat-icon class="lastMenuItemIcon">chrome_reader_mode</mat-icon>
+                        </div>
+                        <!----------------------->
+                        <!-- notification menu -->
+                        <div class="iconMenuItem hoverItem pointer" matRipple (click)="moveOrangeLine(8); currentMenuIndex = 9" routerLinkActive="active" matTooltip="Notificaciones">
+                            <mat-icon class="lastMenuItemIcon">notifications</mat-icon>
+                        </div>
+                        <!----------------------->
+                        <!-- quick add menu -->
+                        <div class="iconMenuItem hoverItem pointer" matRipple matTooltip="Agregar rapido" [matMenuTriggerFor]="quickAddMenu">
+                            <mat-icon class="lastMenuItemIcon">playlist_add</mat-icon>
+                            <!----------------------->
+                            <!-- popoup menu (modal) -->
+                            <mat-menu #quickAddMenu="matMenu">
+                                <div class="selectTextContainer">
+                                    <p>Agregar rapido</p>
+                                </div>
+                                <button mat-menu-item class="popUpMenuButton popUpMenuText" (click)="addNew('client')">
+                  <mat-icon class="popUpMenuIcon">group_add</mat-icon>
+                  <span>Cliente</span>
+                </button>
+                                <button mat-menu-item class="popUpMenuButton popUpMenuText" (click)="addNew('note')">
+                  <mat-icon class="popUpMenuIcon">note_add</mat-icon>
+                  <span>Nota</span>
+                </button>
+                                <button mat-menu-item class="popUpMenuButton popUpMenuText">
+                  <mat-icon class="popUpMenuIcon">alarm_add</mat-icon>
+                  <span>Recordatorio</span>
+                </button>
+                                <button mat-menu-item class="popUpMenuButton popUpMenuText">
+                  <mat-icon class="popUpMenuIcon">assignment</mat-icon>
+                  <span>Ejemplo</span>
+                </button>
+                                <button mat-menu-item class="popUpMenuButton popUpMenuText">
+                  <mat-icon class="popUpMenuIcon">widgets</mat-icon>
+                  <span>Ejemplo</span>
+                </button>
+                            </mat-menu>
+                        </div>
+                        <!----------------------->
+                        <!-- profile menu -->
+                        <div class="menuItem pointer hoverItem nameItem" id="menuDiv10" [matMenuTriggerFor]="userMenu" [matTooltip]="currentUser ? currentUser.user.name : ''" matTooltipPosition="above">
+                            <mat-icon class="firstMenuItemIcon">person</mat-icon>
+                            <p class="name-style inlineBlock Panel-act-2 menuItemText cut-text userName">{{ currentUser ? validateUserName() : '' }}</p>
+                            <!----------------------->
+                            <!-- popoup menu (modal) -->
+                            <mat-menu #userMenu="matMenu">
+                                <button mat-menu-item class="popUpMenuButton popUpMenuText" (click)="moveOrangeLine(10); currentMenuIndex = 10;" routerLink="/profile" routerLinkActive="active">
+                  <mat-icon class="popUpMenuIcon">person</mat-icon>
+                  <span>Perfil</span>
+                </button>
+                                <button mat-menu-item class="popUpMenuButton popUpMenuText" (click)="moveOrangeLine(10); currentMenuIndex = 10;" routerLink="/settings" routerLinkActive="active" *ngIf="configAccess">
+                  <mat-icon class="popUpMenuIcon">build</mat-icon>
+                  <span>Configuracion</span>
+                </button>
+                                <button mat-menu-item class="popUpMenuButton popUpMenuText" (click)="logout()">
+                  <mat-icon class="popUpMenuIcon">exit_to_app</mat-icon>
+                  <span>Salir</span>
+                </button>
+                            </mat-menu>
+                        </div>
+                        <!----------------------->
+                        <!-- branch select -->
+                        <div class="hoverItem pointer" id="branchDiv" matRipple>
+                            <div class="branchButton hoverItem pointer" [matMenuTriggerFor]="branchesMenu" [matTooltip]="currentBranch ? currentBranch.name : ''" matTooltipPosition="above">
+                                <div class="branchText">
+                                    <p>{{ currentBranch ? currentBranch.nickname : '' }}</p>
+                                </div>
+
+                                <div class="colorCircle" [style.background-color]="currentBranch ? currentBranch.color : 'FFFFFF'"></div>
+                                <mat-icon class="branchIcon">expand_more</mat-icon>
+                            </div>
+                            <!----------------------->
+                            <!-- popoup menu (modal) -->
+                            <mat-menu #branchesMenu="matMenu" class="branchesMenu">
+                                <div class="selectTextContainer">
+                                    <p>Selecciona un Aerodromo</p>
+                                </div>
+                                <button mat-menu-item class="popUpMenuButton popUpMenuText selectBranchButton" *ngFor="let branch of branches" (click)="changeBranch(branch);">
+                  <span>{{branch.name}}</span>
+                  <div class="bigColorCircle" [style.background-color]="branch.color"></div>
+                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                </div>
+                <!----------------------->
+                <!-- orange line -->
+                <div id="lineManager" #lineManager>
+                    <div id="orangeLine" #orangeLine></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <mat-sidenav-container class="sidenavContainer">
+        <mat-sidenav #snav mode="over" class="sideNavMenu">
+            <!----------------------->
+            <!-- profile menu -->
+            <div class="responsiveUserContainer">
+                <!----------------------->
+                <!-- profile menu -->
+                <div class="sidenavMenuItem" matRipple [matMenuTriggerFor]="userMenu2">
+                    <mat-icon class="firstMenuItemIcon">person</mat-icon>
+                    <p class="name-style inlineBlock Panel-act-2 menuItemText cut-text userName">{{ currentUser ? validateUserName() : '' }}</p>
+                    <!----------------------->
+                    <!-- popoup menu (modal) -->
+                    <mat-menu #userMenu2="matMenu">
+                        <button mat-menu-item class="popUpMenuButton popUpMenuText" routerLink="/profile" routerLinkActive="active" (click)="snav.toggle()">
+              <mat-icon class="popUpMenuIcon">person</mat-icon>
+              <span>Perfil</span>
+            </button>
+                        <button mat-menu-item class="popUpMenuButton popUpMenuText" (click)="snav.toggle();logout()">
+              <mat-icon class="popUpMenuIcon">exit_to_app</mat-icon>
+              <span>Salir</span>
+            </button>
+                    </mat-menu>
+                </div>
+                <!----------------------->
+                <!-- branch menu -->
+                <div class="branchButton hoverItem pointer" [matMenuTriggerFor]="branchesMenu2">
+                    <div class="branchText">
+                        <p>{{ currentBranch ? currentBranch.name : '' }}</p>
+                    </div>
+                    <div class="colorCircle" [style.background-color]="currentBranch ? currentBranch.color : 'FFFFFF'"></div>
+                    <mat-icon class="branchIcon">expand_more</mat-icon>
+                </div>
+                <!----------------------->
+                <!-- popoup menu (modal) -->
+                <mat-menu #branchesMenu2="matMenu" class="branchesMenu">
+                    <div class="selectTextContainer">
+                        <p>Selecciona un Aerodromo</p>
+                    </div>
+                    <button mat-menu-item class="popUpMenuButton popUpMenuText selectBranchButton" *ngFor="let branch of branches" (click)="changeBranch(branch);snav.toggle();">
+            <span>{{branch.name}}</span>
+            <div class="bigColorCircle" [style.background-color]="branch.color"></div>
+          </button>
+                </mat-menu>
+            </div>
+            <!----------------------->
+            <!-- reminders menu -->
+            <div class="sidenavMenuItem" matRipple routerLinkActive="active" (click)="snav.toggle()">
+                <mat-icon class="menuItemIcon">alarm</mat-icon>
+                <p class="inlineBlock Panel-act-2 menuItemText">Recordatorios</p>
+            </div>
+            <!----------------------->
+            <!-- catalogs menu -->
+            <div class="sidenavMenuItem" matRipple [matMenuTriggerFor]="catalogsMenu2">
+                <mat-icon class="menuItemIcon">apps</mat-icon>
+                <p class="inlineBlock Panel-act-2 menuItemText">Catalogos</p>
+                <!----------------------->
+                <!-- popoup menu (modal) -->
+
+                <mat-menu #catalogsMenu2="matMenu">
+                    <button mat-menu-item class="popUpMenuButton popUpMenuText" routerLinkActive="active" (click)="snav.toggle()">
+            <mat-icon class="popUpMenuIcon">view_week</mat-icon>
+            <span>Membresias</span>
+          </button>
+                    <button mat-menu-item class="popUpMenuButton popUpMenuText" routerLinkActive="active" (click)="snav.toggle()">
+            <mat-icon class="popUpMenuIcon">card_membership</mat-icon>
+            <span>Promociones</span>
+          </button>
+                    <button mat-menu-item class="popUpMenuButton popUpMenuText" routerLink="/users" routerLinkActive="active" (click)="snav.toggle()">
+            <mat-icon class="popUpMenuIcon">verified_user</mat-icon>
+            <span>Usuarios</span>
+          </button>
+                    <button mat-menu-item class="popUpMenuButton popUpMenuText" routerLink="/products" routerLinkActive="active" (click)="snav.toggle()">
+            <mat-icon class="popUpMenuIcon">widgets</mat-icon>
+            <span>Airplains</span>
+          </button>
+                    <button mat-menu-item class="popUpMenuButton popUpMenuText" routerLink="/branches" routerLinkActive="active" (click)="snav.toggle()">
+            <mat-icon class="popUpMenuIcon">place</mat-icon>
+            <span>Airstrips</span> <!--Antes de Aerodromos era sucursales-->
+          </button>
+                </mat-menu>
+            </div>
+            <!----------------------->
+            <!-- grainweeks menu -->
+            <div class="sidenavMenuItem" matRipple routerLinkActive="active" (click)="snav.toggle()">
+                <mat-icon class="menuItemIcon">chrome_reader_mode</mat-icon>
+                <p class="inlineBlock Panel-act-2 menuItemText">Ejemplo</p>
+            </div>
+            <!----------------------->
+            <!-- quickadd menu -->
+            <div class="sidenavMenuItem" matRipple [matMenuTriggerFor]="quickAddMenu2">
+                <mat-icon class="menuItemIcon">playlist_add</mat-icon>
+                <p class="inlineBlock Panel-act-2 menuItemText">Agregar rapido</p>
+                <!----------------------->
+                <!-- popoup menu (modal) -->
+                <mat-menu #quickAddMenu2="matMenu">
+                    <div class="selectTextContainer">
+                        <p>Agregar rapido</p>
+                    </div>
+                    <button mat-menu-item class="popUpMenuButton popUpMenuText" *ngIf="configAccess" (click)="addNew('client'); snav.toggle()">
+            <mat-icon class="popUpMenuIcon">group_add</mat-icon>
+            <span>Cliente</span>
+          </button>
+                    <button mat-menu-item class="popUpMenuButton popUpMenuText" (click)="addNew('note'); snav.toggle()">
+            <mat-icon class="popUpMenuIcon">note_add</mat-icon>
+            <span>Nota</span>
+          </button>
+                    <button mat-menu-item class="popUpMenuButton popUpMenuText" (click)="snav.toggle()">
+            <mat-icon class="popUpMenuIcon">alarm_add</mat-icon>
+            <span>Recordatorio</span>
+          </button>
+                    <button mat-menu-item class="popUpMenuButton popUpMenuText" (click)="snav.toggle()">
+            <mat-icon class="popUpMenuIcon">assignment</mat-icon>
+            <span>Ejemplo</span>
+          </button>
+                    <button mat-menu-item class="popUpMenuButton popUpMenuText" (click)="snav.toggle()">
+            <mat-icon class="popUpMenuIcon">widgets</mat-icon>
+            <span>Ejemplo</span>
+          </button>
+                </mat-menu>
+            </div>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <!----------------------->
+            <!-- children pages wrapper -->
+            <div id="pagesWrapper">
+                <div id="pagesPadding">
+                    <!--<button (click)="updateAllReminders()" style="width: 200px;height: 200px;">
+            update reminders
+          </button>-->
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+
+    <div id="bottomToolBar" *ngIf="!isBigSize">
+        <!----------------------->
+        <!-- dashboard menu -->
+        <div class="bottomMenuItem" matRipple routerLink="/dashboard" routerLinkActive="active" (click)="snav.opened ? snav.toggle() : {}">
+            <mat-icon class="bottomItemIcon">dashboard</mat-icon>
+        </div>
+        <!----------------------->
+        <!-- deals menu -->
+        <div class="bottomMenuItem" matRipple routerLink="/branches" routerLinkActive="active" (click)="snav.opened ? snav.toggle() : {}">
+            <mat-icon class="bottomItemIcon">place</mat-icon>
+        </div>
+        <!----------------------->
+        <!-- clients menu -->
+        <div class="bottomMenuItem" matRipple routerLink="/clients" routerLinkActive="active" (click)="snav.opened ? snav.toggle() : {}">
+            <mat-icon class="bottomItemIcon">account_box</mat-icon>
+        </div>
+        <!----------------------->
+        <!-- calendar menu -->
+        <div class="bottomMenuItem" matRipple routerLinkActive="active" (click)="snav.opened ? snav.toggle() : {}">
+            <mat-icon class="bottomItemIcon">date_range</mat-icon>
+        </div>
+        <!----------------------->
+        <!-- notifications menu -->
+        <div class="bottomMenuItem" matRipple routerLinkActive="active" (click)="snav.opened ? snav.toggle() : {}">
+            <mat-icon class="bottomItemIcon">notifications</mat-icon>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->

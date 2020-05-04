@@ -1,0 +1,91 @@
+<!----------------------->
+<!-- title -->
+<div class="row">
+    <div class="col-12">
+        <h2 class="blueText"> {{ 'Actualiza tu informacion personal'}} </h2>
+    </div>
+</div>
+<!----------------------->
+<!-- form -->
+<form [formGroup]="addForm" (ngSubmit)="performRequest()">
+    <!----------------------->
+    <!-- data inputs -->
+    <div class="row">
+        <!----------------------->
+        <!-- name -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="name" class="inputLabel">Nombre *</label>
+            <div class="customInput" (click)="name.focus()">
+                <input type="text" matInput placeholder="Nombre" id="name" #name formControlName="name">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('name').value" matSuffix aria-label="Clear" (click)="addForm.get('name').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- email -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="email" class="inputLabel">Email *</label>
+            <div class="customInput" (click)="email.focus()">
+                <input type="email" matInput placeholder="Email" id="email" #email formControlName="email">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('email').value !== ''" matSuffix aria-label="Clear" (click)="addForm.get('email').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- username -->
+        <!--    
+      <div class="col-12 col-md-6 col-lg-4 formItem">
+      <label for="username" class="inputLabel">Nombre de usuario *</label>
+      <div class="customInput" (click)="username.focus()">
+        <input type="text" matInput placeholder="Nombre de usuario" id="username" #username formControlName="username">
+        <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('username').value" matSuffix aria-label="Clear" (click)="addForm.get('username').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+    -->
+        <!----------------------->
+        <!-- TYPE -->
+        <div class="col-12 col-sm-6 col-lg-3 formItem">
+            <label for="type" class="inputLabel"> Type *</label>
+            <div class="customInput">
+                <mat-select placeholder="Type" id="type" formControlName="type">
+                    <mat-option disabled="">Selecciona un type</mat-option>
+                    <mat-option value="Capitan">
+                        <!--mat-icon class="matOptionIcon">spa</mat-icon>-->Capitan</mat-option>
+                    <mat-option value="Primer Oficial">
+                        <!--mat-icon class="matOptionIcon">record_voice_over</mat-icon>-->Primer Oficial</mat-option>
+                </mat-select>
+                <mat-error *ngIf="addForm.get('type').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- password
+    <div class="col-12 col-md-6 col-lg-4 formItem" >
+      <label for="password" class="inputLabel">Contraseña *</label>
+      <div class="customInput" (click)="password.focus()">
+        <input type="password" matInput placeholder="Contraseña" id="password" #password formControlName="password">
+        <button class="searchbarSuffix fsize22" *ngIf="addForm.get('password').value" matSuffix aria-label="Clear" (click)="addForm.get('password').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>-->
+    </div>
+
+    <!----------------------->
+    <!-- buttons row -->
+    <div class="row buttonsRow">
+        <!----------------------->
+        <!-- new button -->
+        <div class="col-5 col-md-4">
+            <button class="blueButton fullWidth" matRipple type="submit">
+        <mat-icon class="showOnSmall marg0">save</mat-icon>
+        <span>Guardar</span>
+      </button>
+        </div>
+    </div>
+</form>

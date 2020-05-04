@@ -1,0 +1,60 @@
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background: var(--orange) !important;
+}
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background: rgba(247, 107, 28, .54) !important;
+}
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background: var(--orange) !important;
+}
+::ng-deep .mat-slide-toggle.mat-checked .mat-ripple-element {
+  background: var(--orange) !important;
+}
+::ng-deep .mat-autocomplete-panel {
+  min-width: 230px !important;
+}
+::ng-deep .mat-autocomplete-panel mat-option{
+  min-width: 230px !important;
+  font-size: 13px !important;
+  height: 35px !important;
+  border-bottom: 1px solid var(--very-light-pink) !important;
+}
+.buyerContainer {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+}
+.branchesCircleContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-end;
+}
+.branchCircle{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-left: 2px;
+}
+.notificationsToggle {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  height: 33px;
+}
+.notificationText {
+  text-align: center;
+}
+
+::ng-deep .mat-select-panel mat-option{
+  font-size: 13px !important;
+  height: 35px !important;
+  border-bottom: 1px solid var(--very-light-pink) !important;
+}
+
+#time-picker-wrapper.light #time-picker .time-picker-clock > button.active {
+  background: var(--orange) !important;
+}

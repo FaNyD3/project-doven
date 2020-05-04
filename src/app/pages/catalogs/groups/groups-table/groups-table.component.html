@@ -1,0 +1,102 @@
+<!----------------------->
+<!-- page container -->
+<div class="container-fluid fullHeight">
+  <!----------------------->
+  <!-- filters row -->
+  <div class="row">
+    <div class="col-12 col-sm-4 col-md-6 col-xl-8 pageTitleCell clientsFormItem">
+      <h2>Groups</h2>
+    </div>
+    <!----------------------->
+    <!-- searchbar -->
+    <div class="col-6 col-sm-4 col-md-3 col-xl-2 clientsFormItem">
+      <div class="searchbar" (click)="search.focus()">
+        <mat-icon matPrefix class="fsize22">search</mat-icon>
+        <input type="text" matInput placeholder="Search..." #search [formControl]="searchbar">
+        <button type="button" class="searchbarSuffix fsize22" *ngIf="searchbar.value" matSuffix aria-label="Clear" (click)="searchbar.setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+    <!----------------------->
+    <!-- new group button -->
+    <div class="col-6 col-sm-4 col-md-3 col-xl-2 clientsFormItem">
+      <button type="button" class="orangeButton fullWidth" matRipple (click)="newGroup()">
+        <mat-icon>add_circle_outline</mat-icon>
+        <p>New Group</p>
+      </button>
+    </div>
+  </div>
+  <!----------------------->
+  <!-- loading spinner -->
+  <div class="tableLoaderContainer" *ngIf="firstLoad">
+    <mat-spinner></mat-spinner>
+  </div>
+  <!----------------------->
+  <!-- not found container -->
+  <div #noData>
+    <!----------------------->
+    <!-- not found message -->
+    <div class="tableLoaderContainer fadeIn" *ngIf="!firstLoad">
+      <p>Data not found</p>
+    </div>
+  </div>
+  <!----------------------->
+  <!-- data container -->
+  <div #displayData class="fadeIn hidden">
+    <!----------------------->
+    <!-- table card -->
+    <div class="tableCard">
+      <div class="tableWrapper">
+        <div class="tableFixer">
+          <!----------------------->
+          <!-- table -->
+          <mat-table class="personalizedTable" [dataSource]="dataSource" matSort (matSortChange)="loadTableData(searchbar.value, false, $event)">
+            <ng-container cdkColumnDef="name" sticky>
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> NAME </mat-header-cell>
+              <mat-cell *cdkCellDef="let row" class="cellPadding">
+                <p class="cut-text tableText">
+                  {{ row.name }}
+                </p>
+              </mat-cell>
+            </ng-container>
+            <ng-container cdkColumnDef="filtersCount">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> FILTERS </mat-header-cell>
+              <mat-cell *cdkCellDef="let row" class="cellPadding">
+                <p class="cut-text tableText">
+                  {{ row.filtersCount }} filter(s)
+                </p>
+              </mat-cell>
+            </ng-container>
+            <ng-container cdkColumnDef="clientsCount">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> CLIENTS </mat-header-cell>
+              <mat-cell *cdkCellDef="let row" class="cellPadding">
+                <p class="cut-text tableText">
+                  {{ row.clientsCount }} client(s)
+                </p>
+              </mat-cell>
+            </ng-container>
+            <ng-container cdkColumnDef="button">
+              <mat-header-cell *cdkHeaderCellDef class="buttonCell headerCell"></mat-header-cell>
+              <mat-cell *cdkCellDef="let row" class="buttonCell">
+                <button type="button" class="whiteButton" matRipple (click)="openGroup(row)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+            <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+        </div>
+      </div>
+    </div>
+    <!----------------------->
+    <!-- mat-table paginator -->
+    <mat-paginator class="out-paginator"
+                   [length]="tableCount"
+                   [pageSize]="25"
+                   [pageSizeOptions]="[10, 25, 50, 100]"
+                   (page)="loadTableData(this.searchbar.value, false, this.sort);">
+    </mat-paginator>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<!-- ============================================================== -->
+<!-- Main wrapper -->
+<!-- ============================================================== -->
+<!--<div id="particles-js"></div>-->
+<div id="particles-js" class="particles-js horizontalGradient fullWScreen fullHScreen">
+    <div id="loginBackWrapper"></div>
+    <form [formGroup]="loginForm" (ngSubmit)="performLogin()">
+        <div class="center" id="formWrapper">
+            <div id="circle" class="center">
+                <!--<img id="logoImg" src="../../../assets/img/logo.png" alt="logo adroit">-->
+            </div>
+            <div class="block loginSizes">
+                <mat-form-field appearance="outline" class="fullWidth loginInput">
+                    <mat-label>Correo o nombre de usuario</mat-label>
+                    <input matInput type="text" formControlName="email" required>
+                </mat-form-field>
+            </div>
+            <div class="block loginSizes">
+                <mat-form-field appearance="outline" class="fullWidth loginInput">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput type="password" formControlName="password" required>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button class="whiteRoundedButton block loginSizes" id="loginButton" type="submit" aria-label="Iniciar sesión">Login</button>
+            <p></p>
+        </div>
+    </form>
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->

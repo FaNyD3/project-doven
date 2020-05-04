@@ -1,0 +1,292 @@
+<!----------------------->
+<!-- page container -->
+<div class="container-fluid fullHeight">
+  <!----------------------->
+  <!-- filters row -->
+  <div class="row filtersRow">
+    <!----------------------->
+    <!-- searchbar -->
+    <div class="col-4 col-md-4">
+      <h2 *ngIf="isBigSize">Deals</h2>
+    </div>
+    <div class="col-4 col-md-4 clientsFormItem">
+      <div class="customSelectContainer" matRipple (click)="multiple.open()">
+        <mat-select placeholder="Deal type" class="customSelect" #multiple [formControl]="dealStatus" (selectionChange)="loadTableData($event.value, true, this.sort)">
+          <mat-select-trigger>
+            <mat-icon class="selectIconTrigger" *ngIf="dealStatus.value === 'isLead'">list</mat-icon>
+            <mat-icon class="selectIconTrigger" *ngIf="dealStatus.value === 'isDeal'">playlist_add_check</mat-icon>
+            <mat-icon class="selectIconTrigger" *ngIf="dealStatus.value === 'isCanceled'">close</mat-icon>
+            <mat-icon class="selectIconTrigger" *ngIf="dealStatus.value === 'isDone'">done</mat-icon>
+            {{obtainTypeValue(dealStatus.value)}}
+          </mat-select-trigger>
+          <mat-option disabled >Select one deal type</mat-option>
+          <mat-option>
+            <mat-icon>select_all</mat-icon>
+            All
+          </mat-option>
+          <mat-option value="isLead">
+            <mat-icon>list</mat-icon>
+            Leads
+          </mat-option>
+          <mat-option value="isDeal">
+            <mat-icon>playlist_add_check</mat-icon>
+            Deals
+          </mat-option>
+          <mat-option value="isCanceled">
+            <mat-icon>close</mat-icon>
+            Canceled
+          </mat-option>
+          <mat-option value="isDone">
+            <mat-icon>done</mat-icon>
+            Done
+          </mat-option>
+        </mat-select>
+        <mat-icon class="customSelectIcon">tune</mat-icon>
+      </div>
+    </div>
+
+    <div class="col-4 col-md-4 clientsFormItem">
+      <button type="button" class="orangeButton fullWidth" matRipple (click)="newDeal()">
+        <mat-icon>add_circle_outline</mat-icon>
+        <p>New deal</p>
+      </button>
+    </div>
+  </div>
+  <!----------------------->
+  <!-- loading spinner -->
+  <div class="tableLoaderContainer smallLoaderComponent" *ngIf="firstLoad">
+    <mat-spinner></mat-spinner>
+  </div>
+  <!----------------------->
+  <!-- not found container -->
+  <div #noData>
+    <!----------------------->
+    <!-- not found message -->
+    <div class="tableLoaderContainer smallLoaderComponent fadeIn" *ngIf="!firstLoad">
+      <p>Data not found</p>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!----------------------->
+  <!-- data container (MOBILE) -->
+  <div #displayData class="fadeIn hidden">
+    <!----------------------->
+    <!-- table card -->
+    <div class="tableCard">
+      <div class="tableWrapper">
+        <div class="tableFixer clientDealFixer">
+          <!----------------------->
+          <!-- table -->
+          <mat-table class="personalizedTable" [dataSource]="dataSource" matSort multiTemplateDataRows (matSortChange)="loadTableData(dealStatus.value, false, $event)">
+            <!----------------------->
+            <!-- date -->
+            <ng-container cdkColumnDef="createdAt">
+              <mat-header-cell *cdkHeaderCellDef class="bigNumberCell headerCell" mat-sort-header>DATE</mat-header-cell>
+              <mat-cell *cdkCellDef="let row" class="cellPadding bigNumberCell pointer" (click)=" expandedElement = expandedElement !== row ? row : {};">
+                <p class="cut-text tableText">
+                  {{row.formattedDate ? row.formattedDate : 'N/A'}}
+                </p>
+              </mat-cell>
+            </ng-container>
+            <!----------------------->
+            <!-- product -->
+            <ng-container cdkColumnDef="product" sticky>
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell">PRODUCT</mat-header-cell>
+              <mat-cell *cdkCellDef="let row" [className]="'cellPadding ' + row.id" (click)=" expandedElement = expandedElement !== row ? row : {};">
+                <p class="cut-text tableText">
+                  {{row.product ? row.product.name : 'N/A'}}
+                </p>
+              </mat-cell>
+            </ng-container>
+            <!----------------------->
+            <!-- shipment -->
+            <ng-container cdkColumnDef="shipment">
+              <mat-header-cell *cdkHeaderCellDef class="headerCell">SHIPMENT</mat-header-cell>
+              <mat-cell *cdkCellDef="let row" class="cellPadding" (click)=" expandedElement = expandedElement !== row ? row : {};">
+                <p class="cut-text tableText">
+                  {{row.shipmentRatio ? row.shipmentRatio : 'N/A'}}
+                </p>
+              </mat-cell>
+            </ng-container>
+            <!----------------------->
+            <!-- button -->
+            <ng-container cdkColumnDef="button">
+              <mat-header-cell *cdkHeaderCellDef class="buttonCell headerCell"></mat-header-cell>
+              <mat-cell *cdkCellDef="let row" class="buttonCell">
+                <button type="button" class="whiteButton" matRipple (click)="openDeal(row)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+
+            <!-- Expanded Content Column - The detail row is made up of this one column -->
+            <ng-container matColumnDef="expandedDetail">
+              <mat-cell *cdkCellDef="let detail" class="clientDetailCell">
+                <div class="row fullWidth">
+                  <div class="col-4 col-md-3 expandedItem">
+                    <p class="cut-text inputLabel">Buyer</p>
+                    <p class="cut-text tableText">{{detail.buyer ? detail.buyer.name : 'N/A'}}</p>
+                  </div>
+                  <div class="col-4 col-md-3 expandedItem">
+                    <p class="cut-text inputLabel">Grade</p>
+                    <p class="cut-text tableText">{{ detail.grade ? detail.grade : 'N/A' }}</p>
+                  </div>
+                  <div class="col-4 col-md-3 expandedItem">
+                    <p class="cut-text inputLabel">Quantity</p>
+                    <p class="cut-text tableText">{{ detail.quantity ? detail.quantity : 'N/A' }}</p>
+                  </div>
+                  <div class="col-4 col-md-3 expandedItem">
+                    <p class="cut-text inputLabel">Units</p>
+                    <p class="cut-text tableText">{{ detail.units ? detail.units : 'N/A' }}</p>
+                  </div>
+                  <div class="col-4 col-md-3 expandedItem">
+                    <p class="cut-text inputLabel">Units</p>
+                    <p class="cut-text tableText">{{ detail.price ? detail.price : 'N/A' }}</p>
+                  </div>
+                  <div class="col-4 col-md-3 pointer expandedItem" matRipple (click)="openDeductions(detail)">
+                    <p class="cut-text inputLabel">Deductions</p>
+                    <p class="orangeText cut-text tableText"> See All </p>
+                  </div>
+                </div>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+            <mat-row *cdkRowDef="let row;columns: displayedColumns;"
+                     class="element-row"
+                     [class.expanded]="expandedElement == row" matRipple></mat-row>
+            <mat-row *cdkRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+                     [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'"
+                     style="overflow: hidden" [className]="row == expandedElement ? 'expandedRow' : 'collapsedRow'">
+            </mat-row>
+          </mat-table>
+        </div>
+      </div>
+    </div>
+    <!----------------------->
+    <!-- mat-table paginator -->
+    <mat-paginator class="out-paginator"
+                   [length]="tableCount"
+                   [pageSize]="25"
+                   [pageSizeOptions]="[10, 25, 50, 100]"
+                   (page)="loadTableData(this.dealStatus.value, false, this.sort);">
+    </mat-paginator>
+  </div>
+
+    <!----------------------->
+    <!-- date -->
+    <!--<ng-container cdkColumnDef="createdAt">
+      <mat-header-cell *cdkHeaderCellDef class="bigNumberCell headerCell" mat-sort-header>DATE</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" class="bigNumberCell">
+        <p class="cut-text tableText">
+          {{row.formattedDate}}
+        </p>
+      </mat-cell>
+    </ng-container>-->
+    <!----------------------->
+    <!-- time -->
+    <!--<ng-container cdkColumnDef="time">
+      <mat-header-cell *cdkHeaderCellDef class="numberCell headerCell" mat-sort-header>TIME</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" class="numberCell">
+        <p class="cut-text tableText">
+          {{row.formattedTime}}
+        </p>
+      </mat-cell>
+    </ng-container>-->
+    <!----------------------->
+    <!-- product -->
+    <!--<ng-container cdkColumnDef="product" sticky>
+      <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell">PRODUCT</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" [className]="row.id">
+        <p class="cut-text tableText">
+          {{row.product.name}}
+        </p>
+      </mat-cell>
+    </ng-container>-->
+    <!----------------------->
+    <!-- quantity -->
+    <!--<ng-container cdkColumnDef="quantity">
+      <mat-header-cell *cdkHeaderCellDef class="numberCell cut-text" mat-sort-header>QUANT. </mat-header-cell>
+      <mat-cell *cdkCellDef="let row" class="numberCell">
+        <p class="cut-text tableText">
+          {{row.quantity}}
+        </p>
+      </mat-cell>
+    </ng-container>-->
+    <!----------------------->
+    <!-- units -->
+    <!--<ng-container cdkColumnDef="units">
+      <mat-header-cell *cdkHeaderCellDef class="bigNumberCell headerCell" mat-sort-header>UNITS</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" class="bigNumberCell">
+        <p class="cut-text tableText">
+          {{row.units}}
+        </p>
+      </mat-cell>
+    </ng-container>-->
+    <!----------------------->
+    <!-- grade -->
+    <!--<ng-container cdkColumnDef="grade">
+      <mat-header-cell *cdkHeaderCellDef class="numberCell" mat-sort-header>GRADE</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" class="numberCell">
+        <p class="cut-text tableText">
+          {{row.grade}}
+        </p>
+      </mat-cell>
+    </ng-container>-->
+    <!----------------------->
+    <!-- buyer -->
+    <!--<ng-container cdkColumnDef="buyer">
+      <mat-header-cell *cdkHeaderCellDef class="headerCell">BUYER</mat-header-cell>
+      <mat-cell *cdkCellDef="let row">
+        <p class="cut-text tableText">
+          {{row.buyer.name}}
+        </p>
+      </mat-cell>
+    </ng-container>-->
+    <!----------------------->
+    <!-- price -->
+    <!--<ng-container cdkColumnDef="price">
+      <mat-header-cell *cdkHeaderCellDef class="bigNumberCell headerCell" mat-sort-header>PRICE</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" class="bigNumberCell">
+        <p class="cut-text tableText">
+          {{row.price}}
+        </p>
+      </mat-cell>
+    </ng-container>-->
+    <!----------------------->
+    <!-- shipment -->
+    <!--<ng-container cdkColumnDef="shipment">
+      <mat-header-cell *cdkHeaderCellDef class="headerCell">SHIPMENT</mat-header-cell>
+      <mat-cell *cdkCellDef="let row">
+        <p class="cut-text tableText">
+          {{row.shipmentRatio}}
+        </p>
+      </mat-cell>
+    </ng-container>-->
+    <!----------------------->
+    <!-- deductions -->
+    <!--<ng-container cdkColumnDef="deductions">
+      <mat-header-cell *cdkHeaderCellDef class="productsCell">DEDUCTIONS</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" class="productsCell" (click)="openDeductions(row)">
+        <p class="cut-text tableText orangeText">
+          See all
+        </p>
+      </mat-cell>
+    </ng-container>-->
+    <!----------------------->
+    <!-- button -->
+    <!--<ng-container cdkColumnDef="button">
+      <mat-header-cell *cdkHeaderCellDef class="buttonCell headerCell"></mat-header-cell>
+      <mat-cell *cdkCellDef="let row" class="buttonCell">
+        <button class="whiteButton" matRipple (click)="openDeal(row)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>-->
+</div>

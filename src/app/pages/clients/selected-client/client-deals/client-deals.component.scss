@@ -1,0 +1,30 @@
+@media only screen and (min-width: 960px) {
+  .clientDealFixer {
+    max-height: calc(100vh - 250px) !important;
+  }
+}
+.clientDealFixer {
+  max-height: calc(100vh - 340px);
+}
+
+.expandedRow, .clientDetailCell {
+  min-height: 100px !important;
+  height: 100px !important;
+  width: 100%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.expandedItem {
+  padding: 5px 15px;
+}
+
+
+.tagsIcon {
+  font-size: 16px !important;
+  height: 16px !important;
+  margin-right: 5px !important;
+  color: var(--orange);
+}

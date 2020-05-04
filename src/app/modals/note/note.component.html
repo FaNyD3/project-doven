@@ -1,0 +1,152 @@
+<!----------------------->
+<!-- title -->
+<div class="row">
+    <div class="col-12">
+        <h2 class="blueText"> {{ dataIn.title }} </h2>
+    </div>
+</div>
+<!----------------------->
+<!-- form -->
+<form [formGroup]="addForm" (ngSubmit)="performRequest()">
+    <!----------------------->
+    <!-- 'note' data inputs -->
+    <div class="row">
+        <!----------------------->
+        <!-- type -->
+        <div class="col-8 col-sm-6 col-lg-4 formItem">
+            <label for="type" class="inputLabel">Asunto</label>
+            <div class="customInput" (click)="type.focus()">
+                <input type="text" matInput placeholder="Asunto" id="type" #type formControlName="type">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('type').value" matSuffix aria-label="Clear" (click)="addForm.get('type').setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- participants autocomplete -->
+        <!--
+        <div class="col-9 col-sm-6 col-md-6 col-lg-3 formItem">
+            <label for="availableUsers" class="inputLabel">Available users</label>
+            <div class="customInput" (click)="availableUsers.focus()">
+                <input type="text" matInput placeholder="Available users" id="availableUsers" #availableUsers formControlName="availableUsers" [matAutocomplete]="autoReminder" class="autoCompleteInput">
+                <button type="button"  class="searchbarSuffix fsize22" *ngIf="addForm.get('availableUsers').value" matSuffix aria-label="Clear" (click)="addForm.get('availableUsers').setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <mat-autocomplete #autoReminder="matAutocomplete" [displayWith]="displayFn">
+                <mat-option disabled>Select one user</mat-option>
+                <mat-option *ngFor="let user of (availableOptions | async)" [value]="user">
+                    <div class="buyerContainer">
+                        <p>{{user.name}}</p>
+                        <div class="branchesCircleContainer">
+                            <div class="branchCircle" *ngFor="let branch of user.branches"
+                                 [style.background-color]="branch.color"
+                                 [matTooltip]="branch.name"
+                                 matTooltipPosition="above">
+                            </div>
+                            <p *ngIf="user.role === 'generalAdmin'" matTooltip="Admin" matTooltipPosition="above">A</p>
+                        </div>
+                    </div>
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+        -->
+        <!----------------------->
+        <!-- add participant button -->
+        <!--
+        <div class="col-3 col-sm-2 col-lg-3 formItem">
+            <label class="inputLabel showOnBig">Add to reminder list</label>
+            <label class="inputLabel showUntilBig">Add</label>
+            <button class="orangeButton addButton" matRipple type="button" (click)="addParticipant()">
+                <mat-icon>add_circle_outline</mat-icon>
+                <span class="showOnlyMedium">Add</span>
+                <span class="showOnBig">Add user</span>
+            </button>
+        </div>
+        -->
+    </div>
+    <!----------------------->
+    <!-- users added to participants list -->
+    <!--
+    <div class="row">
+        <div class="col-12 formItem">
+            <label class="inputLabel">Reminder participants</label>
+        </div>
+        <div class="col-12 formItem">
+            <mat-chip-list *ngIf="participantBelongs.length > 0">
+                <mat-chip *ngFor="let user of participantBelongs" removable="true" selectable="false" (removed)="removeParticipant(user)" class="branchChip" [matTooltip]="user.name" matTooltipPosition="above">
+                    <p class="popUpMenuText">{{user.name}}</p>
+                    <mat-icon matChipRemove>close</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+            <p *ngIf="participantBelongs.length === 0" class="tableText">Has not users assigned to reminder</p>
+        </div>
+    </div>
+    -->
+    <!----------------------->
+    <!-- reminder controls -->
+    <!--
+    <div class="row">
+        <div class="col-12 col-sm-4 formItem">
+            <p class="inputLabel notificationText">Send reminders</p>
+            <div class="notificationsToggle">
+                <mat-slide-toggle class="toggle" formControlName="reminder" checked="false" (change)="changeReminder($event)"></mat-slide-toggle>
+            </div>
+        </div>
+        <div class="col-6 col-sm-4 formItem" *ngIf="addForm.get('reminder').value">
+            <label class="inputLabel">Reminder date</label>
+            <div class="customInput" (click)="picker1.open()">
+                <input matInput [matDatepicker]="picker1" formControlName="reminderDate" placeholder="Choose a date" autocomplete="off">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1 startView="month" ></mat-datepicker>
+                <mat-error *ngIf="addForm.get('reminderDate').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+            </div>
+        </div>
+        <div class="col-6 col-sm-4 formItem" *ngIf="addForm.get('reminder').value">
+            <label class="inputLabel">Time</label>
+            <div class="customInput">
+                <input class="fullHeight" atp-time-picker value="16:00" formControlName="reminderTime" placeholder="Choose time"/>
+                <mat-error *ngIf="addForm.get('reminderTime').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+            </div>
+        </div>
+    </div>
+    -->
+</form>
+<!----------------------->
+<!-- notes -->
+<div class="row">
+    <div class="col-12 formItem">
+        <label class="inputLabel">Comentarios *</label>
+        <quill-editor id="textEditor" format="html" [modules]="quillConfig" [(ngModel)]="noteContent"></quill-editor>
+    </div>
+</div>
+    <div class="row buttonsRow">
+        <div class="col-4" *ngIf="dataIn.isNew"></div>
+        <!----------------------->
+        <!-- cancel button -->
+        <div class="col-4">
+            <button type="button" class="grayButton fullWidth" matRipple (click)="onNoClick()">
+                <mat-icon class="showOnSmall marg0">close</mat-icon>
+                <span class="hideUntilMedium">Cancelar</span>
+            </button>
+        </div>
+        <!----------------------->
+        <!-- delete button -->
+        <div class="col-4" *ngIf="!dataIn.isNew">
+            <button type="button" class="redButton fullWidth" matRipple (click)="deleteObject()">
+                <mat-icon class="showOnSmall marg0">delete</mat-icon>
+                <span class="hideUntilMedium">Eliminar</span>
+            </button>
+        </div>
+        <!----------------------->
+        <!-- new button -->
+        <div class="col-4">
+            <button class="blueButton fullWidth" matRipple type="button" (click)="this.performRequest()">
+                <mat-icon class="showOnSmall marg0">save</mat-icon>
+                <span class="hideUntilMedium">Guardar</span>
+            </button>
+        </div>
+    </div>
+
+
+

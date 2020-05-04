@@ -1,0 +1,70 @@
+::ng-deep .mat-select-panel mat-option{
+  font-size: 13px !important;
+  height: 35px !important;
+  border-bottom: 1px solid lightgray !important;
+}
+.justifyStart {
+  justify-content: flex-start !important;
+}
+.reminderType {
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+.noteArea {
+  font-size: 12px !important;
+}
+
+.expandedRow, .clientDetailCell {
+  min-height: max-content;
+  height: max-content;
+  padding: 5px !important;
+  width: 100%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.expandedItem {
+  padding: 5px 15px;
+}
+.noteContainer {
+  border-radius: 2px;
+  padding: 5px 10px !important;
+  font-size: 13px;
+  margin-top: 5px;
+  border: 1px solid lightgray;
+  background-color: #f5f5f5;
+}
+.detailsRowContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.margb5 {
+  margin-bottom: 5px;
+}
+.margR5 {
+  margin-right: 5px;
+}
+.margL5 {
+  margin-left: 5px;
+}
+.quickEditContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-end;
+  width: 220px;
+}
+
+.clickableP {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  height: 100%;
+  cursor: pointer;
+}

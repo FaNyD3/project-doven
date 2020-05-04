@@ -1,0 +1,115 @@
+<!----------------------->
+<!-- page container -->
+<div class="container-fluid fullHeight">
+  <!----------------------->
+  <!-- cards row -->
+  <div class="cardsContainer">
+    <div class="dashCard" *ngIf="!showOnlySmall">
+      <div class="dashCardDataContainer">
+        <p class="Panel-act-2 dashCardText">Ejemplo</p>
+        <p class="Dashboard-card dashCardText">{{ statistics['openLeads'] }} </p>
+      </div>
+    </div>
+    <div class="dashCard" *ngIf="!showOnlySmall">
+      <div class="dashCardDataContainer">
+        <p class="Panel-act-2 dashCardText">Ejemplo</p>
+        <p class="Dashboard-card dashCardText">{{ statistics['openDeals'] }}</p>
+      </div>
+    </div>
+    <div class="dashCard" *ngIf="!showOnlySmall">
+      <div class="dashCardDataContainer">
+        <p class="Panel-act-2 dashCardText">Ejemplo</p>
+        <p class="Dashboard-card dashCardText">{{ statistics['openDeals'] }}</p>
+      </div>
+    </div>
+    <div class="dashCard" *ngIf="!showOnlySmall">
+      <div class="dashCardDataContainer">
+        <p class="Panel-act-2 dashCardText">Ejemplo</p>
+        <p class="Dashboard-card dashCardText">{{ statistics['canceledDeals'] }}</p>
+      </div>
+    </div>
+    <div class="dashCard" *ngIf="showOnLarge && !showOnlySmall">
+      <div class="dashCardDataContainer">
+        <p class="Panel-act-2 dashCardText">Ejemplo</p>
+        <p class="Dashboard-card dashCardText">{{ statistics['excecutedDeals'] }}</p>
+      </div>
+    </div>
+    <div class="dashCard" *ngIf="showOnLarge && !showOnlySmall">
+      <div class="dashCardDataContainer">
+        <p class="Panel-act-2 dashCardText">Ejemplo</p>
+        <p class="Dashboard-card dashCardText">{{ statistics['canceledDeals'] }}</p>
+      </div>
+    </div>
+    <div class="dashCard" *ngIf="showOnLarge && !showOnlySmall">
+      <div class="dashCardDataContainer">
+        <p class="Panel-act-2 dashCardText">Ejemplo</p>
+        <p class="Dashboard-card dashCardText">{{ statistics['reminders'] }}</p>
+      </div>
+    </div>
+  </div>
+  <!----------------------->
+  <!-- cards row -->
+  <div class="secondCardsContainer" *ngIf="!showOnLarge">
+    <div class="dashCard" *ngIf="showOnlySmall">
+      <div class="dashCardDataContainer">
+        <p class="Panel-act-2 dashCardText">Ejemplo</p>
+        <p class="Dashboard-card dashCardText">{{ statistics['openDeals'] }}</p>
+      </div>
+    </div>
+    <div class="dashCard" *ngIf="showOnlySmall">
+      <div class="dashCardDataContainer">
+        <p class="Panel-act-2 dashCardText">Ejemplo</p>
+        <p class="Dashboard-card dashCardText">{{ statistics['canceledDeals'] }}</p>
+      </div>
+    </div>
+    <div class="dashCard" *ngIf="!showOnlySmall">
+      <div class="dashCardDataContainer">
+        <p class="Panel-act-2 dashCardText">Ejemplo</p>
+        <p class="Dashboard-card dashCardText">{{ statistics['excecutedDeals'] }}</p>
+      </div>
+    </div>
+    <div class="dashCard" *ngIf="!showOnlySmall">
+      <div class="dashCardDataContainer">
+        <p class="Panel-act-2 dashCardText">Ejemplo</p>
+        <p class="Dashboard-card dashCardText">{{ statistics['canceledDeals'] }}</p>
+      </div>
+    </div>
+    <div class="dashCard" *ngIf="!showOnlySmall">
+      <div class="dashCardDataContainer">
+        <p class="Panel-act-2 dashCardText">Ejemplo</p>
+        <p class="Dashboard-card dashCardText">{{ statistics['reminders'] }}</p>
+      </div>
+    </div>
+  </div>
+  <!----------------------->
+  <!-- cards row -->
+  <div class="thirdCardsContainer" *ngIf="showOnlySmall">
+    <div class="dashCard">
+      <div class="dashCardDataContainer">
+        <p class="Panel-act-2 dashCardText">Ejemplo</p>
+        <p class="Dashboard-card dashCardText">{{ statistics['excecutedDeals'] }}</p>
+      </div>
+    </div>
+    <div class="dashCard">
+      <div class="dashCardDataContainer">
+        <p class="Panel-act-2 dashCardText">Ejemplo</p>
+        <p class="Dashboard-card dashCardText">{{ statistics['canceledDeals'] }}</p>
+      </div>
+    </div>
+  </div>
+  <!----------------------->
+  <!-- cards row -->
+  <div class="fourthCardsContainer" *ngIf="showOnlySmall">
+    <div class="dashCard">
+      <div class="dashCardDataContainer">
+        <p class="Panel-act-2 dashCardText">Ejemplo</p>
+        <p class="Dashboard-card dashCardText">{{ statistics['reminders'] }}</p>
+      </div>
+    </div>
+  </div>
+  <!----------------------->
+  <!-- graph row  -->
+
+
+
+</div>

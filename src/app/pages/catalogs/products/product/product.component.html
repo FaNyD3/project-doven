@@ -1,0 +1,156 @@
+<div class="row">
+    <div class="col-12">
+        <h2 class="blueText"> {{ dataIn.title }} </h2>
+    </div>
+</div>
+<!----------------------->
+<!-- form -->
+<form [formGroup]="addForm" (ngSubmit)="performRequest()">
+    <div class="row">
+        <!----------------------->
+        <!-- model -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="model" class="inputLabel">Model del airplain*</label>
+            <div class="customInput" (click)="model.focus()">
+                <input type="text" matInput placeholder="Model" id="model" #model formControlName="model">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('model').value" matSuffix aria-label="Clear" (click)="addForm.get('model').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+                <mat-error *ngIf="addForm.get('model').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!-- enrollment -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="enrollment" class="inputLabel">Enrollment del airplain*</label>
+            <div class="customInput" (click)="enrollment.focus()">
+                <input type="text" matInput placeholder="Enrollment" id="enrollment" #enrollment formControlName="enrollment">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('enrollment').value" matSuffix aria-label="Clear" (click)="addForm.get('enrollment').setValue('')">
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="addForm.get('enrollment').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!-- certificationM -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="certificationM" class="inputLabel">CertificationM del airplain*</label>
+            <div class="customInput" (click)="certificationM.focus()">
+                <input type="text" matInput placeholder="Certification M" id="certificationM" #certificationM formControlName="certificationM">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('certificationM').value" matSuffix aria-label="Clear" (click)="addForm.get('certificationM').setValue('')">
+                <mat-icon>close</mat-icon>
+              </button>
+                <mat-error *ngIf="addForm.get('certificationM').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!-- certificationA -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="certificationA" class="inputLabel">CertificationA del airplain*</label>
+            <div class="customInput" (click)="certificationA.focus()">
+                <input type="text" matInput placeholder="Certification A" id="certificationA" #certificationA formControlName="certificationA">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('certificationA').value" matSuffix aria-label="Clear" (click)="addForm.get('certificationA').setValue('')">
+              <mat-icon>close</mat-icon>
+            </button>
+                <mat-error *ngIf="addForm.get('certificationA').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!-- policyS -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="policyS" class="inputLabel">PolicyS del airplain*</label>
+            <div class="customInput" (click)="policyS.focus()">
+                <input type="text" matInput placeholder="Policy S" id="policyS" #policyS formControlName="policyS">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('policyS').value" matSuffix aria-label="Clear" (click)="addForm.get('policyS').setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+                <mat-error *ngIf="addForm.get('policyS').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!-- binnacleV -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="binnacleV" class="inputLabel">BinnacleV del airplain*</label>
+            <div class="customInput" (click)="binnacleV.focus()">
+                <input type="text" matInput placeholder="Binnacle V" id="binnacleV" #binnacleV formControlName="binnacleV">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('binnacleV').value" matSuffix aria-label="Clear" (click)="addForm.get('binnacleV').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+                <mat-error *ngIf="addForm.get('binnacleV').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!-- binnacleM -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="binnacleM" class="inputLabel">BinnacleM del airplain*</label>
+            <div class="customInput" (click)="binnacleM.focus()">
+                <input type="text" matInput placeholder="Binnacle M" id="binnacleM" #binnacleM formControlName="binnacleM">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('binnacleM').value" matSuffix aria-label="Clear" (click)="addForm.get('binnacleM').setValue('')">
+        <mat-icon>close</mat-icon>
+      </button>
+                <mat-error *ngIf="addForm.get('binnacleM').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!-- authorizationOER -->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="authorizationOER" class="inputLabel">AuthorizationOER del airplain*</label>
+            <div class="customInput" (click)="authorizationOER.focus()">
+                <input type="text" matInput placeholder="Authorization OER" id="authorizationOER" #authorizationOER formControlName="authorizationOER">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('authorizationOER').value" matSuffix aria-label="Clear" (click)="addForm.get('authorizationOER').setValue('')">
+      <mat-icon>close</mat-icon>
+    </button>
+                <mat-error *ngIf="addForm.get('authorizationOER').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+        <!--airline-->
+        <div class="col-12 col-md-6 col-lg-4 formItem">
+            <label for="airline" class="inputLabel">Airline del airplain*</label>
+            <div class="customInput" (click)="airline.focus()">
+                <input type="text" matInput placeholder="Airline" id="airline" #airline formControlName="airline">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('airline').value" matSuffix aria-label="Clear" (click)="addForm.get('airline').setValue('')">
+    <mat-icon>close</mat-icon>
+  </button>
+                <mat-error *ngIf="addForm.get('airline').invalid">
+                    <mat-icon>error_outline</mat-icon>
+                </mat-error>
+            </div>
+        </div>
+    </div>
+    <div class="row buttonsRow">
+        <div class="col-4" *ngIf="dataIn.isNew"></div>
+        <!----------------------->
+        <!-- cancel button -->
+        <div class="col-4">
+            <button type="button" class="grayButton fullWidth" matRipple (click)="onNoClick()">
+        <mat-icon class="showOnSmall marg0">close</mat-icon>
+        <span class="hideUntilMedium">Cancelar</span>
+      </button>
+        </div>
+        <!----------------------->
+        <!-- delete button -->
+        <div class="col-4" *ngIf="!dataIn.isNew">
+            <button type="button" class="redButton fullWidth" matRipple (click)="deleteObject()">
+        <mat-icon class="showOnSmall marg0">delete</mat-icon>
+        <span class="hideUntilMedium">Eliminar</span>
+      </button>
+        </div>
+        <!----------------------->
+        <!-- new button -->
+        <div class="col-4">
+            <button class="blueButton fullWidth" matRipple type="submit">
+        <mat-icon class="showOnSmall marg0">save</mat-icon>
+        <span class="hideUntilMedium">Guardar</span>
+      </button>
+        </div>
+    </div>
+</form>

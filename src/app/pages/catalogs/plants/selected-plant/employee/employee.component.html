@@ -1,0 +1,193 @@
+<!----------------------->
+<!-- title -->
+<div class="row">
+  <div class="col-12">
+    <h2 class="orangeText dialogTitle"> {{ dataIn.title }} </h2>
+  </div>
+</div>
+<!----------------------->
+<!-- form -->
+<form [formGroup]="addForm" (ngSubmit)="performRequest()">
+  <div class="row">
+    <!----------------------->
+    <!-- name -->
+    <div class="col-12 col-sm-6 col-lg-4 col-xl-2 formItem">
+      <label for="name" class="inputLabel">Name *</label>
+      <div class="customInput" (click)="name.focus()">
+        <input type="text" matInput placeholder="Name" id="name" #name formControlName="name">
+        <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('name').value" matSuffix aria-label="Clear" (click)="addForm.get('name').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="addForm.get('name').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+      </div>
+    </div>
+    <!----------------------->
+    <!-- position -->
+    <div class="col-12 col-sm-6 col-lg-4 col-xl-2 formItem">
+      <label for="position" class="inputLabel">Position *</label>
+      <div class="customInput" (click)="position.focus()">
+        <input type="text" matInput placeholder="position" id="position" #position formControlName="position">
+        <button type="button" class="searchbarSuffix fsize22" *ngIf="addForm.get('position').value" matSuffix aria-label="Clear" (click)="addForm.get('position').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="addForm.get('position').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+      </div>
+    </div>
+    <!----------------------->
+    <!-- days picker -->
+    <div class="col-12 col-sm-6 col-lg-4 col-xl-2 formItem">
+      <label for="daysPicker" class="inputLabel">Working days</label>
+      <mat-select class="customInput" placeholder="Working days" id="daysPicker" #daysPicker formControlName="days" multiple>
+        <mat-select-trigger>
+          {{addForm.get('days').value}}
+        </mat-select-trigger>
+        <mat-option disabled>Select multiple days</mat-option>
+        <mat-option value="Mo" [disabled]="checkDay('Mo')">
+          <p class="starsWrapper">
+            Monday
+          </p>
+        </mat-option>
+        <mat-option value="Tu" [disabled]="checkDay('Tu')">
+          <p class="starsWrapper">
+            Tuesday
+          </p>
+        </mat-option>
+        <mat-option value="We" [disabled]="checkDay('We')">
+          <p class="starsWrapper">
+            Wednesday
+          </p>
+        </mat-option>
+        <mat-option value="Th" [disabled]="checkDay('Th')">
+          <p class="starsWrapper">
+            Thursday
+          </p>
+        </mat-option>
+        <mat-option value="Fr" [disabled]="checkDay('Fr')">
+          <p class="starsWrapper">
+            Friday
+          </p>
+        </mat-option>
+        <mat-option value="Sa" [disabled]="checkDay('Sa')">
+          <p class="starsWrapper">
+            Saturday
+          </p>
+        </mat-option>
+        <mat-option value="Su" [disabled]="checkDay('Su')">
+          <p class="starsWrapper">
+            Sunday
+          </p>
+        </mat-option>
+      </mat-select>
+    </div>
+    <div class="col-12 col-sm-6 checkContainer">
+      <mat-checkbox color="primary" id="same" formControlName="sameSchedule">Same schedule every selected day.</mat-checkbox>
+    </div>
+  </div>
+  <!----------------------->
+  <!-- dynamic days setter -->
+  <div class="row daysContainer" *ngIf="!addForm.get('sameSchedule').value">
+    <div *ngFor="let day of addForm.get('days').value" class="col-12 col-sm-6 col-md-4 col-xl-3">
+      <div *ngIf="day === 'Mo'" class="col-12">
+        <label class="inputLabel orangeText">Monday</label>
+      </div>
+      <div *ngIf="day === 'Tu'" class="col-12">
+        <label class="inputLabel orangeText">Tuesday</label>
+      </div>
+      <div *ngIf="day === 'We'" class="col-12">
+        <label class="inputLabel orangeText">Wednesday</label>
+      </div>
+      <div *ngIf="day === 'Th'" class="col-12">
+        <label class="inputLabel orangeText">Thursday</label>
+      </div>
+      <div *ngIf="day === 'Fr'" class="col-12">
+        <label class="inputLabel orangeText">Friday</label>
+      </div>
+      <div *ngIf="day === 'Sa'" class="col-12">
+        <label class="inputLabel orangeText">Saturday</label>
+      </div>
+      <div *ngIf="day === 'Su'" class="col-12">
+        <label class="inputLabel orangeText">Sunday</label>
+      </div>
+      <div class="col-12">
+        <div class="row">
+          <!----------------------->
+          <!-- start hour -->
+          <div class="col-6 formItem">
+            <label [for]="day + 'startHour'" class="inputLabel">Start hour</label>
+            <mat-select class="customInput" placeholder="Start hour" [id]="day + 'startHour'" [formControlName]="day + 'StartHour'">
+              <mat-option disabled>Select one hour</mat-option>
+              <mat-option *ngFor="let hour of hourOptions" [value]="hour">{{ hour }}</mat-option>
+            </mat-select>
+          </div>
+          <!----------------------->
+          <!-- end hour -->
+          <div class="col-6 formItem">
+            <label [for]="day + 'endHour'" class="inputLabel">End hour</label>
+            <mat-select class="customInput" placeholder="End hour" [id]="day + 'endHour'" [formControlName]="day + 'EndHour'">
+              <mat-option disabled>Select one hour</mat-option>
+              <mat-option *ngFor="let hour of hourOptions" [value]="hour">{{ hour }}</mat-option>
+            </mat-select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!----------------------->
+  <!-- When same scheduleEvery day -->
+  <div class="row daysContainer" *ngIf="addForm.get('sameSchedule').value && addForm.get('days').value.length > 0">
+    <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+      <div class="row">
+        <div class="col-12">
+          <label class="inputLabel orangeText">Every selected day</label>
+        </div>
+        <!----------------------->
+        <!-- start hour -->
+        <div class="col-6 formItem">
+          <label for="startHour" class="inputLabel">Start hour</label>
+          <mat-select class="customInput" placeholder="Start hour" id="startHour" #startHour formControlName="startHour">
+            <mat-option disabled>Select one hour</mat-option>
+            <mat-option *ngFor="let hour of hourOptions" [value]="hour">{{ hour }}</mat-option>
+          </mat-select>
+        </div>
+        <!----------------------->
+        <!-- end hour -->
+        <div class="col-6 formItem">
+          <label for="endHour" class="inputLabel">End hour</label>
+          <mat-select class="customInput" placeholder="End hour" id="endHour" #endHour formControlName="endHour">
+            <mat-option disabled>Select one hour</mat-option>
+            <mat-option *ngFor="let hour of hourOptions" [value]="hour">{{ hour }}</mat-option>
+          </mat-select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!----------------------->
+  <!-- button actions -->
+  <div class="row buttonsRow">
+    <div class="col-4" *ngIf="dataIn.isNew"></div>
+    <!----------------------->
+    <!-- cancel button -->
+    <div class="col-4">
+      <button type="button" class="grayButton fullWidth" matRipple (click)="onNoClick(null, false)">
+        <mat-icon class="showOnSmall marg0">close</mat-icon>
+        <span class="hideUntilMedium">Cancel</span>
+      </button>
+    </div>
+    <!----------------------->
+    <!-- delete button -->
+    <div class="col-4" *ngIf="!dataIn.isNew">
+      <button type="button" class="redButton fullWidth" matRipple (click)="deleteEmployee()">
+        <mat-icon class="showOnSmall marg0">delete</mat-icon>
+        <span class="hideUntilMedium">Delete</span>
+      </button>
+    </div>
+    <!----------------------->
+    <!-- new button -->
+    <div class="col-4">
+      <button class="orangeButton fullWidth" matRipple type="submit">
+        <mat-icon class="showOnSmall marg0">save</mat-icon>
+        <span class="hideUntilMedium">Save</span>
+      </button>
+    </div>
+  </div>
+</form>

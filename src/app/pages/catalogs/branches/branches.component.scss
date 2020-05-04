@@ -1,0 +1,13 @@
+.colorCircle {
+  width: 20px;
+  height: 20px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-left: 10px;
+}
+.colorCell {
+  max-width: 60px;
+  min-width: 60px;
+}

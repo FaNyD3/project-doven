@@ -1,0 +1,173 @@
+
+<!----------------------->
+<!-- page container -->
+<div class="container-fluid fullHeight">
+  <!----------------------->
+  <!-- filters row -->
+  <div class="row">
+    <div class="col-12 col-sm-2 col-md-6 col-lg-8 pageTitleCell clientsFormItem">
+      <h2>Reminders</h2>
+    </div>
+    <!----------------------->
+    <!-- searchbar -->
+    <div class="col-6 col-sm-5 col-md-3 col-lg-2">
+      <div class="searchbar" (click)="search.focus()">
+        <mat-icon matPrefix class="fsize22">search</mat-icon>
+        <input type="text" matInput placeholder="Search..." #search [formControl]="searchbar">
+        <button type="button" class="searchbarSuffix fsize22" *ngIf="searchbar.value" matSuffix aria-label="Clear" (click)="searchbar.setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+    <!----------------------->
+    <!-- new user button -->
+    <div class="col-6 col-sm-5 col-md-3 col-lg-2 clientsFormItem">
+      <button type="button" class="orangeButton fullWidth" matRipple (click)="newReminder()">
+        <mat-icon>add_circle_outline</mat-icon>
+        <p>New reminder</p>
+      </button>
+    </div>
+  </div>
+  <!----------------------->
+  <!-- loading spinner -->
+  <div class="tableLoaderContainer" *ngIf="firstLoad">
+    <mat-spinner></mat-spinner>
+  </div>
+  <!----------------------->
+  <!-- not found container -->
+  <div #noData>
+    <!----------------------->
+    <!-- not found message -->
+    <div class="tableLoaderContainer fadeIn" *ngIf="!firstLoad">
+      <p>Data not found</p>
+    </div>
+  </div>
+  <!----------------------->
+  <!-- data container -->
+  <div #displayData class="fadeIn hidden">
+    <!----------------------->
+    <!-- table card -->
+    <div class="tableCard">
+      <div class="tableWrapper">
+        <div class="tableFixer">
+          <!----------------------->
+          <!-- table -->
+          <mat-table class="personalizedTable" [dataSource]="dataSource" matSort multiTemplateDataRows (matSortChange)="loadTableData(searchbar.value, this.categories.value, false, $event)">
+            <!----------------------->
+            <!-- check -->
+            <ng-container cdkColumnDef="check">
+              <mat-header-cell *cdkHeaderCellDef class="checkCell headerCell"></mat-header-cell>
+              <mat-cell *cdkCellDef="let row" [className]="'checkCell ' + row.id">
+                <!----------------------->
+                <!-- checkbox -->
+                <mat-checkbox color="primary" (change)="selectRow($event, row.id)"></mat-checkbox>
+              </mat-cell>
+            </ng-container>
+            <!----------------------->
+            <!-- reminder -->
+            <ng-container cdkColumnDef="text">
+              <mat-header-cell *cdkHeaderCellDef class="headerCell"> REMINDER </mat-header-cell>
+              <mat-cell *cdkCellDef="let row" [className]="'cellPadding ' + row.id" (mouseenter)="cellHover = 'text' + row.id" (mouseleave)="cellHover = ''">
+                <p class="cut-text tableText clickableP" (click)=" expandedElement = (row.hasNote && expandedElement !== row) ? row : {};">
+                  {{ row.text }}
+                </p>
+                <div class="copyContainer" id="reminderCopyButton">
+                  <button type="button" class="copyButton" matRipple *ngIf="cellHover === 'text' + row.id" (click)="copyData(row.text)">
+                    <mat-icon class="leftEditProduct">file_copy</mat-icon>
+                  </button>
+                </div>
+              </mat-cell>
+            </ng-container>
+            <!----------------------->
+            <!-- client -->
+            <ng-container cdkColumnDef="client">
+              <mat-header-cell *cdkHeaderCellDef class="headerCell"> CLIENT </mat-header-cell>
+              <mat-cell *cdkCellDef="let row" [className]="'cellPadding ' + row.id" (mouseenter)="cellHover = 'client' + row.id" (mouseleave)="cellHover = ''">
+                <p class="cut-text tableText clickableP" (click)=" expandedElement = (row.hasNote && expandedElement !== row) ? row : {};">
+                  {{ row.note ? row.note.client.name : 'N/A' }}
+                </p>
+                <div class="copyContainer">
+                  <button type="button" class="copyButton" matRipple *ngIf="cellHover === 'client' + row.id" (click)="copyData(row.note ? row.note.client.name : 'N/A')">
+                    <mat-icon class="leftEditProduct">file_copy</mat-icon>
+                  </button>
+                </div>
+              </mat-cell>
+            </ng-container>
+            <!----------------------->
+            <!-- date -->
+            <ng-container cdkColumnDef="date">
+              <mat-header-cell *cdkHeaderCellDef class="reminderCell headerCell"> DATE </mat-header-cell>
+              <mat-cell *cdkCellDef="let row" [className]="'cellPadding reminderCell ' + row.id" (mouseenter)="cellHover = 'date' + row.id"  (mouseleave)="cellHover = ''">
+                <p class="cut-text tableText clickableP" (click)=" expandedElement = (row.hasNote && expandedElement !== row) ? row : {};">
+                  {{(row.formattedDate + ', ' + row.formattedTime)}}
+                </p>
+                <div class="copyContainer">
+                  <button type="button" class="copyButton" matRipple *ngIf="cellHover === 'date' + row.id" (click)="copyData((row.formattedDate + ', ' + row.formattedTime))">
+                    <mat-icon class="leftEditProduct">file_copy</mat-icon>
+                  </button>
+                </div>
+              </mat-cell>
+            </ng-container>
+            <!----------------------->
+            <!-- button -->
+            <ng-container cdkColumnDef="button">
+              <mat-header-cell *cdkHeaderCellDef class="twoButtonCell headerCell justifyStart">TYPE</mat-header-cell>
+              <mat-cell *cdkCellDef="let row" [className]="'twoButtonCell ' + row.id">
+                <div class="reminderType tableButton" [matTooltip]="row.hasNote ? 'Reminder created from note' : 'Custom reminder'" matTooltipPosition="above" (click)=" expandedElement = (row.hasNote && expandedElement !== row) ? row : {};">
+                  <mat-icon class="orangeText pointer" *ngIf="row.hasNote">list_alt</mat-icon>
+                  <mat-icon class="orangeText" *ngIf="!row.hasNote">alarm</mat-icon>
+                </div>
+                <button type="button" class="whiteButton tableButton" matRipple (click)="editReminder(row)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+
+            <!----------------------->
+            <!-- Expanded Content Column - The detail row is made up of this one column -->
+            <ng-container matColumnDef="expandedDetail">
+              <mat-cell *cdkCellDef="let detail" class="clientDetailCell">
+                <div class="row fullWidth" *ngIf="detail.note">
+                  <!----------------------->
+                  <!-- Edit comments text -->
+                  <div class="col-12 detailsRowContainer margb5">
+                    <p class="cut-text inputLabel margb5">Note</p>
+                    <div class="quickEditContainer">
+                      <p class="tableText margR5">Edit note</p>
+                      <button type="button" class="whiteButton tableButton" matRipple (click)="openNote(detail.note)">
+                        <mat-icon class="tagsIcon">edit</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <!----------------------->
+                  <!-- Comments text -->
+                  <!--<div class="col-12 noteContainer" [innerHTML]="detail.note.htmlComments | safeHtml"></div>-->
+                </div>
+              </mat-cell>
+            </ng-container>
+
+
+            <mat-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+            <mat-row *cdkRowDef="let row; columns: displayedColumns;"
+                     class="element-row notesRow"
+                     [class.expanded]="expandedElement == row"></mat-row>
+
+            <mat-row *cdkRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+                     [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'"
+                     style="overflow: hidden" [className]="row == expandedElement ? 'expandedRow' : 'collapsedRow'">
+            </mat-row>
+          </mat-table>
+        </div>
+      </div>
+    </div>
+    <!----------------------->
+    <!-- mat-table paginator -->
+    <mat-paginator class="out-paginator"
+                   [length]="tableCount"
+                   [pageSize]="25"
+                   [pageSizeOptions]="[10, 25, 50, 100]"
+                   (page)="loadTableData(this.searchbar.value, this.categories.value, false, this.sort);">
+    </mat-paginator>
+  </div>
+</div>

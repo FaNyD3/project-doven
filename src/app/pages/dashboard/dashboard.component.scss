@@ -1,0 +1,329 @@
+.dashCard {
+  height: 75px;
+  box-shadow: 0 0 14px 0 var(--brown-grey-9);
+  background-color: #ffffff;
+  margin: 0 0 10px 0;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  min-width: 100px !important;
+  width: calc(calc(100% / 7) - 10px);
+}
+@media only screen and (max-width: 789px) {
+  .dashCard {
+    min-width: 90px !important;
+    width: calc(calc(100% / 4) - 10px);
+  }
+}
+@media only screen and (max-width: 499px) {
+  .dashCard {
+    min-width: 90px !important;
+    width: calc(calc(100% / 2) - 5px);
+  }
+}
+.dashCardDataContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  min-width: 79px;
+}
+.graphCard {
+  width: 100%;
+  box-shadow: 0 0 14px 0 var(--brown-grey-9);
+  background-color: #ffffff;
+  min-height: 250px;
+  margin-bottom: 20px;
+  padding: 15px;
+}
+::ng-deep .mat-autocomplete-panel {
+  min-width: 230px !important;
+}
+::ng-deep .mat-autocomplete-panel mat-option{
+  min-width: 230px !important;
+  font-size: 13px !important;
+  height: 35px !important;
+  border-bottom: 1px solid lightgray !important;
+}
+.buyerContainer {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+}
+.branchesCircleContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-end;
+}
+.branchCircle{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-left: 2px;
+}
+
+.autoInput {
+  height: 100%;
+  padding: 0 10px;
+}
+
+::ng-deep .mat-chip-list-wrapper {
+  margin: 10px 0 !important;
+}
+
+::ng-deep .mat-select-panel mat-option{
+  font-size: 13px !important;
+  height: 35px !important;
+  border-bottom: 1px solid lightgray !important;
+}
+
+.cardsContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+}
+.secondCardsContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-start;
+  .dashCard {
+    margin-right: 13px !important;
+  }
+}
+
+@media only screen and (max-width: 499px) {
+  .secondCardsContainer {
+    .dashCard {
+      margin-right: unset !important;
+    }
+    .dashCard:first-of-type {
+      margin-right: 10px !important;
+    }
+  }
+}
+
+.thirdCardsContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-start;
+  .dashCard:first-of-type {
+    margin-right: 10px !important;
+  }
+}
+.fourthCardsContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-start;
+  .dashCard:first-of-type {
+    margin-right: 10px !important;
+  }
+}
+
+.dashCardTitle {
+  display: flex;
+  align-items: center;
+}
+
+.graphContainer {
+  margin-top: 10px;
+}
+
+.dashInputContainer {
+  -webkit-box-shadow: 0 1px 3px 0 lightgray !important;
+  -moz-box-shadow: 0 1px 3px 0 lightgray !important;
+  box-shadow: 0 1px 3px 0 lightgray !important;
+}
+
+.filterTitle {
+  margin-top: 5px;
+}
+
+.tagsRow {
+  margin-top: 10px;
+}
+
+
+
+#weeksContainer,
+.weekHeader,
+.weekRow,
+.weekColumn,
+.weekProduct,
+.productColumn{
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+#weeksContainer,
+.weekHeader,
+.weekRow {
+  width: 100%;
+}
+#weeksContainer{
+  flex-direction: column;
+  overflow: hidden;
+  margin: 10px 0;
+  min-width: 620px;
+}
+#weeksOverflow {
+  overflow: auto;
+}
+.weekHeader {
+  height: 50px;
+  border: none !important;
+  -webkit-box-shadow: 0 1px 2px 0 var(--brown-grey-25);
+  -moz-box-shadow: 0 1px 2px 0 var(--brown-grey-25);
+  box-shadow: 0 1px 2px 0 var(--brown-grey-25);
+  background-color: white;
+  width: 100%;
+  border-right: 2px solid rgba(100, 100, 100, 0.1) !important;
+  border-left: 2px solid rgba(100, 100, 100, 0.1) !important;
+  border-top: 2px solid rgba(100, 100, 100, 0.1) !important;
+}
+.weekRow {
+  min-height: fit-content;
+}
+.weekProduct {
+  height: 60px;
+  width: 100%;
+  border-bottom: 2px solid rgba(100,100,100, .1);
+  border-right: 2px solid rgba(100,100,100, .1);
+}
+.firstWeekProduct {
+  border-left: 2px solid rgba(100,100,100, .1) !important;
+}
+.week1Column {
+  width: 88%;
+  flex-direction: column;
+  min-width: 120px;
+}
+.week2Column {
+  width: 44%;
+  flex-direction: column;
+  min-width: 120px;
+}
+.week4Column {
+  width: 22%;
+  flex-direction: column;
+  min-width: 120px;
+}
+
+.productColumn {
+  width: 12%;
+  min-width: 100px;
+  flex-direction: column;
+}
+
+
+.productLeft, .productRight {
+  height: 100%;
+  width: 50%;
+  padding-top: 9px !important;
+  overflow: hidden;
+}
+.productLeft {
+  border-right: 2px solid rgba(100,100,100, .1);
+}
+.calendarCard {
+  margin-top: 10px;
+  background: #FFF;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.05);
+}
+.grainSubtitle {
+  font-size: 14px !important;
+  text-align: center;
+}
+.productTitleCell {
+  padding: 0 5px;
+}
+
+
+
+.productLeftInputContainer, .productRightInputContainer {
+  width: 100%;
+  height: 100%;
+  font-size: 14px !important;
+}
+
+.grainLabel {
+  font-size: 12px;
+  font-weight: 700;
+  font-family: Oswald, sans-serif;
+  color: rgb(100,100,100);
+  width: 100%;
+  text-align: center;
+  padding-left: 10px;
+}
+
+.grainInputContainer {
+  background: white;
+  /* box-shadow: 0 2px 4px 0 var(--brown-grey-9); */
+  height: 25px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: Oswald, Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.14;
+  letter-spacing: normal;
+  color: var(--greyish-brown);
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.grainInput {
+  font-size: 12px !important;
+  padding-right: 5px;
+}
+
+#grainCard {
+  max-height: calc(100vh - 210px);
+  overflow: auto !important;
+}
+
+@media only screen and (max-width: 767px) {
+  #grainCard {
+    height: calc(100vh - 265px);
+  }
+}
+@media only screen and (max-width: 579px) {
+  #grainCard {
+    height: calc(100vh - 285px);
+  }
+}
+#arrowsContainer {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: flex-end;
+  #backButton, #nextButton {
+    width: calc(50% - 5px);
+    max-width: 180px;
+  }
+  #backButton {
+    margin-right: 10px;
+  }
+}
+
+.grayButton:disabled {
+  background-color: #AAAAAA !important;
+
+}

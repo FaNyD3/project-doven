@@ -1,0 +1,198 @@
+<!----------------------->
+<!-- page container -->
+<div class="container-fluid fullHeight">
+    <!----------------------->
+    <!-- filters row -->
+    <div class="row">
+        <div class="col-12 col-sm-4 col-md-6 col-xl-8 pageTitleCell clientsFormItem">
+            <h2 class="blueText">Airplains</h2>
+        </div>
+        <!----------------------->
+        <!-- space if !usersAccess -->
+        <div class="col-6 col-sm-4 col-md-3 col-xl-2 clientsFormItem" *ngIf="!editAccess"></div>
+        <!----------------------->
+        <!-- year -->
+        <!--
+    <div class="col-6 col-sm-3 col-md-2 col-xl-2 clientsFormItem">
+      <div class="customSelectContainer" matRipple (click)="year.open()">
+        <mat-select placeholder="Year" class="customSelect" #year id="year" [formControl]="yearControl" [value]="currentYear" (selectionChange)="this.loadTableData($event.value, true, this.sort);">
+          <mat-option disabled >Select a year</mat-option>
+          <mat-option [value]="currentYear">{{ currentYear }}</mat-option>
+          <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+        </mat-select>
+        <mat-icon class="customSelectIcon">tune</mat-icon>
+      </div>
+    </div>
+    -->
+        <!----------------------->
+        <!-- searchbar -->
+        <div class="col-6 col-sm-3 col-md-3 col-xl-2 clientsFormItem">
+            <div class="searchbar" (click)="search.focus()">
+                <mat-icon matPrefix class="fsize22">search</mat-icon>
+                <input type="text" matInput placeholder="Buscar..." #search [formControl]="searchbar">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="searchbar.value" matSuffix aria-label="Clear" (click)="searchbar.setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- new product button -->
+        <div class="col-6 col-sm-3 col-md-3 col-xl-2 clientsFormItem" *ngIf="editAccess">
+            <button type="button" class="blueButton fullWidth" matRipple (click)="newProduct()">
+        <mat-icon>add_circle_outline</mat-icon>
+        <p>Nuevo Airplain</p>
+      </button>
+        </div>
+    </div>
+    <!----------------------->
+    <!-- loading spinner -->
+    <div class="tableLoaderContainer" *ngIf="firstLoad">
+        <mat-spinner></mat-spinner>
+    </div>
+    <!----------------------->
+    <!-- not found container -->
+    <div #noData>
+        <!----------------------->
+        <!-- not found message -->
+        <div class="tableLoaderContainer fadeIn" *ngIf="!firstLoad">
+            <p>Informacion no encontrada</p>
+        </div>
+    </div>
+    <!----------------------->
+    <!-- data container -->
+    <div #displayData class="fadeIn hidden">
+        <!----------------------->
+        <!-- table card -->
+        <div class="tableCard">
+            <div class="tableWrapper">
+                <div class="tableFixer">
+                    <!----------------------->
+                    <!-- table -->
+                    <mat-table class="personalizedTable" [dataSource]="dataSource" matSort (matSortChange)="loadTableData(yearControl.value, false, $event)">
+                        <!----------------------->
+                        <!-- model -->
+                        <ng-container cdkColumnDef="model" sticky>
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> MODEL </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="cellPadding">
+                                <p class="cut-text tableText">
+                                    {{ row.model ? row.model : 'N/A'}}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- enrollment -->
+                        <ng-container cdkColumnDef="enrollment">
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> ENROLLMENT </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="cellPadding">
+                                <p class="cut-text tableText">
+                                    {{ row.enrollment ? row.enrollment : 'N/A' }}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <!-- certificationM -->
+                        <ng-container cdkColumnDef="certificationM">
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> CERTIFICATION M </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="cellPadding">
+                                <p class="cut-text tableText">
+                                    {{ row.certificationM ? row.certificationM : 'N/A' }}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <!-- certificationA -->
+                        <ng-container cdkColumnDef="certificationA">
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> CERTIFICATION A </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="cellPadding">
+                                <p class="cut-text tableText">
+                                    {{ row.certificationA ? row.certificationA : 'N/A' }}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <!-- policyS -->
+                        <ng-container cdkColumnDef="policyS">
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> POLICY S </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="cellPadding">
+                                <p class="cut-text tableText">
+                                    {{ row.policyS ? row.policyS : 'N/A' }}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <!-- binnacleV -->
+                        <ng-container cdkColumnDef="binnacleV">
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> BINNACLE V </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="cellPadding">
+                                <p class="cut-text tableText">
+                                    {{ row.binnacleV ? row.binnacleV : 'N/A' }}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <!-- binnacleM -->
+                        <ng-container cdkColumnDef="binnacleM">
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> BINNACLE M </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="cellPadding">
+                                <p class="cut-text tableText">
+                                    {{ row.binnacleM ? row.binnacleM : 'N/A' }}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <!-- authorizationOER -->
+                        <ng-container cdkColumnDef="authorizationOER">
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> AUTHORIZATION OER </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="cellPadding">
+                                <p class="cut-text tableText">
+                                    {{ row.authorizationOER ? row.authorizationOER : 'N/A' }}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <!--airline-->
+                        <ng-container cdkColumnDef="airline">
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> AIRLINE </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="cellPadding">
+                                <p class="cut-text tableText">
+                                    {{ row.airline ? row.airline : 'N/A' }}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <!--createdAt-->
+                        <ng-container cdkColumnDef="createdAt">
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> CREATED AT OER </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="cellPadding">
+                                <p class="cut-text tableText">
+                                    {{ row.createdAt ? row.createdAt : 'N/A' }}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <!----------------------->
+                        <!-- available -->
+                        <!--
+                        <ng-container cdkColumnDef="productAvailable">
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> EJEMPLO </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="cellPadding">
+                                <p class="cut-text tableText">
+                                    {{ row.productAvailable ? row.productAvailable : 'N/A' }}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        -->
+                        <!----------------------->
+                        <!-- button -->
+                        <ng-container cdkColumnDef="button" *ngIf="editAccess">
+                            <mat-header-cell *cdkHeaderCellDef class="buttonCell headerCell"></mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="buttonCell">
+                                <button type="button" class="whiteButton" matRipple (click)="openProduct(row)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row *cdkHeaderRowDef="editAccess ? displayedColumnsAdmin : displayedColumns; sticky: true"></mat-header-row>
+                        <mat-row *cdkRowDef="let row; columns: editAccess ? displayedColumnsAdmin : displayedColumns;"></mat-row>
+                    </mat-table>
+                </div>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- mat-table paginator -->
+        <mat-paginator class="out-paginator" [length]="tableCount" [pageSize]="25" [pageSizeOptions]="[10, 25, 50, 100]" (page)="loadTableData(this.yearControl.value, false, this.sort);">
+        </mat-paginator>
+    </div>
+
+</div>

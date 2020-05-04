@@ -1,0 +1,11 @@
+<h2 class="blueText">{{data.title}}</h2>
+<div mat-dialog-content class="Panel-act-2">
+  <h4>{{data.subtitle}}</h4>
+  <div *ngFor="let line of data.message">
+    <p>{{line}}</p>
+  </div>
+</div>
+<div mat-dialog-actions style="float: right;">
+  <button type="button" mat-button (click)="dismiss()">Cancelar</button>
+  <button type="button" mat-button (click)="confirm()">{{data.button}}</button>
+</div>

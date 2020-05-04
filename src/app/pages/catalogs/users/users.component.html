@@ -1,0 +1,106 @@
+<!----------------------->
+<!-- page container -->
+<div class="container-fluid fullHeight">
+    <!----------------------->
+    <!-- filters row -->
+    <div class="row">
+        <div class="col-12 col-sm-4 col-md-6 col-xl-8 pageTitleCell clientsFormItem">
+            <h2 class="blueText">Usuarios</h2>
+        </div>
+        <!----------------------->
+        <!-- searchbar -->
+        <div class="col-6 col-sm-4 col-md-3 col-xl-2 clientsFormItem">
+            <div class="searchbar" (click)="search.focus()">
+                <mat-icon matPrefix class="fsize22">search</mat-icon>
+                <input type="text" matInput placeholder="Buscar..." #search [formControl]="searchbar">
+                <button type="button" class="searchbarSuffix fsize22" *ngIf="searchbar.value" matSuffix aria-label="Clear" (click)="searchbar.setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- new user button -->
+        <div class="col-6 col-sm-4 col-md-3 col-xl-2 clientsFormItem">
+            <button type="button" class="blueButton fullWidth" matRipple (click)="newUser()">
+                <mat-icon>add_circle_outline</mat-icon>
+                <p>Nuevo Usuario</p>
+            </button>
+        </div>
+    </div>
+    <!----------------------->
+    <!-- loading spinner -->
+    <div class="tableLoaderContainer" *ngIf="firstLoad">
+        <mat-spinner></mat-spinner>
+    </div>
+    <!----------------------->
+    <!-- not found container -->
+    <div #noData>
+        <!----------------------->
+        <!-- not found message -->
+        <div class="tableLoaderContainer fadeIn" *ngIf="!firstLoad">
+            <p>Informacion no encontrada</p>
+        </div>
+    </div>
+    <!----------------------->
+    <!-- data container -->
+    <div #displayData class="fadeIn hidden">
+        <!----------------------->
+        <!-- table card -->
+        <div class="tableCard">
+            <div class="tableWrapper">
+                <div class="tableFixer">
+                    <!----------------------->
+                    <!-- table -->
+                    <mat-table class="personalizedTable" [dataSource]="dataSource" matSort (matSortChange)="loadTableData(searchbar.value, false, $event)">
+                        <ng-container cdkColumnDef="name" sticky>
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> NOMBRE </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="cellPadding">
+                                <p class="cut-text tableText">
+                                    {{ row.name }}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="email">
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> CORREO ELECTRONICO </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="cellPadding">
+                                <p class="cut-text tableText">
+                                    {{ row.email }}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="role">
+                            <mat-header-cell *cdkHeaderCellDef mat-sort-header class="headerCell"> ROL </mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="cellPadding">
+                                <p class="cut-text tableText" *ngIf="row.role === 'branchTrader'">Branch Trader</p>
+                                <p class="cut-text tableText" *ngIf="row.role === 'branchAdmin'">Branch Admin</p>
+                                <p class="cut-text tableText" *ngIf="row.role === 'generalAdmin'">General Admin</p>
+                                <div *ngIf="row.role === 'branchTrader' || row.role === 'branchAdmin'" class="branchesContainer">
+                                    <div class="branchCircle" *ngFor="let branch of row.branches" [style.background-color]="branch.color" [matTooltip]="branch.name" matTooltipPosition="above">
+                                    </div>
+                                </div>
+                                <div class="branchesContainer" *ngIf="row.role === 'generalAdmin'">
+                                    <p>A</p>
+                                </div>
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="button">
+                            <mat-header-cell *cdkHeaderCellDef class="buttonCell headerCell"></mat-header-cell>
+                            <mat-cell *cdkCellDef="let row" class="buttonCell">
+                                <button type="button" class="whiteButton" matRipple (click)="openUser(row)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                        <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </mat-table>
+                </div>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- mat-table paginator -->
+        <mat-paginator class="out-paginator" [length]="tableCount" [pageSize]="25" [pageSizeOptions]="[10, 25, 50, 100]" (page)="loadTableData(this.searchbar.value, false, this.sort);">
+        </mat-paginator>
+    </div>
+
+</div>

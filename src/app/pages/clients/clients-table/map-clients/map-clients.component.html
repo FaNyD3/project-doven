@@ -1,0 +1,224 @@
+<div class="row">
+  <div class="col-12 topRow">
+    <div class="chipsWrapper">
+      <div class="chipsContainer">
+        <!----------------------->
+        <!-- filter chips -->
+        <mat-chip-list class="customChips">
+          <!----------------------->
+          <!-- tags chip -->
+          <mat-chip class="filterChip pointer" [matMenuTriggerFor]="tagsModal" *ngIf="searchParameters.tags">
+            <p class="cut-text"> {{ searchParameters.tagsCount }} tags </p>
+          </mat-chip>
+          <!----------------------->
+          <!-- popoup filtered tags -->
+          <mat-menu #tagsModal="matMenu">
+            <p class="popUpTag orangeText">
+              Filtered tags
+            </p>
+            <div *ngIf="searchParameters.tags">
+              <p class="popUpTag popUpMenuText" *ngFor="let tag of searchParameters.tagsObject">
+                <span>{{tag}}</span>
+              </p>
+            </div>
+
+          </mat-menu>
+          <!----------------------->
+          <!-- products chip -->
+          <mat-chip class="filterChip pointer" [matMenuTriggerFor]="productsModal" *ngIf="searchParameters.products">
+            <p class="cut-text"> {{ searchParameters.productsCount }} products </p>
+          </mat-chip>
+          <!----------------------->
+          <!-- popoup filtered products -->
+          <mat-menu #productsModal="matMenu">
+            <p class="popUpTag orangeText">
+              Filtered products
+            </p>
+            <div *ngIf="searchParameters.products">
+              <p class="popUpTag popUpMenuText" *ngFor="let product of searchParameters.products.productsNames.inq">
+                <span>{{product}}</span>
+              </p>
+            </div>
+          </mat-menu>
+          <!----------------------->
+          <!-- groups chip -->
+          <mat-chip class="filterChip pointer" [matMenuTriggerFor]="groupsModal" *ngIf="searchParameters.groups">
+            <p class="cut-text"> {{ searchParameters.groupsCount }} group(s) </p>
+          </mat-chip>
+          <!----------------------->
+          <!-- popoup filtered groups -->
+          <mat-menu #groupsModal="matMenu">
+            <p class="popUpTag orangeText">
+              Filtered groups
+            </p>
+            <div *ngIf="searchParameters.groups">
+              <p class="popUpTag popUpMenuText" *ngFor="let group of searchParameters.groups.groups">
+                <span>{{group.name}}</span>
+              </p>
+            </div>
+          </mat-menu>
+          <!----------------------->
+          <!-- buyers chip -->
+          <mat-chip class="filterChip pointer" [matMenuTriggerFor]="buyersModal" *ngIf="searchParameters.buyers">
+            <p class="cut-text"> {{ searchParameters.buyersCount }} buyers </p>
+          </mat-chip>
+          <!----------------------->
+          <!-- popoup filtered buyers -->
+          <mat-menu #buyersModal="matMenu">
+            <p class="popUpTag orangeText">
+              Filtered buyers
+            </p>
+            <div *ngIf="searchParameters.buyers">
+              <p class="popUpTag popUpMenuText" *ngFor="let buyer of searchParameters.buyersObject">
+                <span>{{buyer.name}}</span>
+              </p>
+            </div>
+          </mat-menu>
+          <!----------------------->
+          <!-- categories chip -->
+          <mat-chip class="filterChip pointer" [matMenuTriggerFor]="catModal" *ngIf="searchParameters.categories">
+            <p class="cut-text"> {{ searchParameters.categoryCount }} categories </p>
+          </mat-chip>
+          <!----------------------->
+          <!-- popoup filtered categories -->
+          <mat-menu #catModal="matMenu">
+            <p class="popUpTag orangeText">
+              Filtered categories
+            </p>
+            <div *ngIf="searchParameters.categories">
+              <p class="popUpTag popUpMenuText" *ngFor="let category of searchParameters.categories.category.inq">
+                <span>{{category}}</span>
+              </p>
+            </div>
+          </mat-menu>
+          <!----------------------->
+          <!-- rates chip -->
+          <mat-chip class="filterChip pointer" [matMenuTriggerFor]="ratesModal" *ngIf="searchParameters.rates">
+            <p class="cut-text"> {{ searchParameters.ratesCount }} rates </p>
+          </mat-chip>
+          <!----------------------->
+          <!-- popoup filtered rates -->
+          <mat-menu #ratesModal="matMenu">
+            <p class="popUpTag orangeText">
+              Filtered rates
+            </p>
+            <div *ngIf="searchParameters.rates">
+              <p class="popUpTag popUpMenuText" *ngFor="let rate of searchParameters.rates.rate.inq">
+                <span>{{rate}} <mat-icon>star</mat-icon></span>
+              </p>
+            </div>
+          </mat-menu>
+          <!----------------------->
+          <!-- search chip -->
+          <mat-chip class="filterChip pointer" *ngIf="searchParameters.search" [matMenuTriggerFor]="searchModal">
+            <p class="cut-text"> Search </p>
+          </mat-chip>
+          <!----------------------->
+          <!-- popoup filtered search -->
+          <mat-menu #searchModal="matMenu">
+            <p class="popUpTag orangeText">
+              Matched text
+            </p>
+            <p class="popUpTag popUpMenuText"> {{searchParameters.searchString}} </p>
+          </mat-menu>
+          <!----------------------->
+          <!-- place chip -->
+          <mat-chip class="filterChip pointer" *ngIf="searchParameters.place || searchParameters.searchAddress" [matMenuTriggerFor]="placeModal">
+            <p class="cut-text" *ngIf="searchParameters.place"> Location radius </p>
+            <p class="cut-text" *ngIf="searchParameters.searchAddress"> Location matched </p>
+          </mat-chip>
+          <!----------------------->
+          <!-- popoup filtered places -->
+          <mat-menu #placeModal="matMenu">
+            <p class="popUpTag orangeText">
+              Location radius
+            </p>
+            <p class="popUpTag popUpMenuText cut-text"> Location: {{ searchParameters.place ? searchParameters.place.formattedAddress : searchParameters.searchAddressString }}  </p>
+            <p class="popUpTag popUpMenuText cut-text" *ngIf="searchParameters.place"> Radius: {{ searchParameters.place ? searchParameters.place.radius : '' }}  </p>
+          </mat-menu>
+        </mat-chip-list>
+      </div>
+    </div>
+    <button type="button" class="backButton" matRipple (click)="onNoClick()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>
+<div class="row">
+  <!----------------------->
+  <!-- address -->
+  <div class="col-12 col-md-8 formItem">
+    <label for="address" class="inputLabel">Search point</label>
+    <div class="customInput" (click)="address.focus()">
+      <input google-place (onSelect)="setPoint($event)" type="text" matInput placeholder="Point of search (Search in google maps)" id="address" #address [formControl]="search">
+      <button type="button" class="searchbarSuffix fsize22" *ngIf="search.value" matSuffix aria-label="Clear" (click)="search.patchValue('')">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+  <!----------------------->
+  <!-- radius -->
+  <div class="col-12 col-md-4 formItem">
+    <label for="radius" class="inputLabel">Search radius</label>
+    <div class="customInput radiusInput" (click)="radiusWrapper.focus()">
+      <input class="customInput" #radiusWrapper type="number" matInput placeholder="Put search radius in Kms" id="radius" [formControl]="radius">
+      <button type="button" class="locate" matRipple (click)="setDistance()">
+        <mat-icon>my_location</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+<!----------------------->
+<!--  -->
+<div class="extendedDataContainer fadeIn hidden" #extendedData>
+  <div class="row">
+    <div class="col-6 col-lg-8">
+      <h2 id="dataTitle" class="orangeText">  {{selectedClient.name ? selectedClient.name : 'N/A'}}  </h2>
+    </div>
+    <div class="col-6 col-lg-4 closeContainer">
+      <mat-icon (click)="closeExtendedData()" class="pointer">close</mat-icon>
+    </div>
+    <div class="contentCell col-4 col-lg-2">
+      <h3 class="cut-text inputLabel extendedSubtitle">NAME</h3>
+      <span class="cut-text tableText">  {{selectedClient.name ? selectedClient.name : 'N/A'}}  </span>
+    </div>
+    <div class="contentCell col-4 col-lg-2">
+      <h3 class="cut-text inputLabel extendedSubtitle">PHONE NUMBER</h3>
+      <span class="cut-text tableText">  {{(selectedClient.phoneNumber !== undefined && selectedClient.phoneNumber !== null) ? selectedClient.phoneNumber.toString().length == 11 ? ( selectedClient.phoneNumber.toString().substring(0,1) + ' (' + ' ' +  selectedClient.phoneNumber.toString().substring(1,4) + ' ) ' + selectedClient.phoneNumber.toString().substring(4,7) + ' ' + selectedClient.phoneNumber.toString().substring(7,11)) : ( '(' + ' ' +  selectedClient.phoneNumber.toString().substring(0,3) + ' ) ' + selectedClient.phoneNumber.toString().substring(3,6) + ' ' + selectedClient.phoneNumber.toString().substring(6,10))  : 'N/A' }} </span>
+    </div>
+    <div class="contentCell col-4 col-lg-2">
+      <h3 class="cut-text inputLabel extendedSubtitle">LAND NUMBER</h3>
+      <span class="cut-text tableText">  {{(selectedClient.landNumber !== undefined && selectedClient.landNumber !== null) ? selectedClient.landNumber.toString().length == 11 ? ( selectedClient.landNumber.toString().substring(0,1) + ' (' + ' ' +  selectedClient.landNumber.toString().substring(1,4) + ' ) ' + selectedClient.landNumber.toString().substring(4,7) + ' ' + selectedClient.landNumber.toString().substring(7,11)) : ( '(' + ' ' +  selectedClient.landNumber.toString().substring(0,3) + ' ) ' + selectedClient.landNumber.toString().substring(3,6) + ' ' + selectedClient.landNumber.toString().substring(6,10))  : 'N/A' }} </span>
+    </div>
+    <div class="contentCell col-4 col-lg-2">
+      <h3 class="cut-text inputLabel extendedSubtitle">BUYER</h3>
+      <span class="cut-text tableText">  {{selectedClient.buyer ? selectedClient.buyer.name : 'N/A'}}  </span>
+    </div>
+    <div class="contentCell customProductsCell col-4 col-lg-2 pointer" (click)="openProductsModal(selectedClient.years, selectedClient)">
+      <h3 class="cut-text inputLabel extendedSubtitle">PRODUCTS</h3>
+      <p class="orangeText cut-text tableText"> See All </p>
+    </div>
+    <div class="contentCell customAddressCell col-4 col-lg-2">
+      <h3 class="cut-text inputLabel extendedSubtitle">ADDRESS</h3>
+      <span class="cut-text tableText">  {{selectedClient.address ? selectedClient.address : 'N/A'}}  </span>
+    </div>
+  </div>
+</div>
+<!----------------------->
+<!-- popoup client tags -->
+<mat-menu #clientsMenu="matMenu">
+  <p class="popUpTag orangeText">
+    Clients on cluster
+  </p>
+  <p class="popUpTag popUpMenuText pointer" matRipple *ngFor="let client of currentClusterMarkers" (click)="setCurrentClient(client.data)">
+    <span>{{client.name}}</span>
+    <mat-icon></mat-icon>
+  </p>
+</mat-menu>
+<div [matMenuTriggerFor]="clientsMenu" #menuTrigger="matMenuTrigger" id="clientsMenuTrigger"></div>
+<!-- map container -->
+<div id="displayedMap">
+  <!----------------------->
+  <!-- map -->
+  <div id="map" class="google-map"></div>
+</div>

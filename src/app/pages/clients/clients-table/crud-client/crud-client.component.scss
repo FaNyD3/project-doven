@@ -1,0 +1,100 @@
+::ng-deep .mat-autocomplete-panel mat-option {
+    font-size: 13px !important;
+    height: 35px !important;
+    border-bottom: 1px solid lightgray !important;
+}
+
+.buyerContainer {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.branchesCircleContainer {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-end;
+}
+
+.branchCircle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-left: 2px;
+}
+
+.autoInput {
+    height: 100%;
+    padding: 0 10px;
+}
+
+.buttonsRow {
+    padding-top: 10px;
+}
+
+.productRow {
+    padding: 15px 0;
+}
+
+.newProductCancelCol {
+    display: flex;
+    justify-content: flex-end;
+    margin: 5px 0;
+}
+
+.newProductTopRow {
+    border-top: 1px solid var(--brown-grey);
+    margin-top: 10px;
+}
+
+.productsTitleCol {
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+::ng-deep .mat-select-panel mat-option {
+    font-size: 13px !important;
+    height: 35px !important;
+    border-bottom: 1px solid lightgray !important;
+}
+
+#branch:disabled {
+    color: #000 !important;
+}
+
+#branchCircle {
+    margin-right: 5px;
+}
+
+.flexEnd {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-end;
+}
+
+.editButton {
+    color: var(--orange);
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    mat-icon {
+        height: 20px !important;
+        width: 20px !important;
+        font-size: 20px !important;
+        padding: 0 !important;
+    }
+}
+
+.removeStars {
+    width: 17px;
+    height: 17px;
+    font-size: 17px;
+}

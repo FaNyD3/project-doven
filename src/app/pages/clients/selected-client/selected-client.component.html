@@ -1,0 +1,480 @@
+<!----------------------->
+<!-- loading spinner -->
+<div class="clientLoaderContainer" *ngIf="firstLoad">
+    <mat-spinner></mat-spinner>
+</div>
+<div #noData>
+    <!----------------------->
+    <!-- not found message -->
+    <div class="clientLoaderContainer fadeIn" *ngIf="firstLoad">
+        <p>Data not found</p>
+    </div>
+</div>
+
+<!----------------------->
+<!-- data container -->
+<div class="fadeIn ">
+    <div class="container-fluid fullHeight">
+        <!----------------------->
+        <!-- orange Left container (DESKTOP) -->
+        <div class="floatLeftWrapper" *ngIf="isBigSize">
+            <div class="floatLeftClient verticalGradient">
+                <!----------------------->
+                <!-- top butotns wrapper -->
+                <div class="actionsContainer">
+                    <div class="toggleWrapper">
+                        <button type="button" mat-stroked-button class="leftRightButtons leftButton" (click)="loadOtherClient(this.id, false)"><mat-icon>keyboard_arrow_left</mat-icon></button>
+                        <button type="button" mat-stroked-button class="leftRightButtons" (click)="loadOtherClient(this.id, true)"><mat-icon>keyboard_arrow_right</mat-icon></button>
+                    </div>
+                    <div class="editWrapper">
+                        <button type="button" class="editButton" matRipple>
+              <mat-icon class="whiteClass" *ngIf="true">star_border</mat-icon>
+              <mat-icon class="whiteClass" *ngIf="false">star</mat-icon>
+            </button>
+                        <button type="button" class="editButton" matRipple (click)="openEdit(client)">
+              <mat-icon class="whiteClass">edit</mat-icon>
+            </button>
+                    </div>
+                </div>
+                <!----------------------->
+                <!-- client data Wrapper -->
+                <div class="titleContainer">
+                    <h2 class="Panel-act selectedClientName">{{client && client.name ? client.name : 'Cliente (N/A)'}}</h2>
+                    <h2 class="Panel-act selectedClientName">{{client && client.lastName ? client.lastName : 'Cliente (N/A)'}}</h2>
+                    <h2 class="Panel-act">{{client && client.number ? client.number : 'Numero (N/A)'}}</h2>
+                    <p class="Descripciones-2 clientDetails">
+                        <mat-icon>phone_in_talk</mat-icon> {{client && client.phone ? client.phone : 'Numero de celular (N/A)'}}</p>
+                    <p class="Descripciones-2 clientDetails">
+                        <mat-icon>place</mat-icon> {{'Direccion (N/A)'}}</p>
+                    <p class="Descripciones-2 clientDetails">
+                        <mat-icon>email</mat-icon> {{client && client.email ? client.email : 'Email (N/A)'}}</p>
+                    <p class="Descripciones-2 clientDetails">
+                        <mat-icon>contacts</mat-icon> {{'Status (N/A)'}}</p>
+                </div>
+                <!----------------------->
+                <!-- button wrapper
+        <div class="buttonContainer">
+          <button class="orangeButton fullWidth" matRipple (click)="newNote()">
+            <p>New note</p>
+            <mat-icon >add_circle</mat-icon>
+          </button>
+        </div>-->
+                <!----------------------->
+                <!-- white strip and form wrapper -->
+                <div class="clientFormDataWrapper">
+                    <!--<div class="clientFormDataItem">
+            <p class="whiteInputLabel clientLabel">Category</p>
+            <div class="viewMapContainer" matRipple>
+              <mat-icon>location_searching</mat-icon>
+              <p>{{ client && client.category ? client.category.charAt(0).toUpperCase() + client.category.slice(1) : 'Category (N/A)'}}</p>
+            </div>
+          </div>
+          <div class="clientFormDataItem">
+            <p class="whiteInputLabel clientLabel">Buyer</p>
+            <div class="viewMapContainer">
+              <p>{{client && client.buyer ? client.buyer.name : 'Buyer (N/A)'}}</p>
+            </div>
+          </div>-->
+
+                    <!--
+          <div class="clientFormDataItem">
+            <p class="whiteInputLabel clientLabel">Plant</p>
+            <div class="customSelectContainer" matRipple (click)="plant1.open()">
+              <mat-select placeholder="Plant" class="customSelect textCenter" #plant1 id="plant1" [formControl]="plantControl" (valueChange)="calculateDistance($event.location)">
+                <mat-option disabled >Select a plant</mat-option>
+                <mat-option *ngFor="let plant of plantOptions" [value]="plant">{{ plant.name }}</mat-option>
+              </mat-select>
+              <mat-icon class="customSelectIcon">location_searching</mat-icon>
+            </div>
+          </div>
+          -->
+                    <div class="clientFormDataItem">
+                        <p class="whiteInputLabel clientLabel">Aerodromo</p>
+                        <!--Antes de Aerodromo era Sucursal-->
+                        <div class="row">
+                            <div class="col-12 clientdistanceCol">
+                                <div class="viewMapContainer" matRipple>
+                                    <div class="distanceNumber">
+                                        <p>San Andres</p>
+                                    </div>
+                                    <mat-icon class="distanceIcon marg0">map</mat-icon>
+                                    <!--<p>{{ plantTime }}</p>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--
+          <div class="clientFormDataItem">
+            <p class="whiteInputLabel clientLabel">Año</p>
+            <div class="customSelectContainer" matRipple (click)="year1.open()">
+              <mat-select placeholder="Year" class="customSelect textCenter" #year1 id="year1" [formControl]="yearControl">
+                <mat-option disabled >Select a year</mat-option>
+                <mat-option *ngFor="let year of yearOptions" [value]="year">{{ year }}</mat-option>
+              </mat-select>
+              <mat-icon class="customSelectIcon">tune</mat-icon>
+            </div>
+          </div>
+        </div>
+        -->
+
+                    <!--
+        <div class="leftProductsContainer" *ngIf="client && clientProducts">
+          <div *ngIf="clientProducts.length > 0">
+            <p class="whiteInputLabel clientLabel">Products</p>
+            <div *ngFor="let clientProduct of clientProducts">
+              <div class="leftProductItem">
+                <div class="leftProductName cut-text">
+                  <mat-icon>adjust</mat-icon>
+                  <p>{{clientProduct.product.name}}</p>
+                </div>
+                <div class="leftProductName">
+                  <p class="leftAvailable">{{loadProductsAvailable(clientProduct.productAvailable)}}</p>
+                  <button type="button" class="lefProductButton" matRipple>
+                    <mat-icon class="leftEditProduct" (click)="setEditProduct(clientProduct.id)">edit</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <div class="hidden fadeIn" [id]="'edit' + clientProduct.id">
+                <div class="leftProductItem">
+                  <div class="customLeftSelectContainer fullWidth" >
+                    <input type="number" matInput placeholder="Product available" [id]="['editInput' + clientProduct.id]" class="autoCompleteInput" [value]="clientProduct.productAvailable">
+                  </div>
+                  <button type="button" class="lefProductButton saveButton" (click)="editProduct(clientProduct)" matRipple>
+                    <mat-icon class="leftEditProduct" >save</mat-icon>
+                  </button>
+                  <button type="button" class="lefProductButton" matRipple (click)="closeEdit(clientProduct.id)">
+                    <mat-icon class="leftEditProduct" >close</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="whiteInputLabel clientLabel textCenter" *ngIf="clientProducts.length === 0">Has no registered products</p>
+        </div>
+        -->
+                </div>
+            </div>
+
+            <!----------------------->
+            <!-- orange top container (MOBILE) -->
+            <div class="floatTopClient verticalGradient" *ngIf="!isBigSize" #expandablePanel>
+                <div class=" topGradientContainer">
+                    <div class="gradientContainerRow">
+                        <!----------------------->
+                        <!-- top buttons wrapper -->
+                        <div class="toggleWrapper">
+                            <button type="button" mat-stroked-button class="leftRightButtons leftButton" (click)="loadOtherClient(this.id, false)"><mat-icon>keyboard_arrow_left</mat-icon></button>
+                            <h2 class="Panel-act selectedClientName">{{client && client.name ? client.name : 'Client (N/A)'}}</h2>
+                            <button type="button" mat-stroked-button class="leftRightButtons" (click)="loadOtherClient(this.id, true)"><mat-icon>keyboard_arrow_right</mat-icon></button>
+                        </div>
+                        <div class="editWrapper">
+                            <button type="button" class="editButton" matRipple (click)="changeFavorite()">
+              <mat-icon class="whiteClass" *ngIf="!isFavorite">star_border</mat-icon>
+              <mat-icon class="whiteClass" *ngIf="isFavorite">star</mat-icon>
+            </button>
+                            <button type="button" class="editButton" matRipple (click)="openEdit(client)">
+              <mat-icon class="whiteClass">edit</mat-icon>
+            </button>
+                            <button type="button" class="editButton" matRipple (click)="expandPanel()">
+              <mat-icon class="whiteClass" *ngIf="isExpanded">expand_less</mat-icon>
+              <mat-icon class="whiteClass" *ngIf="!isExpanded">expand_more</mat-icon>
+            </button>
+                        </div>
+                    </div>
+                    <div class="gradientContainerRow">
+                        <h2 class="Panel-act">{{(client && client.companyName) ? client.companyName : 'Company name (N/A)'}}</h2>
+                        <p class="Descripciones-2 clientDetails" *ngIf="!isSmallSize">
+                            <mat-icon>place</mat-icon> {{client && client.address ? client.address : 'Address (N/A)'}}</p>
+                        <p class="Descripciones-2 clientDetails">
+                            <mat-icon>location_searching</mat-icon> {{ client && client.category ? client.category.charAt(0).toUpperCase() + client.category.slice(1) : 'Category (N/A)'}}</p>
+                    </div>
+                    <div class="gradientContainerRow">
+                        <p class="Descripciones-2 clientDetails">
+                            <mat-icon>phone_in_talk</mat-icon> {{client && client.landNumber ? client.landNumber.toString().length == 11 ? ( client.landNumber.toString().substring(0,1) + ' (' + ' ' + client.landNumber.toString().substring(1,4) + ' ) ' + client.landNumber.toString().substring(4,7)
+                            + ' ' + client.landNumber.toString().substring(7,11)) : ( '(' + ' ' + client.landNumber.toString().substring(0,3) + ' ) ' + client.landNumber.toString().substring(3,6) + ' ' + client.landNumber.toString().substring(6,10)) :
+                            'Land Number (N/A)'}}</p>
+                        <p class="Descripciones-2 clientDetails">
+                            <mat-icon>phone_in_talk</mat-icon> {{client && client.phoneNumber ? client.phoneNumber.toString().length == 11 ? ( client.phoneNumber.toString().substring(0,1) + ' (' + ' ' + client.phoneNumber.toString().substring(1,4) + ' ) ' + client.phoneNumber.toString().substring(4,7)
+                            + ' ' + client.phoneNumber.toString().substring(7,11)) : ( '(' + ' ' + client.phoneNumber.toString().substring(0,3) + ' ) ' + client.phoneNumber.toString().substring(3,6) + ' ' + client.phoneNumber.toString().substring(6,10))
+                            : 'CellPhone Number (N/A)'}}</p>
+                        <p class="Descripciones-2 clientDetails" *ngIf="!isSmallSize">
+                            <mat-icon>email</mat-icon> {{client && client.email ? client.email : 'Email (N/A)'}}</p>
+                    </div>
+                    <div class="gradientContainerRow" *ngIf="isSmallSize">
+                        <p class="Descripciones-2 clientDetails">
+                            <mat-icon>place</mat-icon> {{client && client.address ? client.address : 'Address (N/A)'}}</p>
+                        <p class="Descripciones-2 clientDetails">
+                            <mat-icon>email</mat-icon> {{client && client.email ? client.email : 'Email (N/A)'}}</p>
+                    </div>
+                    <div class="gradientContainerCenterRow">
+                        <button type="button" class="orangeButton responsiveNoteButton" matRipple (click)="newNote()">
+            <p>New note</p>
+            <mat-icon >add_circle</mat-icon>
+          </button>
+                    </div>
+                    <div class="gradientContainerRow">
+                        <div class="clientFormDataItem">
+                            <p class="whiteInputLabel clientLabel" *ngIf="!isSmallSize">Buyer</p>
+                            <div class="viewMapContainer">
+                                <p>{{client && client.buyer ? client.buyer.name : 'Buyer (N/A)'}}</p>
+                            </div>
+                        </div>
+                        <div class="clientFormDataItem">
+                            <p class="whiteInputLabel clientLabel" *ngIf="!isSmallSize">Year</p>
+                            <div class="customSelectContainer" matRipple (click)="year.open()">
+                                <mat-select placeholder="Year" class="customSelect customSelectClient textCenter" #year id="year" [formControl]="yearControl">
+                                    <mat-option disabled>Select a year</mat-option>
+                                    <mat-option *ngFor="let year of yearOptions" [value]="year">{{ year }}</mat-option>
+                                </mat-select>
+                                <mat-icon class="customSelectIcon">tune</mat-icon>
+                            </div>
+                        </div>
+                        <!-- IF MOBILE -->
+                        <div class="clientFormDataItem" *ngIf="!isSmallSize">
+                            <p class="whiteInputLabel clientLabel">Plant</p>
+                            <div class="customSelectContainer" matRipple (click)="plant2.open()">
+                                <mat-select placeholder="Plant" class="customSelect customSelectClient textCenter" #plant2 id="plant2" [formControl]="plantControl" (valueChange)="calculateDistance($event.location)">
+                                    <mat-option disabled>Select a plant</mat-option>
+                                    <mat-option *ngFor="let plant of plantOptions" [value]="plant">{{ plant.name }}</mat-option>
+                                </mat-select>
+                                <mat-icon class="customSelectIcon">location_searching</mat-icon>
+                            </div>
+                        </div>
+                        <!-- IF MOBILE -->
+                        <div class="clientFormDataItem" *ngIf="!isSmallSize">
+                            <p class="whiteInputLabel clientLabel">Distance to plant</p>
+                            <div class="row">
+                                <div class="col-12 clientdistanceCol">
+                                    <div class="viewMapContainer" matRipple (click)="openRoute()">
+                                        <div class="distanceNumber">
+                                            <p>{{ plantDistance }} KM</p>
+                                        </div>
+                                        <mat-icon class="distanceIcon marg0">map</mat-icon>
+                                        <!--<p>{{ plantTime }}</p>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="gradientContainerRow" *ngIf="isSmallSize">
+                        <div class="clientFormDataItem">
+                            <!--<p class="whiteInputLabel clientLabel">Plant</p>-->
+                            <div class="customSelectContainer" matRipple (click)="plant.open()">
+                                <mat-select placeholder="Plant" class="customSelect customSelectClient textCenter" #plant id="plant" [formControl]="plantControl" (valueChange)="calculateDistance($event.location)">
+                                    <mat-option disabled>Select a plant</mat-option>
+                                    <mat-option *ngFor="let plant of plantOptions" [value]="plant">{{ plant.name }}</mat-option>
+                                </mat-select>
+                                <mat-icon class="customSelectIcon">location_searching</mat-icon>
+                            </div>
+                        </div>
+                        <div class="clientFormDataItem">
+                            <!--<p class="whiteInputLabel clientLabel">Distance to plant</p>-->
+                            <div class="row">
+                                <div class="col-12 clientdistanceCol">
+                                    <div class="viewMapContainer" matRipple (click)="openRoute()">
+                                        <div class="distanceNumber">
+                                            <p>{{ plantDistance }} KM</p>
+                                        </div>
+                                        <mat-icon class="distanceIcon marg0">map</mat-icon>
+                                        <!--<p>{{ plantTime }}</p>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!----------------------->
+            <!-- chips topbar -->
+            <div class="clientDataWrapper " #dataWrapper>
+                <div class="selectedClientToolbar">
+                    <button type="button" class="backButton" matRipple routerLink="/clients">
+          <mat-icon>keyboard_backspace</mat-icon>
+        </button>
+                    <div class="chipsWrapper ">
+
+
+
+
+
+                        <div class="chipsContainer">
+                            <!----------------------->
+                            <!-- filter chips -->
+                            <mat-chip-list class="customChips">
+                                <!----------------------->
+                                <!-- tags chip -->
+                                <mat-chip class="filterChip pointer" [matMenuTriggerFor]="tagsModal" *ngIf="searchParameters.tags">
+                                    <p class="cut-text"> {{ searchParameters.tagsCount }} tag(s) </p>
+                                </mat-chip>
+                                <!----------------------->
+                                <!-- popoup filtered tags -->
+                                <mat-menu #tagsModal="matMenu">
+                                    <p class="popUpTag blueText">
+                                        Tags Filtradas
+                                    </p>
+                                    <div *ngIf="searchParameters.tags">
+                                        <p class="popUpTag popUpMenuText" *ngFor="let tag of searchParameters.tagsObject">
+                                            <span>{{tag}}</span>
+                                        </p>
+                                    </div>
+                                </mat-menu>
+                                <!----------------------->
+                                <!-- products chip -->
+                                <mat-chip class="filterChip pointer" [matMenuTriggerFor]="productsModal" *ngIf="searchParameters.products">
+                                    <p class="cut-text"> {{ searchParameters.productsCount }} producto(s) </p>
+                                </mat-chip>
+                                <!----------------------->
+                                <!-- popoup filtered products -->
+                                <mat-menu #productsModal="matMenu">
+                                    <p class="popUpTag blueText">
+                                        Productos Filtrados
+                                    </p>
+                                    <div *ngIf="searchParameters.products">
+                                        <p class="popUpTag popUpMenuText" *ngFor="let product of searchParameters.products.productsNames.inq">
+                                            <span>{{product}}</span>
+                                        </p>
+                                    </div>
+                                </mat-menu>
+                                <!----------------------->
+                                <!-- groups chip -->
+                                <mat-chip class="filterChip pointer" [matMenuTriggerFor]="groupsModal" *ngIf="searchParameters.groups">
+                                    <p class="cut-text"> {{ searchParameters.groupsCount }} grupo(s) </p>
+                                </mat-chip>
+                                <!----------------------->
+                                <!-- popoup filtered groups -->
+                                <mat-menu #groupsModal="matMenu">
+                                    <p class="popUpTag blueText">
+                                        Grupos Filtrados
+                                    </p>
+                                    <div *ngIf="searchParameters.groups">
+                                        <p class="popUpTag popUpMenuText" *ngFor="let group of searchParameters.groups.groups">
+                                            <span>{{group.name}}</span>
+                                        </p>
+                                    </div>
+                                </mat-menu>
+                                <!----------------------->
+                                <!-- buyers chip -->
+                                <mat-chip class="filterChip pointer" [matMenuTriggerFor]="buyersModal" *ngIf="searchParameters.buyers">
+                                    <p class="cut-text"> {{ searchParameters.buyersCount }} buyer(s) </p>
+                                </mat-chip>
+                                <!----------------------->
+                                <!-- popoup filtered buyers -->
+                                <mat-menu #buyersModal="matMenu">
+                                    <p class="popUpTag blueText">
+                                        Compradores filtrados
+                                    </p>
+                                    <div *ngIf="searchParameters.buyers">
+                                        <p class="popUpTag popUpMenuText" *ngFor="let buyer of searchParameters.buyersObject">
+                                            <span>{{buyer.name}}</span>
+                                        </p>
+                                    </div>
+                                </mat-menu>
+                                <!----------------------->
+                                <!-- categories chip -->
+                                <mat-chip class="filterChip pointer" [matMenuTriggerFor]="catModal" *ngIf="searchParameters.categories">
+                                    <p class="cut-text"> {{ searchParameters.categoryCount }} categories </p>
+                                </mat-chip>
+                                <!----------------------->
+                                <!-- popoup filtered categories -->
+                                <mat-menu #catModal="matMenu">
+                                    <p class="popUpTag blueText">
+                                        Categorias filtradas
+                                    </p>
+                                    <div *ngIf="searchParameters.categories">
+                                        <p class="popUpTag popUpMenuText" *ngFor="let category of searchParameters.categories.category.inq">
+                                            <span>{{category}}</span>
+                                        </p>
+                                    </div>
+                                </mat-menu>
+                                <!----------------------->
+                                <!-- rates chip -->
+                                <mat-chip class="filterChip pointer" [matMenuTriggerFor]="ratesModal" *ngIf="searchParameters.rates">
+                                    <p class="cut-text"> {{ searchParameters.ratesCount }} rate(s) </p>
+                                </mat-chip>
+                                <!----------------------->
+                                <!-- popoup filtered rates -->
+                                <mat-menu #ratesModal="matMenu">
+                                    <p class="popUpTag blueText">
+                                        Calificaciones filtradas
+                                    </p>
+                                    <div *ngIf="searchParameters.rates">
+                                        <p class="popUpTag popUpMenuText" *ngFor="let rate of searchParameters.rates.rate.inq">
+                                            <span>{{rate}} <mat-icon>star</mat-icon></span>
+                                        </p>
+                                    </div>
+                                </mat-menu>
+                                <!----------------------->
+                                <!-- search chip -->
+                                <mat-chip class="filterChip pointer" *ngIf="searchParameters.search" [matMenuTriggerFor]="searchModal">
+                                    <p class="cut-text"> Buscar </p>
+                                </mat-chip>
+                                <!----------------------->
+                                <!-- popoup filtered search -->
+                                <mat-menu #searchModal="matMenu">
+                                    <p class="popUpTag blueText">
+                                        Texto encontrado
+                                    </p>
+                                    <p class="popUpTag popUpMenuText"> {{searchParameters.searchString}} </p>
+                                </mat-menu>
+                                <!----------------------->
+                                <!-- place chip -->
+                                <div *ngIf="searchParameters.place || searchParameters.searchAddress">
+                                    <mat-chip class="filterChip pointer" *ngIf="searchParameters.place || searchParameters.searchAddressString !== ''" [matMenuTriggerFor]="placeModal">
+                                        <p class="cut-text" *ngIf="searchParameters.place"> Location radius </p>
+                                        <p class="cut-text" *ngIf="searchParameters.searchAddress && searchParameters.searchAddressString !== ''"> Location matched </p>
+                                    </mat-chip>
+                                </div>
+                                <!----------------------->
+                                <!-- popoup filtered place -->
+                                <mat-menu #placeModal="matMenu">
+                                    <p class="popUpTag blueText">
+                                        Location radius
+                                    </p>
+                                    <p class="popUpTag popUpMenuText cut-text"> Location: {{ searchParameters.place ? searchParameters.place.formattedAddress : searchParameters.searchAddressString }} </p>
+                                    <p class="popUpTag popUpMenuText cut-text" *ngIf="searchParameters.place"> Radius: {{ searchParameters.place ? searchParameters.place.radius : '' }} </p>
+                                </mat-menu>
+                            </mat-chip-list>
+                        </div>
+                    </div>
+                </div>
+
+                <!----------------------->
+                <!-- data tabs
+
+      <div class="selectedClientContainer">
+        <mat-tab-group dynamicHeight class="tabGroup" (selectedIndexChange)="reload($event)">
+          <mat-tab label="Notes">
+            <app-client-notes [id]="client !== undefined ? client.id : id" [reload]="reload0"></app-client-notes>
+          </mat-tab>
+          <mat-tab label="Products">
+            <app-client-products [clientData]="childClientData" [reload]="reload1"></app-client-products>
+          </mat-tab>
+          <mat-tab label="Deals">
+            <app-client-deals [clientData]="childClientData" [reload]="reload2"></app-client-deals>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <!----------------------->
+                <!-- data cards (DESKTOP)) -->
+                <!--<div class="selectedClientDesktopContainer" *ngIf="isBigSize">
+        <div class="notesContainer">
+          <app-client-notes [id]="client !== undefined ? client.id : id" [reload]="reload1"></app-client-notes>
+        </div>
+        <div class="twoContainer">
+          <div class="productsContainer">
+            <app-client-products [year]="yearControl.value" [reload]="reload0"></app-client-products>
+          </div>
+          <div class="dealsContainer">
+            <app-client-deals [year]="yearControl.value" [reload]="reload2"></app-client-deals>
+          </div>
+        </div>
+      </div>-->
+
+            </div>
+        </div>
+    </div>

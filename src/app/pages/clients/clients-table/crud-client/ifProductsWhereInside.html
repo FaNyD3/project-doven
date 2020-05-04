@@ -1,0 +1,369 @@
+<!----------------------->
+<!-- new client products -->
+<div class="row">
+    <div class="col-6 productsTitleCol">
+        <h2 class="orangeText"> Products </h2>
+    </div>
+    <div class="col-6 newProductCancelCol">
+        <button class="orangeButton" *ngIf="!newProduct" matRipple type="button" (click)="newProduct = !newProduct">
+            <span>Add new product</span>
+        </button>
+        <button class="orangeButton" *ngIf="newProduct" matRipple type="button" (click)="newProduct = !newProduct">
+            <span>Cancel</span>
+        </button>
+    </div>
+</div>
+<div class="newProductTopRow" *ngIf="newProduct"></div>
+<form [formGroup]="productForm">
+    <!----------------------->
+    <!-- new product -->
+    <div class="row productRow" *ngIf="newProduct">
+        <!----------------------->
+        <!-- product autocomplete -->
+        <div class="col-12">
+            <label class="inputLabel">Add new product</label>
+        </div>
+        <div class="col-12 col-md-4">
+            <label for="productsWrapper" class="inputLabel">Product</label>
+            <div class="customInput" (click)="productsWrapper.focus()">
+                <input type="text" class="autoInput" matInput placeholder="Product" id="productsWrapper" #productsWrapper formControlName="products" [matAutocomplete]="autoProduct">
+                <button type="button"  class="searchbarSuffix fsize22" *ngIf="productForm.get('products').value" matSuffix aria-label="Clear" (click)="productForm.get('products').setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="productForm.get('products').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+            </div>
+            <mat-autocomplete #autoProduct="matAutocomplete" [displayWith]="displayFn">
+                <mat-option disabled>Select one product</mat-option>
+                <mat-option *ngFor="let product of (productOptions | async)" [value]="product">
+                    {{product.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+        <!----------------------->
+        <!-- productGrown -->
+        <div class="col-6 col-md-3">
+            <label for="pGrown" class="inputLabel">Product grown</label>
+            <div class="customInput" (click)="pGrown.focus()">
+                <input type="number" matInput placeholder="Product grown" id="pGrown" #pGrown formControlName="productGrown">
+                <button class="searchbarSuffix fsize22" *ngIf="productForm.get('productGrown').value" matSuffix aria-label="Clear" (click)="productForm.get('productGrown').setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="productForm.get('productGrown').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- productAvailable -->
+        <div class="col-6 col-md-3">
+            <label for="pAvailable" class="inputLabel">P. available</label>
+            <div class="customInput" (click)="pAvailable.focus()">
+                <input type="number" matInput placeholder="Product available" id="pAvailable" #pAvailable formControlName="productAvailable">
+                <button class="searchbarSuffix fsize22" *ngIf="productForm.get('productAvailable').value" matSuffix aria-label="Clear" (click)="productForm.get('productAvailable').setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="productForm.get('productAvailable').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- grade -->
+        <div class="col-6 col-md-2">
+            <label for="grad" class="inputLabel">Grade</label>
+            <div class="customInput" (click)="grad.focus()">
+                <input type="text" matInput placeholder="Grade" id="grad" #grad formControlName="grade">
+                <button class="searchbarSuffix fsize22" *ngIf="productForm.get('grade').value" matSuffix aria-label="Clear" (click)="productForm.get('grade').setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="productForm.get('grade').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- targetPrice -->
+        <div class="col-6 col-md-4">
+            <label for="tPrice" class="inputLabel">Target price</label>
+            <div class="customInput" (click)="tPrice.focus()">
+                <input type="text" matInput placeholder="Target price" id="tPrice" #tPrice formControlName="targetPrice">
+                <button class="searchbarSuffix fsize22" *ngIf="productForm.get('targetPrice').value" matSuffix aria-label="Clear" (click)="productForm.get('targetPrice').setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="productForm.get('targetPrice').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- units -->
+        <div class="col-6 col-md-3">
+            <label for="unit" class="inputLabel">Units</label>
+            <div class="customInput" (click)="unit.focus()">
+                <input type="text" matInput placeholder="Target price" id="unit" #unit formControlName="units">
+                <button class="searchbarSuffix fsize22" *ngIf="productForm.get('units').value" matSuffix aria-label="Clear" (click)="productForm.get('units').setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="productForm.get('units').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+            </div>
+        </div>
+        <!----------------------->
+        <!-- add relation button -->
+        <div class="col-6 col-md-3">
+            <label class="inputLabel">Add</label>
+            <button class="orangeButton" matRipple type="button" (click)="addProduct()">
+                <span>Add</span>
+                <mat-icon>add_circle_outline</mat-icon>
+            </button>
+        </div>
+    </div>
+</form>
+<div class="newProductTopRow" *ngIf="newProduct"></div>
+
+<div *ngFor="let clientProduct of clientProducts; let i = index">
+    <form [formGroup]="clientProductsForms[i]">
+        <!----------------------->
+        <!-- client products -->
+        <div class="row productRow">
+            <div class="col-12">
+                <label class="inputLabel">Current products</label>
+            </div>
+            <!----------------------->
+            <!-- product autocomplete -->
+            <div class="col-12 col-md-4">
+                <label [for]="'productWrappper' + i" class="inputLabel">Product</label>
+                <div class="customInput" (click)="['productWrappper' + i].focus()">
+                    <input type="text" class="autoInput" matInput placeholder="Product" [id]="'productWrappper' + i" formControlName="products">
+                </div>
+            </div>
+            <!----------------------->
+            <!-- productGrown -->
+            <div class="col-6 col-md-3">
+                <label [for]="'pGrown' + i" class="inputLabel">Product grown</label>
+                <div class="customInput" (click)="['pGrown' + i].focus()">
+                    <input type="number" matInput placeholder="Product grown" [id]="'pGrown' + i" formControlName="productGrown">
+                    <button class="searchbarSuffix fsize22" *ngIf="clientProductsForms[i].get('productGrown').value" matSuffix aria-label="Clear" (click)="clientProductsForms[i].get('productGrown').setValue('')">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-error *ngIf="clientProductsForms[i].get('productGrown').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+                </div>
+            </div>
+            <!----------------------->
+            <!-- productAvailable -->
+            <div class="col-6 col-md-3">
+                <label [for]="'pAvailable' + i" class="inputLabel">P. available</label>
+                <div class="customInput" (click)="['pAvailable' + i].focus()">
+                    <input type="number" matInput placeholder="Product available" [id]="'pAvailable' + i" formControlName="productAvailable">
+                    <button class="searchbarSuffix fsize22" *ngIf="clientProductsForms[i].get('productAvailable').value" matSuffix aria-label="Clear" (click)="clientProductsForms[i].get('productAvailable').setValue('')">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-error *ngIf="clientProductsForms[i].get('productAvailable').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+                </div>
+            </div>
+            <!----------------------->
+            <!-- grade -->
+            <div class="col-6 col-md-2">
+                <label [for]="'grad' + i" class="inputLabel">Grade</label>
+                <div class="customInput" (click)="['grad' + i].focus()">
+                    <input type="text" matInput placeholder="Grade" [id]="'grad + i'" formControlName="grade">
+                    <button class="searchbarSuffix fsize22" *ngIf="clientProductsForms[i].get('grade').value" matSuffix aria-label="Clear" (click)="clientProductsForms[i].get('grade').setValue('')">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-error *ngIf="clientProductsForms[i].get('grade').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+                </div>
+            </div>
+            <!----------------------->
+            <!-- targetPrice -->
+            <div class="col-6 col-md-4">
+                <label [for]="'tPrice' + i" class="inputLabel">Target price</label>
+                <div class="customInput" (click)="['tPrice' + i].focus()">
+                    <input type="text" matInput placeholder="Target price" [id]="'tPrice' + i" formControlName="targetPrice">
+                    <button class="searchbarSuffix fsize22" *ngIf="clientProductsForms[i].get('targetPrice').value" matSuffix aria-label="Clear" (click)="clientProductsForms[i].get('targetPrice').setValue('')">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-error *ngIf="clientProductsForms[i].get('targetPrice').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+                </div>
+            </div>
+            <!----------------------->
+            <!-- units -->
+            <div class="col-6 col-md-3">
+                <label [for]="'unit' + i" class="inputLabel">Units</label>
+                <div class="customInput" (click)="['unit' + i].focus()">
+                    <input type="text" matInput placeholder="Target price" [id]="'unit' + i" formControlName="units">
+                    <button class="searchbarSuffix fsize22" *ngIf="clientProductsForms[i].get('units').value" matSuffix aria-label="Clear" (click)="clientProductsForms[i].get('units').setValue('')">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-error *ngIf="clientProductsForms[i].get('units').invalid"><mat-icon>error_outline</mat-icon></mat-error>
+                </div>
+            </div>
+            <!----------------------->
+            <!-- add relation button -->
+            <div class="col-6 col-md-3"  *ngIf="!this.dataIn.isNew">
+                <label class="inputLabel">Add</label>
+                <button class="orangeButton" matRipple type="button" (click)="editProduct(i)">
+                    <span>Edit</span>
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="tableCard">
+    <div class="tableWrapper">
+        <div class="tableFixer clientsFixer">
+            <!----------------------->
+            <!-- table -->
+            <mat-table class="personalizedTable" [dataSource]="dataSource" matSort (matSortChange)="loadTableData(searchbar.value, this.categories.value, false, $event)">
+                <!----------------------->
+                <!-- check -->
+                <ng-container cdkColumnDef="check">
+                    <mat-header-cell *cdkHeaderCellDef class="checkCell headerCell"></mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" [className]="'checkCell ' + row.id">
+                        <div class="customCell">
+                            <div class="tableCell ">
+                                <!----------------------->
+                                <!-- checkbox -->
+                                <mat-checkbox color="primary" (change)="selectRow($event, row.id)"></mat-checkbox>
+                            </div>
+                        </div>
+                    </mat-cell>
+                </ng-container>
+                <!----------------------->
+                <!-- number -->
+                <ng-container cdkColumnDef="id">
+                    <mat-header-cell *cdkHeaderCellDef mat-sort-header class="numberCell headerCell"> # </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" [className]="'numberCell ' + row.id">
+                        <p class="cut-text tableText">
+                            {{ row.id }}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <!----------------------->
+                <!-- name -->
+                <ng-container cdkColumnDef="name">
+                    <mat-header-cell *cdkHeaderCellDef class="headerCell" mat-sort-header> NAME </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" [matTooltip]="row.name ? row.name : 'N/R'" matTooltipPosition="above" [className]="row.id">
+                        <p class="cut-text tableText">
+                            {{ row.name ? row.name : 'N/R' }}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <!----------------------->
+                <!-- phone -->
+                <ng-container cdkColumnDef="phoneNumber">
+                    <mat-header-cell *cdkHeaderCellDef class="phoneCell headerCell" mat-sort-header> PHONE </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" [matTooltip]="(row.phoneNumber !== undefined && row.phoneNumber !== null) ? row.phoneNumber : 'N/R'" matTooltipPosition="above" [className]="'phoneCell ' + row.id">
+                        <p class="cut-text tableText">
+                            {{ (row.phoneNumber !== undefined && row.phoneNumber !== null) ? ('(' + row.phoneNumber.toString().substring(0,3) + ') ' + row.phoneNumber.toString().substring(3,6) + ' ' + row.phoneNumber.toString().substring(6,10)) : 'N/R' }}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <!----------------------->
+                <!-- buyer -->
+                <ng-container cdkColumnDef="buyer">
+                    <mat-header-cell *cdkHeaderCellDef class="headerCell"> BUYER </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" [matTooltip]="row.buyer ? row.buyer.name : 'N/R'" matTooltipPosition="above" [className]="row.id">
+                        <p class="cut-text tableText">
+                            {{ row.buyer ? row.buyer.name : 'N/R' }}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <!----------------------->
+                <!-- category -->
+                <ng-container cdkColumnDef="category">
+                    <mat-header-cell *cdkHeaderCellDef class="bigNumberCell headerCell" mat-sort-header> CATEGORY </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" [className]="'bigNumberCell ' + row.id" [matTooltip]="row.category ? row.category.charAt(0).toUpperCase() + row.category.slice(1) : 'N/R'" matTooltipPosition="above">
+                        <p class="cut-text tableText">
+                            {{ row.category ? row.category.charAt(0).toUpperCase() + row.category.slice(1) : 'N/R'}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <!----------------------->
+                <!-- tags -->
+                <ng-container cdkColumnDef="tags">
+                    <mat-header-cell *cdkHeaderCellDef class="tagsCell headerCell "> TAGS </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" [matMenuTriggerFor]="tagModal" [className]="'tagsCell ' + row.id">
+                        <mat-icon class="tagsIcon">{{'filter_' + (row.tags.length > 0 ? (row.tags.length <= 9 ? row.tags.length : '9_plus') : 'none')}}</mat-icon>
+                        <p class="orangeText cut-text tableText"> See All </p>
+                        <!----------------------->
+                        <!-- popoup client tags -->
+                        <mat-menu #tagModal="matMenu">
+                            <p class="popUpTag orangeText">
+                                Assigned tags
+                            </p>
+                            <p class="popUpTag popUpMenuText" *ngIf="row.tags.length === 0">Has no assigned tags</p>
+                            <p class="popUpTag popUpMenuText" *ngFor="let tag of row.tags">
+                                <span>{{tag}}</span>
+                            </p>
+                        </mat-menu>
+                    </mat-cell>
+                </ng-container>
+                <!----------------------->
+                <!-- products -->
+                <ng-container cdkColumnDef="products">
+                    <mat-header-cell *cdkHeaderCellDef class="productsCell"> PRODUCTS </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" (click)="openProductsModal(row.years, row)" [className]="'productsCell ' + row.id">
+                        <p class="orangeText cut-text tableText"> See All </p>
+                    </mat-cell>
+                </ng-container>
+                <!----------------------->
+                <!-- product grown -->
+                <ng-container cdkColumnDef="productGrown">
+                    <mat-header-cell *cdkHeaderCellDef class="bigNumberCell headerCell" mat-sort-header matTooltip="Product grown" matTooltipPosition="above"> P.G. </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" [className]="'bigNumberCell ' + row.id">
+                        <p class="cut-text tableText">
+                            <!--{{ row.productGrown }}-->0
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <!----------------------->
+                <!-- closed deals -->
+                <ng-container cdkColumnDef="closedDeals">
+                    <mat-header-cell *cdkHeaderCellDef class="numberCell headerCell" mat-sort-header matTooltip="Closed deals" matTooltipPosition="above"> C.D. </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" [className]="'numberCell ' + row.id">
+                        <p class="cut-text tableText">
+                            <!--{{ row.deals.length }}-->0
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <!----------------------->
+                <!-- location -->
+                <ng-container cdkColumnDef="address">
+                    <mat-header-cell *cdkHeaderCellDef class="headerCell" mat-sort-header> LOCATION </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" [matTooltip]="row.address ? row.address : 'N/R'" matTooltipPosition="above" [className]="row.id">
+                        <p class="cut-text tableText">
+                            {{ row.address ? row.address : 'N/R'}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <!----------------------->
+                <!-- button -->
+                <ng-container cdkColumnDef="button">
+                    <mat-header-cell *cdkHeaderCellDef [className]=" editAccess ? 'threeButtonCell ' : 'twoButtonCell ' + 'headerCell'"></mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" [className]="editAccess ? 'threeButtonCell ' : 'twoButtonCell ' + row.id">
+                        <div class="starData tableButton">
+                            {{row.date ? row.date : 0}}
+                            <mat-icon>star</mat-icon>
+                        </div>
+                        <button class="whiteButton tableButton" matRipple (click)="details(row)">
+                            <mat-icon>list</mat-icon>
+                        </button>
+                        <button class="whiteButton" matRipple (click)="openClient(row)" *ngIf="editAccess">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+    </div>
+</div>
